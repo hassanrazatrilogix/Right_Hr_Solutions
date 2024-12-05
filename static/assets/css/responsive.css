@@ -1,0 +1,242 @@
+/**
+ * Template Name: Right HR Solutions - v1.0
+ * Template URL: https://zohirs.com
+ * Author: Zohir
+ */
+
+/* --------------------------------------------------------------
+   Media Queries
+-------------------------------------------------------------- */
+
+/* Max width 1100px */
+@media (max-width: 1100px) {
+  .site-logo {
+    height: 50px;
+    width: 160px;
+  }
+
+  .main-nav {
+    width: calc(100% - 160px);
+  }
+}
+
+/* Max width 1024px */
+@media (max-width: 1024px) {
+
+  /* Font Resizing */
+  html {
+    font-size: 14px;
+  }
+
+  h1 {
+    font-size: 2.2rem;
+    line-height: 1.1em;
+  }
+
+  h2 {
+    font-size: 1.8rem;
+    line-height: 1.2em;
+  }
+
+  h3 {
+    font-size: 1.4rem;
+  }
+
+  h4,
+  h5,
+  h6,
+  p,
+  a,
+  li {
+    font-size: 1rem;
+    line-height: 1.3em;
+  }
+
+  /* Button */
+  .btn-big {
+    padding: 0.75rem 1.5rem;
+  }
+
+  /* Navigation Menu */
+  .hamburger {
+    display: block;
+  }
+
+  .nav-menu {
+    width: 340px;
+    max-width: 90vh;
+    height: 100%;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: start;
+    position: fixed;
+    top: 80px;
+    right: -120%;
+    transition: 0.5s ease-in-out;
+    background-color: var(--hr-primary);
+  }
+
+  .navbar ul {
+    padding-left: 1.25rem;
+  }
+
+  .nav-menu li {
+    padding: 0.5rem 0;
+  }
+
+  .navbar.active .nav-menu {
+    right: 0;
+    z-index: 99999;
+    transition: 0.2s ease-in-out;
+    overflow: hidden;
+    overflow-y: scroll;
+  }
+
+  /* Mega Menu */
+  .mega-menu {
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .dropdown-menu .mega-menu-heading,
+  .dropdown-menu .mega-menu-heading h3 {
+    margin-bottom: 0.15rem;
+  }
+
+  .dropdown-menu .menu-items {
+    gap: 0.25rem;
+    padding: 0 0.5rem 0 0.25rem;
+  }
+
+  .dropdown-menu .menu-items img {
+    max-width: 100%;
+    height: auto;
+    object-fit: cover;
+    aspect-ratio: 16 / 6;
+  }
+
+  /* Page Sections */
+  #page_header {
+    min-height: 280px;
+  }
+
+  section {
+    padding: 3rem 0;
+  }
+
+  .section-heading {
+    margin-bottom: 3rem;
+  }
+
+  /* Grids */
+  .quick-service-grid .grid-item {
+    width: calc((100% / 3) - 1.5rem);
+  }
+  .steps-grid .grid-item .grid-item-link .icon {
+    width: 60px;
+  }
+
+  #place_order .category-list-group .list-group-item {
+    width: calc((100% / 4) - 1em);
+  }
+
+  #place_order .service-list-group .list-group-item {
+    width: calc((100% / 2) - 1em);
+  }
+
+  #Checkout .payment-list-group .list-group-item {
+    width: calc((100% / 3) - 1rem);
+  }
+}
+
+/* Max width 992px */
+@media (max-width: 992px) {
+
+  /* Font Resizing */
+  html {
+    font-size: 13px;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  h2 {
+    font-size: 1.6rem;
+    line-height: 1.2em;
+  }
+
+  h3 {
+    font-size: 1.3rem;
+  }
+
+  h4,
+  h5,
+  h6,
+  p,
+  a,
+  li {
+    font-size: 1rem;
+    line-height: 1.3em;
+  }
+}
+
+/* Max width 767px */
+@media (max-width: 767px) {
+
+  /* Aspect Ratios */
+  .ratio-h,
+  .ratio-v {
+    aspect-ratio: 16 / 10;
+  }
+
+  /* Hero Banner */
+  .hero-banner .banner-content {
+    padding: 6rem 0 0.5rem;
+    text-align: center;
+  }
+
+  .hero-banner .banner-img {
+    padding-top: 0;
+  }
+
+  /* Contact Form */
+  .contact-form-wrapper {
+    padding: 1.5rem;
+  }
+
+  /* Grids */
+  .quick-service-grid .grid-item {
+    width: calc((100% / 2) - 1.5rem);
+  }
+  .steps-grid .grid-item {
+    width: calc((100% / 1) - 1.5rem);
+  }
+  .steps-grid .grid-item .grid-item-link .icon {
+    width: 50px;
+  }
+  
+
+  #place_order .category-list-group .list-group-item {
+    width: calc((100% / 2) - 1em);
+  }
+
+  #place_order .service-list-group .list-group-item {
+    width: calc((100% / 1) - 1em);
+  }
+
+  /* Appointment and Auth Images */
+  #book_appointment .appointment-wrapper .appointment-img,
+  .auth-img {
+    height: 190px;
+    min-height: 190px;
+  }
+
+  /* Footer */
+  .footer-buttom .social-link {
+    justify-content: center;
+  }
+}

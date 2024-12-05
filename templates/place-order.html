@@ -1,0 +1,668 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Right HR Solutions – HR Solutions & Professional Services{% endblock title %}
+
+ {% block content %}
+      <section id="page_header" class="page-header d-flex align-items-center justify-center"
+      style="background-image: url({% static '' %}/assets/img/image/place-order-page.png);">
+        <div class="overlay"></div>
+        <div class="container">
+          <div class="row d-flex align-items-center justify-center">
+            <div class="col-md-5 page-header-content">
+              <h1 class="page-title">Place Your Order</h1>
+              <h5 class="text">Get started with Right HR Solutions by placing an order for our comprehensive HR and
+                professional services.</h5>
+            </div>
+          </div>
+          <!-- End row -->
+          <!-- End container -->
+      </section>
+      <!-- End Page Title  -->
+      <!-- Place Order Section  -->
+      <section id="place_order">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="section-content">
+                <div class="row g-5 align-items-center justify-center">
+                  <div class="col-md-12">
+                    <div class="order-form-wrapper">
+                      <form method="post" action="{% url 'placeorder' %}"  class="needs-validation" id="dynamicForm" novalidate>
+                        {% csrf_token %}
+                        <div class="form-section">
+                          <div class="form-heading">
+                            <h3 class="title">Select Category</h3>
+                            <h6 class="sub-title">Choose from our broad range of service categories. </h6>
+                          </div>
+                          <div class="form-body">
+                            <div class="category-list-group list-group list-group-checkable">
+                              <input class="list-group-item-check pe-none" type="radio" name="categoriesList"
+                                data-category="Apostille_Service" id="Apostille_Service" value="Apostille Service"
+                               >
+                              <label class="list-group-item rounded-3 py-3" for="Apostille_Service">
+                                <div class="service-category">
+                                  <img class="service-icon" src="{% static '' %}assets/img/icons/services-icon-apostille-services.svg"
+                                    alt="Apostille Service">
+                                  <h6 class="service-heading">Apostille Service</h6>
+                                </div>
+                              </label>
+                              <input class="list-group-item-check pe-none" type="radio" name="categoriesList"
+                                data-category="Background_Check" id="Background_Check" value="Background Check">
+                              <label class="list-group-item rounded-3 py-3" for="Background_Check">
+                                <div class="service-category">
+                                  <img class="service-icon" src="{% static '' %}assets/img/icons/services-icon-background-check.svg"
+                                    alt="Background Checks">
+                                  <h6 class="service-heading">Background Check</h6>
+                                </div>
+                              </label>
+                              <input class="list-group-item-check pe-none" type="radio" name="categoriesList"
+                                data-category="Benefits_Management" id="Benefits_Management"
+                                value="Benefits Management">
+                              <label class="list-group-item rounded-3 py-3" for="Benefits_Management">
+                                <div class="service-category">
+                                  <img class="service-icon" src="{% static '' %}assets/img/icons/services-icon-benefits-managemnet.svg"
+                                    alt="Benefits Management">
+                                  <h6 class="service-heading">Benefits Management</h6>
+                                </div>
+                              </label>
+                              <input class="list-group-item-check pe-none" type="radio" name="categoriesList"
+                                data-category="Document_Notarization" id="Document_Notarization"
+                                value="Document Notarization">
+                              <label class="list-group-item rounded-3 py-3" for="Document_Notarization">
+                                <div class="service-category">
+                                  <img class="service-icon" src="{% static '' %}assets/img/icons/services-icon-docu-notarization.svg"
+                                    alt="Document Notarization">
+                                  <h6 class="service-heading">Document Notarization</h6>
+                                </div>
+                              </label>
+                              <input class="list-group-item-check pe-none" type="radio" name="categoriesList"
+                                data-category="Document_Translation" id="Document_Translation"
+                                value="Document Translation">
+                              <label class="list-group-item rounded-3 py-3" for="Document_Translation">
+                                <div class="service-category">
+                                  <img class="service-icon" src="{% static '' %}assets/img/icons/services-icon-docu-translation.svg"
+                                    alt="Document Translation">
+                                  <h6 class="service-heading">Document Translation</h6>
+                                </div>
+                              </label>
+                              <input class="list-group-item-check pe-none" type="radio" name="categoriesList"
+                                data-category="Fingerprinting_Service" id="Fingerprinting_Service"
+                                value="Fingerprinting Service">
+                              <label class="list-group-item rounded-3 py-3" for="Fingerprinting_Service">
+                                <div class="service-category">
+                                  <img class="service-icon" src="{% static '' %}assets/img/icons/services-icon-fingerprinting.svg"
+                                    alt="Fingerprinting Services">
+                                  <h6 class="service-heading">Fingerprinting Service</h6>
+                                </div>
+                              </label>
+                              <input class="list-group-item-check pe-none" type="radio" name="categoriesList"
+                                data-category="Payroll_Management" id="Payroll_Management" value="Payroll Management">
+                              <label class="list-group-item rounded-3 py-3" for="Payroll_Management">
+                                <div class="service-category">
+                                  <img class="service-icon" src="{% static '' %}assets/img/icons/services-icon-payroll-management.svg"
+                                    alt="Payroll Management">
+                                  <h6 class="service-heading">Payroll Management</h6>
+                                </div>
+                              </label>
+                              <input class="list-group-item-check pe-none" type="radio" name="categoriesList"
+                                data-category="Special_HR_Project" id="Special_HR_Project" value="Special HR Project">
+                              <label class="list-group-item rounded-3 py-3" for="Special_HR_Project">
+                                <div class="service-category">
+                                  <img class="service-icon" src="{% static '' %}assets/img/icons/services-icon-special-project.svg"
+                                    alt="Special Projects">
+                                  <h6 class="service-heading">Special HR Project</h6>
+                                </div>
+                              </label>
+                              <input class="list-group-item-check pe-none" type="radio" name="categoriesList"
+                                data-category="Staffing_Recruitment" id="Staffing_Recruitment"
+                                value="Staffing & Recruitment">
+                              <label class="list-group-item rounded-3 py-3" for="Staffing_Recruitment">
+                                <div class="service-category">
+                                  <img class="service-icon"
+                                    src="{% static '' %}assets/img/icons/services-icon-staffing-recruitment.svg"
+                                    alt="Staffing & Recruitment">
+                                  <h6 class="service-heading">Staffing & Recruitment</h6>
+                                </div>
+                              </label>
+                              <input class="list-group-item-check pe-none" type="radio" name="categoriesList"
+                                data-category="Training_Development" id="Training_Development"
+                                value="Training & Development">
+                              <label class="list-group-item rounded-3 py-3" for="Training_Development">
+                                <div class="service-category">
+                                  <img class="service-icon"
+                                    src="{% static '' %}assets/img/icons/services-icon-trainning-development.svg"
+                                    alt="Training & Development">
+                                  <h6 class="service-heading">Training & Development</h6>
+                                </div>
+                              </label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-section" id="subcategoriesSection">
+                          <div class="form-heading">
+                            <h3 class="title">Select the Services You Need</h3>
+                            <h6 class="sub-title">Browse through specific services we offer. </h6>
+                          </div>
+                          <div class="form-body">
+                            <!-- Apostille Service -->
+                            <div class="service-list-group list-group list-group-checkable subcategory hidden"
+                              data-category="Apostille_Service">
+                              <input class="list-group-item-check pe-none" type="radio" name="servicesList"
+                                id="service_TaxProcessing" value="Complete Payroll & Tax Processing">
+                              <label class="list-group-item rounded-3 py-3" for="service_TaxProcessing">
+                                <div class="service-item-name">
+                                  <h6 class="service-heading">Complete Payroll & Tax Processing</h6>
+                                </div>
+                              </label>
+                              <input class="list-group-item-check pe-none" type="radio" name="servicesList"
+                                id="service_BenefitsDeductions" value="Benefits & Deductions Processing">
+                              <label class="list-group-item rounded-3 py-3" for="service_BenefitsDeductions">
+                                <div class="service-item-name">
+                                  <h6 class="service-heading">Benefits & Deductions Processing</h6>
+                                </div>
+                              </label>
+                              <input class="list-group-item-check pe-none" type="radio" name="servicesList"
+                                id="service_PayrollAccess" value="We Payroll Access & Employee Self Service">
+                              <label class="list-group-item rounded-3 py-3" for="service_PayrollAccess">
+                                <div class="service-item-name">
+                                  <h6 class="service-heading">We Payroll Access & Employee Self Service</h6>
+                                </div>
+                              </label>
+                              <input class="list-group-item-check pe-none" type="radio" name="servicesList"
+                                id="service_BenefitsAccrual" value="Paid Time Off & Benefits Accrual">
+                              <label class="list-group-item rounded-3 py-3" for="service_BenefitsAccrual">
+                                <div class="service-item-name">
+                                  <h6 class="service-heading">Paid Time Off & Benefits Accrual</h6>
+                                </div>
+                              </label>
+                              <input class="list-group-item-check pe-none" type="radio" name="servicesList"
+                                id="service_ChildSupport" value="Garnishment & Child Support Administration">
+                              <label class="list-group-item rounded-3 py-3" for="service_ChildSupport">
+                                <div class="service-item-name">
+                                  <h6 class="service-heading">Garnishment & Child Support Administration</h6>
+                                </div>
+                              </label>
+                              <input class="list-group-item-check pe-none" type="radio" name="servicesList"
+                                id="service_TaxFillingRemittance" value="Fed/state/local Tax Filling & Remittance">
+                              <label class="list-group-item rounded-3 py-3" for="service_TaxFillingRemittance">
+                                <div class="service-item-name">
+                                  <h6 class="service-heading">Fed/state/local Tax Filling & Remittance</h6>
+                                </div>
+                              </label>
+                            </div>
+
+                            <!-- Background Check -->
+                            <div class="service-list-group list-group list-group-checkable subcategory hidden"
+                              data-category="Background_Check">
+                              <input class="list-group-item-check pe-none" type="radio" name="servicesList"
+                                id="service_CriminalCheck" value="Criminal Background Check">
+                              <label class="list-group-item rounded-3 py-3" for="service_CriminalCheck">
+                                <div class="service-item-name">
+                                  <h6 class="service-heading">Criminal Background Check</h6>
+                                </div>
+                              </label>
+                              <input class="list-group-item-check pe-none" type="radio" name="servicesList"
+                                id="service_EmploymentVerification" value="Employment Verification">
+                              <label class="list-group-item rounded-3 py-3" for="service_EmploymentVerification">
+                                <div class="service-item-name">
+                                  <h6 class="service-heading">Employment Verification</h6>
+                                </div>
+                              </label>
+                              <input class="list-group-item-check pe-none" type="radio" name="servicesList"
+                                id="service_ReferenceCheck" value="Reference Check">
+                              <label class="list-group-item rounded-3 py-3" for="service_ReferenceCheck">
+                                <div class="service-item-name">
+                                  <h6 class="service-heading">Reference Check</h6>
+                                </div>
+                              </label>
+                              <input class="list-group-item-check pe-none" type="radio" name="servicesList"
+                                id="service_EducationVerification" value="Education Verification">
+                              <label class="list-group-item rounded-3 py-3" for="service_EducationVerification">
+                                <div class="service-item-name">
+                                  <h6 class="service-heading">Education Verification</h6>
+                                </div>
+                              </label>
+                              <input class="list-group-item-check pe-none" type="radio" name="servicesList"
+                                id="service_DrugScreening" value="Drug Screening">
+                              <label class="list-group-item rounded-3 py-3" for="service_DrugScreening">
+                                <div class="service-item-name">
+                                  <h6 class="service-heading">Drug Screening</h6>
+                                </div>
+                              </label>
+                            </div>
+
+                            <!-- Benefits Management -->
+                            <div class="service-list-group list-group list-group-checkable subcategory hidden"
+                              data-category="Benefits_Management">
+                              <input class="list-group-item-check pe-none" type="radio" name="servicesList"
+                                id="service_HealthInsurance" value="Health Insurance Administration">
+                              <label class="list-group-item rounded-3 py-3" for="service_HealthInsurance">
+                                <div class="service-item-name">
+                                  <h6 class="service-heading">Health Insurance Administration</h6>
+                                </div>
+                              </label>
+                              <input class="list-group-item-check pe-none" type="radio" name="servicesList"
+                                id="service_RetirementPlans" value="Retirement Plans Management">
+                              <label class="list-group-item rounded-3 py-3" for="service_RetirementPlans">
+                                <div class="service-item-name">
+                                  <h6 class="service-heading">Retirement Plans Management</h6>
+                                </div>
+                              </label>
+                              <input class="list-group-item-check pe-none" type="radio" name="servicesList"
+                                id="service_LifeInsurance" value="Life Insurance Benefits">
+                              <label class="list-group-item rounded-3 py-3" for="service_LifeInsurance">
+                                <div class="service-item-name">
+                                  <h6 class="service-heading">Life Insurance Benefits</h6>
+                                </div>
+                              </label>
+                              <input class="list-group-item-check pe-none" type="radio" name="servicesList"
+                                id="service_DisabilityPlans" value="Disability Plans Management">
+                              <label class="list-group-item rounded-3 py-3" for="service_DisabilityPlans">
+                                <div class="service-item-name">
+                                  <h6 class="service-heading">Disability Plans Management</h6>
+                                </div>
+                              </label>
+                            </div>
+
+                            <!-- Document Notarization -->
+                            <div class="service-list-group list-group list-group-checkable subcategory hidden"
+                              data-category="Document_Notarization">
+                              <input class="list-group-item-check pe-none" type="radio" name="servicesList"
+                                id="service_Affidavits" value="Affidavits Notarization">
+                              <label class="list-group-item rounded-3 py-3" for="service_Affidavits">
+                                <div class="service-item-name">
+                                  <h6 class="service-heading">Affidavits Notarization</h6>
+                                </div>
+                              </label>
+                              <input class="list-group-item-check pe-none" type="radio" name="servicesList"
+                                id="service_Contracts" value="Contracts Notarization">
+                              <label class="list-group-item rounded-3 py-3" for="service_Contracts">
+                                <div class="service-item-name">
+                                  <h6 class="service-heading">Contracts Notarization</h6>
+                                </div>
+                              </label>
+                              <input class="list-group-item-check pe-none" type="radio" name="servicesList"
+                                id="service_PowerOfAttorney" value="Power of Attorney Notarization">
+                              <label class="list-group-item rounded-3 py-3" for="service_PowerOfAttorney">
+                                <div class="service-item-name">
+                                  <h6 class="service-heading">Power of Attorney Notarization</h6>
+                                </div>
+                              </label>
+                              <input class="list-group-item-check pe-none" type="radio" name="servicesList"
+                                id="service_PropertyDocuments" value="Property Documents Notarization">
+                              <label class="list-group-item rounded-3 py-3" for="service_PropertyDocuments">
+                                <div class="service-item-name">
+                                  <h6 class="service-heading">Property Documents Notarization</h6>
+                                </div>
+                              </label>
+                            </div>
+
+
+                            <!-- Document Translation -->
+                            <div class="service-list-group list-group list-group-checkable subcategory hidden"
+                              data-category="Document_Translation">
+                              <input class="list-group-item-check pe-none" type="radio" name="servicesList"
+                                id="service_LegalDocuments" value="Legal Documents Translation">
+                              <label class="list-group-item rounded-3 py-3" for="service_LegalDocuments">
+                                <div class="service-item-name">
+                                  <h6 class="service-heading">Legal Documents Translation</h6>
+                                </div>
+                              </label>
+                              <input class="list-group-item-check pe-none" type="radio" name="servicesList"
+                                id="service_BusinessContracts" value="Business Contracts Translation">
+                              <label class="list-group-item rounded-3 py-3" for="service_BusinessContracts">
+                                <div class="service-item-name">
+                                  <h6 class="service-heading">Business Contracts Translation</h6>
+                                </div>
+                              </label>
+                              <input class="list-group-item-check pe-none" type="radio" name="servicesList"
+                                id="service_Certificates" value="Certificates Translation">
+                              <label class="list-group-item rounded-3 py-3" for="service_Certificates">
+                                <div class="service-item-name">
+                                  <h6 class="service-heading">Certificates Translation</h6>
+                                </div>
+                              </label>
+                              <input class="list-group-item-check pe-none" type="radio" name="servicesList"
+                                id="service_TechnicalManuals" value="Technical Manuals Translation">
+                              <label class="list-group-item rounded-3 py-3" for="service_TechnicalManuals">
+                                <div class="service-item-name">
+                                  <h6 class="service-heading">Technical Manuals Translation</h6>
+                                </div>
+                              </label>
+                            </div>
+
+
+                            <!-- Fingerprinting Service -->
+                            <div class="service-list-group list-group list-group-checkable subcategory hidden"
+                              data-category="Fingerprinting_Service">
+                              <input class="list-group-item-check pe-none" type="radio" name="servicesList"
+                                id="service_CriminalFingerprinting" value="Criminal Fingerprinting Service">
+                              <label class="list-group-item rounded-3 py-3" for="service_CriminalFingerprinting">
+                                <div class="service-item-name">
+                                  <h6 class="service-heading">Criminal Fingerprinting Service</h6>
+                                </div>
+                              </label>
+                              <input class="list-group-item-check pe-none" type="radio" name="servicesList"
+                                id="service_EmploymentFingerprinting" value="Employment Fingerprinting Service">
+                              <label class="list-group-item rounded-3 py-3" for="service_EmploymentFingerprinting">
+                                <div class="service-item-name">
+                                  <h6 class="service-heading">Employment Fingerprinting Service</h6>
+                                </div>
+                              </label>
+                              <input class="list-group-item-check pe-none" type="radio" name="servicesList"
+                                id="service_ImmigrationFingerprinting" value="Immigration Fingerprinting Service">
+                              <label class="list-group-item rounded-3 py-3" for="service_ImmigrationFingerprinting">
+                                <div class="service-item-name">
+                                  <h6 class="service-heading">Immigration Fingerprinting Service</h6>
+                                </div>
+                              </label>
+                            </div>
+
+                            <!-- Payroll Management -->
+                            <div class="service-list-group list-group list-group-checkable subcategory hidden"
+                              data-category="Payroll_Management">
+                              <input class="list-group-item-check pe-none" type="radio" name="servicesList"
+                                id="service_FullCyclePayroll" value="Full-Cycle Payroll Management">
+                              <label class="list-group-item rounded-3 py-3" for="service_FullCyclePayroll">
+                                <div class="service-item-name">
+                                  <h6 class="service-heading">Full-Cycle Payroll Management</h6>
+                                </div>
+                              </label>
+                              <input class="list-group-item-check pe-none" type="radio" name="servicesList"
+                                id="service_ComplianceReporting" value="Compliance & Reporting">
+                              <label class="list-group-item rounded-3 py-3" for="service_ComplianceReporting">
+                                <div class="service-item-name">
+                                  <h6 class="service-heading">Compliance & Reporting</h6>
+                                </div>
+                              </label>
+                              <input class="list-group-item-check pe-none" type="radio" name="servicesList"
+                                id="service_DirectDeposits" value="Direct Deposits Setup">
+                              <label class="list-group-item rounded-3 py-3" for="service_DirectDeposits">
+                                <div class="service-item-name">
+                                  <h6 class="service-heading">Direct Deposits Setup</h6>
+                                </div>
+                              </label>
+                            </div>
+
+                            <!-- Special HR Project -->
+                            <div class="service-list-group list-group list-group-checkable subcategory hidden"
+                              data-category="Special_HR_Project">
+                              <input class="list-group-item-check pe-none" type="radio" name="servicesList"
+                                id="service_HRPolicyDevelopment" value="HR Policy Development">
+                              <label class="list-group-item rounded-3 py-3" for="service_HRPolicyDevelopment">
+                                <div class="service-item-name">
+                                  <h6 class="service-heading">HR Policy Development</h6>
+                                </div>
+                              </label>
+                              <input class="list-group-item-check pe-none" type="radio" name="servicesList"
+                                id="service_PerformanceManagement" value="Performance Management">
+                              <label class="list-group-item rounded-3 py-3" for="service_PerformanceManagement">
+                                <div class="service-item-name">
+                                  <h6 class="service-heading">Performance Management</h6>
+                                </div>
+                              </label>
+                              <input class="list-group-item-check pe-none" type="radio" name="servicesList"
+                                id="service_ChangeManagement" value="Change Management">
+                              <label class="list-group-item rounded-3 py-3" for="service_ChangeManagement">
+                                <div class="service-item-name">
+                                  <h6 class="service-heading">Change Management</h6>
+                                </div>
+                              </label>
+                            </div>
+
+                            <!-- Staffing & Recruitment -->
+                            <div class="service-list-group list-group list-group-checkable subcategory hidden"
+                              data-category="Staffing_Recruitment">
+                              <input class="list-group-item-check pe-none" type="radio" name="servicesList"
+                                id="service_TemporaryStaffing" value="Temporary Staffing">
+                              <label class="list-group-item rounded-3 py-3" for="service_TemporaryStaffing">
+                                <div class="service-item-name">
+                                  <h6 class="service-heading">Temporary Staffing</h6>
+                                </div>
+                              </label>
+                              <input class="list-group-item-check pe-none" type="radio" name="servicesList"
+                                id="service_PermanentPlacement" value="Permanent Placement">
+                              <label class="list-group-item rounded-3 py-3" for="service_PermanentPlacement">
+                                <div class="service-item-name">
+                                  <h6 class="service-heading">Permanent Placement</h6>
+                                </div>
+                              </label>
+                              <input class="list-group-item-check pe-none" type="radio" name="servicesList"
+                                id="service_ExecutiveRecruitment" value="Executive Recruitment">
+                              <label class="list-group-item rounded-3 py-3" for="service_ExecutiveRecruitment">
+                                <div class="service-item-name">
+                                  <h6 class="service-heading">Executive Recruitment</h6>
+                                </div>
+                              </label>
+                            </div>
+
+                            <!-- Training & Development -->
+                            <div class="service-list-group list-group list-group-checkable subcategory hidden"
+                              data-category="Training_Development">
+                              <input class="list-group-item-check pe-none" type="radio" name="servicesList"
+                                id="service_SkillsWorkshops" value="Skills Workshops">
+                              <label class="list-group-item rounded-3 py-3" for="service_SkillsWorkshops">
+                                <div class="service-item-name">
+                                  <h6 class="service-heading">Skills Workshops</h6>
+                                </div>
+                              </label>
+                              <input class="list-group-item-check pe-none" type="radio" name="servicesList"
+                                id="service_LeadershipTraining" value="Leadership Training">
+                              <label class="list-group-item rounded-3 py-3" for="service_LeadershipTraining">
+                                <div class="service-item-name">
+                                  <h6 class="service-heading">Leadership Training</h6>
+                                </div>
+                              </label>
+                              <input class="list-group-item-check pe-none" type="radio" name="servicesList"
+                                id="service_TeamBuilding" value="Team Building Exercises">
+                              <label class="list-group-item rounded-3 py-3" for="service_TeamBuilding">
+                                <div class="service-item-name">
+                                  <h6 class="service-heading">Team Building Exercises</h6>
+                                </div>
+                              </label>
+                            </div>
+
+
+                          </div>
+                        </div>
+                        <div class="form-section" id="customizeOrderSection">
+                          <div class="form-heading">
+                            <h3 class="title">Customize Your Order</h3>
+                            <h6 class="sub-title">Specify details unique to your requirements. </h6>
+                          </div>
+                          <div class="form-body">
+                            <div class="row g-4">
+
+                              <div class="col-12">
+                                <label for="uploadFile" class="form-label">Upload Documents</label>
+                                <div class="input-group">
+                                  <input type="file" class="form-control" id="uploadFile" name="upload_documents" 
+                                    accept=".jpg, .jpeg, .png, .pdf" multiple required>
+
+                                </div>
+                                <small id="fileName" class="form-text text-muted">Accepted formats: JPG, PNG, PDF. Max
+                                  size: 5MB.</small>
+                                <div class="invalid-feedback">Please upload a file in JPG, PNG, or PDF format.</div>
+                              </div>
+
+                              <div class="col-12">
+                                <label for="documentType" class="form-label">Documents Type</label>
+                                <input type="text" class="form-control" id="documentType" name="document_type" placeholder="" value=""
+                                  required>
+                                <div class="invalid-feedback"> Enter Type Of Documents. </div>
+                              </div>
+                              <div class="col-3 col-sm-3 col-md-5">
+                                <label for="documentNumber" class="form-label">Number Of Documents</label>
+                                <select class="form-select" id="documentNumber" name="number_of_documents" required>
+                                  <option value="">Seclect</option>
+                                  <option>3</option>
+                                  <option>5</option>
+                                  <option>10</option>
+                                </select>
+                                <div class="invalid-feedback">Enter number of documents. </div>
+                              </div>
+                              <div class="col-5 col-sm-5 col-md-4">
+                                <label for="pickDate" class="form-label">Select Date</label>
+                                <input type="date" class="form-control" id="pickDate" name="pick_date" placeholder="Select Date" value=""
+                                  required>
+                                <div class="invalid-feedback"> Please select a date. </div>
+                              </div>
+                              <div class="col-4 col-sm-4 col-md-3">
+                                <label for="pickTime" class="form-label">Set Time</label>
+                                <select class="form-control" id="pickTime" name="pick_time" required>
+                                  <option value="">Select a time</option>
+                                </select>
+                                <div class="invalid-feedback">Select between 8:00 AM and 6:00 PM.</div>
+                              </div>
+                              <div class="col-12">
+                                <label for="commentsQuestions" class="form-label">Comments or Questions <span
+                                    class="small">(Optional)</span>
+                                </label>
+                                <textarea class="form-control" id="commentsQuestions" name="comments_questions" placeholder=""></textarea>
+                                <div class="invalid-feedback"> Please enter your comments or questions. </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-section" id="orderConfirmSection">
+                          <div class="form-heading">
+                            <h3 class="title">Confirm Order</h3>
+                            <h6 class="sub-title">Confirm your order to proceed
+                              to the next step. </h6>
+                          </div>
+                          <div class="form-body">
+                            <div class="row g-4">
+                              <div class="col-12">
+                                <div class="form-check">
+                                  <input type="checkbox" class="form-check-input" id="acceptTermsConditions" name="terms_accepted" required>
+                                  <label class="form-check-label" for="acceptTermsConditions">I do accept the <a
+                                      href="/termsconditions">Terms and Conditions</a>
+                                  </label>
+                                  <div class="invalid-feedback">You must accept the terms and conditions. </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <button class="mt-4 btn btn-big" type="submit" id="submitButton" disabled>Complete your
+                            order</button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- End Place Order Section  -->
+
+    </main>
+    <!-- End Main Body -->
+    <!-- Footer Section -->
+    <section class="footer-main">
+      <div class="container">
+        <div class="row g-3">
+          <div class="col-12">
+            <div class="footer-logo">
+              <a href="/">
+                <img class="img-fluid" src="{% static '' %}assets/img/logo.svg" alt="logo">
+              </a>
+            </div>
+          </div>
+          <!-- Footer Menu -->
+          <div class="col-md-7 col-sm-12">
+            <div class="footer-menu">
+              <div class="menu-group">
+                <h5 class="menu-title">HR Solutions</h5>
+                <ul class="menu-list">
+                  <li>
+                    <a href="/hrsolutions#Benefits_Management">Benefits Management</a>
+                  </li>
+                  <li>
+                    <a href="/hrsolutions#Payroll_Management">Payroll Management</a>
+                  </li>
+                  <li>
+                    <a href="/hrsolutions#Special_HR_Project">Special HR Project</a>
+                  </li>
+                  <li>
+                    <a href="/hrsolutions#Staffing_Recruitment">Staffing & Recruitment</a>
+                  </li>
+                  <li>
+                    <a href="/hrsolutions#Training_Development">Training & Development</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="menu-group">
+                <h5 class="menu-title">Professional Services</h5>
+                <ul class="menu-list">
+                  <li>
+                    <a href="/professional_services#Apostille_Service">Apostille Service</a>
+                  </li>
+                  <li>
+                    <a href="/professional_services#Background_Check">Background Check</a>
+                  </li>
+                  <li>
+                    <a href="/professional_services#Document_Notarization">Document Notarization</a>
+                  </li>
+                  <li>
+                    <a href="/professional_services#Document_Translation">Document Translation</a>
+                  </li>
+                  <li>
+                    <a href="/professional_services#Fingerprinting_Service">Fingerprinting Service</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="partner-logo">
+              <div class="partner-logo-list">
+                <img class="img-fluid" src="{% static '' %}assets/img/icons/partner-logo-boca-chamber.png" alt="Boca Chamber Logo">
+                <img class="img-fluid" src="{% static '' %}assets/img/icons/partner-logo-nna-services.png" alt="NNA Services Logo">
+                <img class="img-fluid" src="{% static '' %}assets/img/icons/partner-logo-shrm.png" alt="SHRM Logo">
+                <img class="img-fluid" src="{% static '' %}assets/img/icons/partner-logo-bbb-trust.png" alt="BBB Trust Logo">
+                <img class="img-fluid" src="{% static '' %}assets/img/icons/partner-logo-signix.png" alt="Signix Logo">
+              </div>
+            </div>
+          </div>
+          <!-- Contact Info & Newsletter -->
+          <div class="col-md-5 col-sm-12">
+            <div class="contact-info">
+              <div class="info-item w-100">
+                <p class="heading">Opening Hours</p>
+                <h5 class="info">Monday - Friday > 9.00 AM to 6.00 PM</h5>
+              </div>
+              <div class="info-item">
+                <p class="heading">Phone</p>
+                <h5 class="info">(561) 491-9550</h5>
+              </div>
+              <div class="info-item">
+                <p class="heading">Email</p>
+                <h5 class="info">info@rightrsolutions.com</h5>
+              </div>
+              <div class="info-item">
+                <p class="heading">Business Address</p>
+                <h5 class="info">1600 NW 2nd Ave; Suite 20 Boca Raton, Fl. 33432</h5>
+              </div>
+            </div>
+            <div class="footer-newsletter">
+              <form method="get" class="needs-validation" novalidate onsubmit="return preloadEmail()">
+                <div class="input-group">
+                  <input type="email" class="form-control" placeholder="Enter your email" id="newsletterEmail" required>
+                  <div class="input-group-append">
+                    <button class="btn" type="submit" id="submitNewsletter" disabled>Contact Us</button>
+                  </div>
+                  <div class="invalid-feedback"> Please enter a valid email address. </div>
+                </div>
+              </form>
+            </div>
+            <div class="footer-seal">
+              <div class="seal-list">
+                <img class="img-fluid" src="{% static '' %}assets/img/icons/seal-notary.svg" alt="Notary Public Seal">
+                <img class="img-fluid" src="{% static '' %}assets/img/icons/seal-10years.svg" alt="Ten Years Celebrating Seal">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    {% endblock content %}

@@ -1,0 +1,215 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Right HR Solutions – HR Solutions & Professional Services{% endblock title %}
+
+ {% block content %}
+      <!-- Appointment Section  -->
+      <section id="book_appointment" class="book-appointment">
+        <div class="container">
+          <div class="row g-0 appointment-wrapper">
+            <div class="col-md-6">
+              <img class="appointment-img" src="{% static '' %}assets/img/image/schedule-appointment.png" alt="Apostille Services">
+            </div>
+            <div class="col-md-6">
+              <div class="appointment-form-wrapper">
+                <div class="appointment-form">
+                  <form method="post" action="{% url 'appoinment' %}" class="needs-validation" novalidate>
+                    {% csrf_token %}
+                    <div class="appointment-form-section">
+                        <div class="form-heading">
+                            <h3 class="title">Schedule Your Appointment</h3>
+                            <h6 class="sub-title">Simply choose the service you need, select a date and time that fits your
+                                schedule, and confirm your booking. We look forward to serving you!</h6>
+                        </div>
+                        <div class="form-body">
+                            <div class="row g-3">
+                                <div class="col-12 col-sm-12 col-md-5">
+                                    <label for="service" class="form-label">Select a Service</label>
+                                    <select class="form-select" id="service" name="service" required>
+                                        <option value="">Choose a service...</option>
+                                        <option value="Apostille Services">Apostille Services</option>
+                                        <option value="Background Checks">Background Checks</option>
+                                        <option value="Benefits Management">Benefits Management</option>
+                                        <option value="Document Notarization">Document Notarization</option>
+                                        <option value="Document Translation">Document Translation</option>
+                                        <option value="Fingerprinting Services">Fingerprinting Services</option>
+                                        <option value="Payroll Management">Payroll Management</option>
+                                        <option value="Special Projects">Special Projects</option>
+                                        <option value="Staffing & Recruitment">Staffing & Recruitment</option>
+                                        <option value="Training & Development">Training & Development</option>
+                                    </select>
+                                    <div class="invalid-feedback">Select a service. </div>
+                                </div>
+                                <div class="col-7 col-sm-7 col-md-4">
+                                    <label for="pickDate" class="form-label">Set Date</label>
+                                    <input type="date" class="form-control" id="pickDate" name="date" required>
+                                    <div class="invalid-feedback">Select a date. </div>
+                                </div>
+                                <div class="col-5 col-sm-5 col-md-3">
+                                    <label for="pickTime" class="form-label">Set Time</label>
+                                    <select class="form-control" id="pickTime" name="time" required>
+                                        <option value="">Select a time</option>
+                                    </select>
+                                    <div class="invalid-feedback">Select between 8:00 AM and 6:00 PM.</div>
+                                </div>
+                                <div class="col-12">
+                                  <label for="yourName" class="form-label">Name</label>
+                                  <input type="text" class="form-control" id="yourName" name="name" required 
+                                      pattern="^(?!\s*$).+" title="Name cannot be empty or only spaces">
+                                  <div class="invalid-feedback">Name is required </div>
+                              </div>
+                              
+                                <div class="col-12 col-sm-6">
+                                    <label for="emailAddress" class="form-label">Email</label>
+                                    <input type="email" class="form-control" id="emailAddress" name="email" required>
+                                    <div class="invalid-feedback">Enter a valid email. </div>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <label for="phoneNumber" class="form-label">Phone</label>
+                                    <input type="tel" class="form-control" id="phoneNumber" name="phone" required>
+                                    <div class="invalid-feedback">Enter phone number. </div>
+                                </div>
+                                <div class="col-12">
+                                    <label for="address" class="form-label">Address</label>
+                                    <input type="text" class="form-control" id="address" name="address" required 
+                                    pattern="^(?!\s*$).+" title="Name cannot be empty or only spaces">
+                                    <div class="invalid-feedback">Enter your address. </div>
+                                </div>
+                                <div class="col-12">
+                                    <label for="commentsQuestions" class="form-label">Comments or Questions <span
+                                            class="small">(Optional)</span>
+                                    </label>
+                                    <textarea class="form-control" id="commentsQuestions" name="comments"></textarea>
+                                    <div class="invalid-feedback">Enter your comments or questions. </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input" id="acceptTermsConditions" name="terms" required>
+                                        <label class="form-check-label" for="acceptTermsConditions">I do accept the <a
+                                                href="/termsconditions">Terms and Conditions</a>
+                                        </label>
+                                        <div class="invalid-feedback">You must accept the terms and conditions. </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="mt-4 btn btn-big" type="submit" id="submitButton">Book Now</button>
+                    </div>
+                </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- End Appointment Section  -->
+    </main>
+    <!-- End Main Body -->
+      <!-- Footer Section -->
+      <section class="footer-main">
+        <div class="container">
+          <div class="row g-3">
+            <div class="col-12">
+              <div class="footer-logo">
+                <a href="/">
+                  <img class="img-fluid" src="{% static '' %}assets/img/logo.svg" alt="logo">
+                </a>
+              </div>
+            </div>
+            <!-- Footer Menu -->
+            <div class="col-md-7 col-sm-12">              
+              <div class="footer-menu">
+                <div class="menu-group">
+                  <h5 class="menu-title">HR Solutions</h5>
+                  <ul class="menu-list">
+                    <li>
+                      <a href="/hrsolutions#Benefits_Management">Benefits Management</a>
+                    </li>
+                    <li>
+                      <a href="/hrsolutions#Payroll_Management">Payroll Management</a>
+                    </li>
+                    <li>
+                      <a href="/hrsolutions#Special_HR_Project">Special HR Project</a>
+                    </li>
+                    <li>
+                      <a href="/hrsolutions#Staffing_Recruitment">Staffing & Recruitment</a>
+                    </li>
+                    <li>
+                      <a href="/hrsolutions#Training_Development">Training & Development</a>
+                    </li>
+                  </ul>
+                </div>
+                <div class="menu-group">
+                  <h5 class="menu-title">Professional Services</h5>
+                  <ul class="menu-list">
+                    <li>
+                      <a href="/professional_services#Apostille_Service">Apostille Service</a>
+                    </li>
+                    <li>
+                      <a href="/professional_services#Background_Check">Background Check</a>
+                    </li>
+                    <li>
+                      <a href="/professional_services#Document_Notarization">Document Notarization</a>
+                    </li>
+                    <li>
+                      <a href="/professional_services#Document_Translation">Document Translation</a>
+                    </li>
+                    <li>
+                      <a href="/professional_services#Fingerprinting_Service">Fingerprinting Service</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="partner-logo">
+                <div class="partner-logo-list">
+                  <img class="img-fluid" src="{% static '' %}assets/img/icons/partner-logo-boca-chamber.png" alt="Boca Chamber Logo">
+                  <img class="img-fluid" src="{% static '' %}assets/img/icons/partner-logo-nna-services.png" alt="NNA Services Logo">
+                  <img class="img-fluid" src="{% static '' %}assets/img/icons/partner-logo-shrm.png" alt="SHRM Logo">
+                  <img class="img-fluid" src="{% static '' %}assets/img/icons/partner-logo-bbb-trust.png" alt="BBB Trust Logo">
+                  <img class="img-fluid" src="{% static '' %}assets/img/icons/partner-logo-signix.png" alt="Signix Logo">
+                </div>
+              </div>
+            </div>
+            <!-- Contact Info & Newsletter -->
+            <div class="col-md-5 col-sm-12">
+              <div class="contact-info">
+                <div class="info-item w-100">
+                  <p class="heading">Opening Hours</p>
+                  <h5 class="info">Monday - Friday > 9.00 AM to 6.00 PM</h5>
+                </div>
+                <div class="info-item">
+                  <p class="heading">Phone</p>
+                  <h5 class="info">(561) 491-9550</h5>
+                </div>
+                <div class="info-item">
+                  <p class="heading">Email</p>
+                  <h5 class="info">info@rightrsolutions.com</h5>
+                </div>
+                <div class="info-item">
+                  <p class="heading">Business Address</p>
+                  <h5 class="info">1600 NW 2nd Ave; Suite 20 Boca Raton, Fl. 33432</h5>
+                </div>
+              </div>
+              <div class="footer-newsletter">
+                <form method="get" class="needs-validation" novalidate onsubmit="return preloadEmail()">
+                  <div class="input-group">
+                    <input type="email" class="form-control" placeholder="Enter your email" id="newsletterEmail" required>
+                    <div class="input-group-append">
+                      <button class="btn" type="submit" id="submitNewsletter" disabled>Contact Us</button>
+                    </div>
+                    <div class="invalid-feedback"> Please enter a valid email address. </div>
+                  </div>
+                </form>
+              </div>
+              <div class="footer-seal">
+                <div class="seal-list">
+                  <img class="img-fluid" src="{% static '' %}assets/img/icons/seal-notary.svg" alt="Notary Public Seal">
+                  <img class="img-fluid" src="{% static '' %}assets/img/icons/seal-10years.svg" alt="Ten Years Celebrating Seal">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- Footer Bottom Section -->
+      {% endblock content %}
