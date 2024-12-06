@@ -3,7 +3,15 @@ from django.contrib.auth import authenticate, login
 from .models import *
 from django.contrib import messages
 from django.contrib.auth.models import User
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import PasswordResetForm
+
+from django.contrib.sites.shortcuts import get_current_site
+from django.template.loader import render_to_string
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.contrib.auth.tokens import default_token_generator as token_generator
+from django.core.mail import send_mail
+from django.conf import settings
+from django.contrib import messages
 
 from .forms import *
 from .models import *
@@ -46,9 +54,6 @@ def faqs(request):
 
 def fingerprintingservice(request):
     return render(request, 'fingerprinting-service.html') 
-
-def forgetpassword(request):
-    return render(request, 'forget-password.html') 
 
 def government(request):
     return render(request, 'government.html') 
@@ -115,6 +120,56 @@ def signin(request):
 
     return render(request, 'sign-in.html')
 
+
+def forgetpassword(request):
+    if request.method == "POST":
+        form = PasswordResetForm(request.POST)
+        if form.is_valid():
+            email = form.cleaned_data['email']
+            try:
+                user = User.objects.get(email=email)
+                
+                token = token_generator.make_token(user)
+                uid = urlsafe_base64_encode(str(user.pk).encode()).decode()
+                reset_link = f"{get_current_site(request).domain}/reset/{uid}/{token}/"
+                
+                subject = "Password Reset Request"
+                message = render_to_string('password_reset_email.html', {
+                    'user': user,
+                    'reset_link': reset_link,
+                })
+                send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [email])
+
+                messages.success(request, "Password reset link has been sent to your email.")
+                return redirect('forgetpassword')
+            except User.DoesNotExist:
+                messages.error(request, "Email not registered.")
+    else:
+        form = PasswordResetForm()
+
+    return render(request, 'forget-password.html', {'form': form})
+
+def password_reset_confirm(request, uidb64, token):
+    try:
+        uid = urlsafe_base64_decode(uidb64).decode()
+        user = User.objects.get(pk=uid)
+
+        if token_generator.check_token(user, token):
+            if request.method == 'POST':
+                form = SetPasswordForm(user, request.POST)
+                if form.is_valid():
+                    form.save()
+                    messages.success(request, "Your password has been reset successfully.")
+                    return redirect('login') 
+            else:
+                form = SetPasswordForm(user)
+            return render(request, 'password_reset_confirm.html', {'form': form})
+        else:
+            messages.error(request, "This password reset link is invalid or expired.")
+            return redirect('forgetpassword')
+    except (User.DoesNotExist, ValueError, TypeError):
+        messages.error(request, "Invalid token or user.")
+        return redirect('forgetpassword')
 
 def termsconditions(request):
     return render(request, 'terms-conditions.html') 

@@ -3,9 +3,7 @@
 {% block title %}Right HR Solutions – HR Solutions & Professional Services{% endblock title %}
 
  {% block content %}
-
-
-        <section id="page_header" class="page-header d-flex align-items-center justify-center" style="background-image: url(/assets/img/image/contact-us-page.png);">
+        <section id="page_header" class="page-header d-flex align-items-center justify-center" style="background-image: url({% static '' %}assets/img/image/contact-us-page.png);">
           <div class="overlay"></div>
           <div class="container">
             <div class="row d-flex align-items-center justify-center">
@@ -59,10 +57,10 @@
                           <h6 class="sub-title">We are licensed for the entire State of Florida and operates in all 67 Counties. We provide mobile services in the following counties:</h6>  
                         </div>
                         <ul class="county-list">
-                          <li class="list-item"><a href="#" class="btn lit-btn">Palm Beach</a></li>
-                          <li class="list-item"><a href="#" class="btn lit-btn">Broward</a></li>
-                          <li class="list-item"><a href="#" class="btn lit-btn">Miami-Dade</a></li>
-                          <li class="list-item"><a href="#" class="btn lit-btn">St. Lucie</a></li>
+                          <li class="list-item"><a href="/" class="btn lit-btn">Palm Beach</a></li>
+                          <li class="list-item"><a href="/" class="btn lit-btn">Broward</a></li>
+                          <li class="list-item"><a href="/" class="btn lit-btn">Miami-Dade</a></li>
+                          <li class="list-item"><a href="/" class="btn lit-btn">St. Lucie</a></li>
                         </ul>
                       </div>
                     </div>
@@ -76,7 +74,7 @@
                   </div>
                   <!-- Contact Form -->
                   <div class="contact-form">
-                    <form method="get" action="/thank-you.html" class="needs-validation" novalidate>
+                    <form method="get" action="/thankyou" class="needs-validation" novalidate>
                       <div class="row g-4">
                         <div class="col-12">
                           <label for="yourName" class="form-label">Name</label>
@@ -127,7 +125,7 @@
         <!-- End Contact Us Section  -->
         <!-- Map Section  -->
         <section id="map">
-          <iframe src="{% static '' %}https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d457751.3337288592!2d-80.18862!3d26.320596!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88d8e1ce5d338289%3A0xd4b5c3bbaf5dc50f!2sApostille%2C%20Fingerprint%2C%20Notary%20-%20Notary%20Plus%20More!5e0!3m2!1sen!2sus!4v1730486093981!5m2!1sen!2sus" width="100%" height="460" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d457751.3337288592!2d-80.18862!3d26.320596!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88d8e1ce5d338289%3A0xd4b5c3bbaf5dc50f!2sApostille%2C%20Fingerprint%2C%20Notary%20-%20Notary%20Plus%20More!5e0!3m2!1sen!2sus!4v1730486093981!5m2!1sen!2sus" width="100%" height="460" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
         </section>
         <!-- End Map Section  -->
       </main>
@@ -150,19 +148,19 @@
                   <h5 class="menu-title">HR Solutions</h5>
                   <ul class="menu-list">
                     <li>
-                      <a href="/hr-solutions.html#Benefits_Management">Benefits Management</a>
+                      <a href="/hrsolutions#Benefits_Management">Benefits Management</a>
                     </li>
                     <li>
-                      <a href="/hr-solutions.html#Payroll_Management">Payroll Management</a>
+                      <a href="/hrsolutions#Payroll_Management">Payroll Management</a>
                     </li>
                     <li>
-                      <a href="/hr-solutions.html#Special_HR_Project">Special HR Project</a>
+                      <a href="/hrsolutions#Special_HR_Project">Special HR Project</a>
                     </li>
                     <li>
-                      <a href="/hr-solutions.html#Staffing_Recruitment">Staffing & Recruitment</a>
+                      <a href="/hrsolutions#Staffing_Recruitment">Staffing & Recruitment</a>
                     </li>
                     <li>
-                      <a href="/hr-solutions.html#Training_Development">Training & Development</a>
+                      <a href="/hrsolutions#Training_Development">Training & Development</a>
                     </li>
                   </ul>
                 </div>
@@ -170,19 +168,19 @@
                   <h5 class="menu-title">Professional Services</h5>
                   <ul class="menu-list">
                     <li>
-                      <a href="/professional-services.html#Apostille_Service">Apostille Service</a>
+                      <a href="/professionalservices#Apostille_Service">Apostille Service</a>
                     </li>
                     <li>
-                      <a href="/professional-services.html#Background_Check">Background Check</a>
+                      <a href="/professionalservices#Background_Check">Background Check</a>
                     </li>
                     <li>
-                      <a href="/professional-services.html#Document_Notarization">Document Notarization</a>
+                      <a href="/professionalservices#Document_Notarization">Document Notarization</a>
                     </li>
                     <li>
-                      <a href="/professional-services.html#Document_Translation">Document Translation</a>
+                      <a href="/professionalservices#Document_Translation">Document Translation</a>
                     </li>
                     <li>
-                      <a href="/professional-services.html#Fingerprinting_Service">Fingerprinting Service</a>
+                      <a href="/professionalservices#Fingerprinting_Service">Fingerprinting Service</a>
                     </li>
                   </ul>
                 </div>

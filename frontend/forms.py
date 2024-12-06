@@ -17,6 +17,12 @@ class UserRegistrationForm(forms.ModelForm):
         return user
 
 
+class PasswordResetForm(forms.Form):
+    email = forms.EmailField(label="Email", max_length=254)
+
+class SetPasswordForm(forms.Form):
+    email = forms.EmailField(label="Email", max_length=254)
+
 class AppointmentForm(forms.ModelForm):
     class Meta:
         model = Appointment

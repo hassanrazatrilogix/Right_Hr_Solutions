@@ -1,161 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Right HR Solutions – HR Solutions & Professional Services{% endblock title %}
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Right HR Solutions – HR Solutions & Professional Services</title>
-  <meta name="keywords" content="">
-  <meta name="description" content="">
-  <meta name="author" content="Zohir">
-  <!-- Favicons -->
-  <link rel="icon" href="assets/img/favicon.svg">
-  <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.svg">
-  <!-- Vendor CSS Files -->
-  <link rel="stylesheet" href="assets/vendor/bootstrap/css/bootstrap.min.css">
-  <link rel="stylesheet" href="assets/vendor/bootstrap-icons/bootstrap-icons.css">
-  <!-- Template Main CSS File -->
-  <link rel="stylesheet" href="assets/css/style.css">
-  <link rel="stylesheet" href="assets/css/responsive.css">
-  <!-- =======================================================
-    * Template Name: Right HR Solutions - v1.0
-    * Template URL: https://zohirs.com
-    * Author: Zohir
-    ======================================================== -->
-</head>
-
-<body>
-  <!-- Page Content -->
-  <div class="nav-overlay"></div>
-  <div id="page" class="page">
-    <!-- Header -->
-    <header id="header" class="main-header">
-      <div class="container header-wrapper">
-        <div class="site-logo">
-          <a href="index.html">
-            <img class="img-fluid" src="assets/img/logo.svg" alt="logo">
-          </a>
-        </div>
-        <nav class="main-nav">
-          <div class="navbar">
-            <ul class="nav-menu">
-              <li class="nav-item">
-                <a href="index.html" class="nav-link">Home</a>
-              </li>
-              <li class="nav-item">
-                <a href="/professional-services.html" class="nav-link">Professional Services</a>
-              </li>
-              <li class="nav-item dropdown">
-                <a href="hr-solutions.html" class="nav-link">HR Solutions</a>
-                <div class="dropdown-menu mega-menu">
-                  <div class="mega-menu-block d-none d-md-block">
-                    <div class="mega-menu-heading">
-                      <h3>Overview</h3>
-                    </div>
-                    <div class="menu-items">
-                      <img class="img-fluid" src="assets/img/image/menu-overview.png"
-                        alt="Professional Services">
-                      <p>Comprehensive HR & Legal Solutions for Your Business</p>
-                    </div>
-                  </div>
-                  <div class="mega-menu-block">
-                    <div class="mega-menu-heading">
-                      <a href="/hr-solutions.html">
-                        <h3>HR Solutions</h3>
-                      </a>
-                    </div>
-                    <ul class="menu-items">
-                      <li>
-                        <a href="/hr-solutions.html#Benefits_Management">Benefits Management</a>
-                      </li>
-                      <li>
-                        <a href="/hr-solutions.html#Payroll_Management">Payroll Management</a>
-                      </li>
-                      <li>
-                        <a href="/hr-solutions.html#Special_HR_Project">Special HR Project</a>
-                      </li>
-                      <li>
-                        <a href="/hr-solutions.html#Staffing_Recruitment">Staffing & Recruitment</a>
-                      </li>
-                      <li>
-                        <a href="/hr-solutions.html#Training_Development">Training & Development</a>
-                      </li>
-                    </ul>
-                  </div>
-                  <div class="mega-menu-block">
-                    <div class="mega-menu-heading">
-                      <a href="/professional-services.html">
-                        <h3>Professional Services</h3>
-                      </a>
-                    </div>
-                    <ul class="menu-items">
-                      <li>
-                        <a href="/professional-services.html#Apostille_Service">Apostille Service</a>
-                      </li>
-                      <li>
-                        <a href="/professional-services.html#Background_Check">Background Check</a>
-                      </li>
-                      <li>
-                        <a href="/professional-services.html#Document_Notarization">Document Notarization</a>
-                      </li>
-                      <li>
-                        <a href="/professional-services.html#Document_Translation">Document Translation</a>
-                      </li>
-                      <li>
-                        <a href="/professional-services.html#Fingerprinting_Service">Fingerprinting Service</a>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </li>
-              <li class="nav-item">
-                <a href="/government.html" class="nav-link">Government</a>
-              </li>
-              <li class="nav-item">
-                <a href="/about-us.html" class="nav-link">About Us</a>
-              </li>
-              <li class="nav-item">
-                <a href="/faqs.html" class="nav-link">FAQs</a>
-              </li>
-              <li class="nav-item dropdown notranslate">
-                <a href="#" class="nav-link" id="languageDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                  <i class="bi bi-globe"></i> <span id="currentLanguage">English</span>
-                </a>
-                <div class="dropdown-menu">
-                  <ul class="menu-items">
-                    <li><a href="#" class="dropdown-item" onclick="handleLanguageChange('en')">English</a></li>
-                    <li><a href="#" class="dropdown-item" onclick="handleLanguageChange('fr')">Français</a></li>
-                    <li><a href="#" class="dropdown-item" onclick="handleLanguageChange('es')">Español</a></li>
-                  </ul>
-                </div>
-              </li>
-            </ul>
-          </div>
-          <div class="nav-action">
-            <ul class="nav-btn">
-              <li class="nav-btn-item d-none d-md-block">
-                <a href="/contact-us.html" class="btn">Book Appointments</a>
-              </li>
-              <li class="nav-btn-item">
-                <a href="/sign-up.html" class="btn">Sign Up/Login</a>
-              </li>
-            </ul>
-          </div>
-          <div class="hamburger">
-            <span class="bar"></span>
-            <span class="bar"></span>
-            <span class="bar"></span>
-          </div>
-        </nav>
-      </div>
-      <!-- End header-wrapper -->
-    </header>
-    <!-- End Header -->
-    <!-- Main Body -->
-    <main class="main">
-      <!-- Page Title  -->
+ {% block content %}
       <section id="page_header" class="page-header d-flex align-items-center justify-center"
-        style="background-image: url({% static '' %}/assets/img/image/checkout-page.png);">
+        style="background-image: url({% static '' %}assets/img/image/checkout-page.png);">
         <div class="overlay"></div>
         <div class="container">
           <div class="row d-flex align-items-center justify-center">
@@ -185,7 +34,7 @@
                 <div class="row g-3 align-items-start justify-center flex-lg-row flex-column-reverse">
                   <div class="col-lg-8">
                     <div class="order-form-wrapper">
-                      <form method="get" action="/thank-you.html" class="needs-validation" novalidate>
+                      <form method="get" action="/thankyou" class="needs-validation" novalidate>
                         <div class="form-section">
                           <div class="form-heading">
                             <h3 class="title">Billing Information</h3>
@@ -272,7 +121,7 @@
                                     id="Payment-MasterCard" value="Master Card">
                                   <label class="list-group-item" for="Payment-MasterCard">
                                     <div class="payment-method">
-                                      <img class="payment-icon" src="assets/img/icons/MasterCard-logo.svg"
+                                      <img class="payment-icon" src="{% static '' %}assets/img/icons/MasterCard-logo.svg"
                                         alt="Master Card">
                                     </div>
                                   </label>
@@ -280,21 +129,21 @@
                                     id="Payment-Stripe" value="Stripe">
                                   <label class="list-group-item" for="Payment-Stripe">
                                     <div class="payment-method">
-                                      <img class="payment-icon" src="assets/img/icons/Stripe-logo.svg" alt="Stripe">
+                                      <img class="payment-icon" src="{% static '' %}assets/img/icons/Stripe-logo.svg" alt="Stripe">
                                     </div>
                                   </label>
                                   <input class="list-group-item-check pe-none" type="radio" name="PaymentlistRadios"
                                     id="Payment-PayPal" value="PayPal">
                                   <label class="list-group-item" for="Payment-PayPal">
                                     <div class="payment-method">
-                                      <img class="payment-icon" src="assets/img/icons/PayPal-logo.svg" alt="PayPal">
+                                      <img class="payment-icon" src="{% static '' %}assets/img/icons/PayPal-logo.svg" alt="PayPal">
                                     </div>
                                   </label>
                                   <input class="list-group-item-check pe-none" type="radio" name="PaymentlistRadios"
                                     id="Payment-ApplePay" value="ApplePay">
                                   <label class="list-group-item" for="Payment-ApplePay">
                                     <div class="payment-method">
-                                      <img class="payment-icon" src="assets/img/icons/ApplePay-logo.svg"
+                                      <img class="payment-icon" src="{% static '' %}assets/img/icons/ApplePay-logo.svg"
                                         alt="Apple Pay">
                                     </div>
                                   </label>
@@ -302,7 +151,7 @@
                                     id="Payment-GooglePay" value="GooglePay">
                                   <label class="list-group-item" for="Payment-GooglePay">
                                     <div class="payment-method">
-                                      <img class="payment-icon" src="assets/img/icons/GooglePay-logo.svg"
+                                      <img class="payment-icon" src="{% static '' %}assets/img/icons/GooglePay-logo.svg"
                                         alt="Google Pay">
                                     </div>
                                   </label>
@@ -310,7 +159,7 @@
                                     id="Payment-AmazonPay" value="AmazonPay">
                                   <label class="list-group-item" for="Payment-AmazonPay">
                                     <div class="payment-method">
-                                      <img class="payment-icon" src="assets/img/icons/AmazonPay-logo.svg"
+                                      <img class="payment-icon" src="{% static '' %}assets/img/icons/AmazonPay-logo.svg"
                                         alt="Amazon Pay">
                                     </div>
                                   </label>
@@ -356,7 +205,7 @@
                                 <div class="form-check">
                                   <input type="checkbox" class="form-check-input" id="acceptTermsConditions">
                                   <label class="form-check-label" for="acceptTermsConditions">I do accept the <a
-                                      href="/termsconditions">Terms and Conditions</a>
+                                      href="{% static '' %}/termsconditions">Terms and Conditions</a>
                                   </label>
                                 </div>
                               </div>
@@ -438,8 +287,8 @@
           <div class="row g-3">
             <div class="col-12">
               <div class="footer-logo">
-                <a href="index.html">
-                  <img class="img-fluid" src="assets/img/logo.svg" alt="logo">
+                <a href="/">
+                  <img class="img-fluid" src="{% static '' %}assets/img/logo.svg" alt="logo">
                 </a>
               </div>
             </div>
@@ -450,19 +299,19 @@
                   <h5 class="menu-title">HR Solutions</h5>
                   <ul class="menu-list">
                     <li>
-                      <a href="/hr-solutions.html#Benefits_Management">Benefits Management</a>
+                      <a href="/hrsolutions#Benefits_Management">Benefits Management</a>
                     </li>
                     <li>
-                      <a href="/hr-solutions.html#Payroll_Management">Payroll Management</a>
+                      <a href="/hrsolutions#Payroll_Management">Payroll Management</a>
                     </li>
                     <li>
-                      <a href="/hr-solutions.html#Special_HR_Project">Special HR Project</a>
+                      <a href="/hrsolutions#Special_HR_Project">Special HR Project</a>
                     </li>
                     <li>
-                      <a href="/hr-solutions.html#Staffing_Recruitment">Staffing & Recruitment</a>
+                      <a href="/hrsolutions#Staffing_Recruitment">Staffing & Recruitment</a>
                     </li>
                     <li>
-                      <a href="/hr-solutions.html#Training_Development">Training & Development</a>
+                      <a href="/hrsolutions#Training_Development">Training & Development</a>
                     </li>
                   </ul>
                 </div>
@@ -470,30 +319,30 @@
                   <h5 class="menu-title">Professional Services</h5>
                   <ul class="menu-list">
                     <li>
-                      <a href="/professional-services.html#Apostille_Service">Apostille Service</a>
+                      <a href="/professional_services#Apostille_Service">Apostille Service</a>
                     </li>
                     <li>
-                      <a href="/professional-services.html#Background_Check">Background Check</a>
+                      <a href="/professional_services#Background_Check">Background Check</a>
                     </li>
                     <li>
-                      <a href="/professional-services.html#Document_Notarization">Document Notarization</a>
+                      <a href="/professional_services#Document_Notarization">Document Notarization</a>
                     </li>
                     <li>
-                      <a href="/professional-services.html#Document_Translation">Document Translation</a>
+                      <a href="/professional_services#Document_Translation">Document Translation</a>
                     </li>
                     <li>
-                      <a href="/professional-services.html#Fingerprinting_Service">Fingerprinting Service</a>
+                      <a href="/professional_services#Fingerprinting_Service">Fingerprinting Service</a>
                     </li>
                   </ul>
                 </div>
               </div>
               <div class="partner-logo">
                 <div class="partner-logo-list">
-                  <img class="img-fluid" src="assets/img/icons/partner-logo-boca-chamber.png" alt="Boca Chamber Logo">
-                  <img class="img-fluid" src="assets/img/icons/partner-logo-nna-services.png" alt="NNA Services Logo">
-                  <img class="img-fluid" src="assets/img/icons/partner-logo-shrm.png" alt="SHRM Logo">
-                  <img class="img-fluid" src="assets/img/icons/partner-logo-bbb-trust.png" alt="BBB Trust Logo">
-                  <img class="img-fluid" src="assets/img/icons/partner-logo-signix.png" alt="Signix Logo">
+                  <img class="img-fluid" src="{% static '' %}assets/img/icons/partner-logo-boca-chamber.png" alt="Boca Chamber Logo">
+                  <img class="img-fluid" src="{% static '' %}assets/img/icons/partner-logo-nna-services.png" alt="NNA Services Logo">
+                  <img class="img-fluid" src="{% static '' %}assets/img/icons/partner-logo-shrm.png" alt="SHRM Logo">
+                  <img class="img-fluid" src="{% static '' %}assets/img/icons/partner-logo-bbb-trust.png" alt="BBB Trust Logo">
+                  <img class="img-fluid" src="{% static '' %}assets/img/icons/partner-logo-signix.png" alt="Signix Logo">
                 </div>
               </div>
             </div>
@@ -530,8 +379,8 @@
               </div>
               <div class="footer-seal">
                 <div class="seal-list">
-                  <img class="img-fluid" src="assets/img/icons/seal-notary.svg" alt="Notary Public Seal">
-                  <img class="img-fluid" src="assets/img/icons/seal-10years.svg" alt="Ten Years Celebrating Seal">
+                  <img class="img-fluid" src="{% static '' %}assets/img/icons/seal-notary.svg" alt="Notary Public Seal">
+                  <img class="img-fluid" src="{% static '' %}assets/img/icons/seal-10years.svg" alt="Ten Years Celebrating Seal">
                 </div>
               </div>
             </div>
@@ -539,61 +388,4 @@
         </div>
       </section>
       <!-- Footer Bottom Section -->
-      <footer class="footer-buttom d-flex align-items-center justify-center">
-        <div class="container">
-          <div class="row d-flex align-items-center justify-center footer-copyright">
-            <div class="col-md-5 col-sm-12">
-              <p class="text-md-start text-center mb-0">© <span id="year"></span>
-                <a href="/index.html">
-                  <strong>RightHRSolutions</strong>
-                </a> | All Rights Reserved.
-              </p>
-            </div>
-  
-            <div class="col-md-4 col-sm-12">
-              <ul class="inline-menu">
-                <li>
-                  <a href="/privacypolicy">Privacy Policy</a>
-                </li>
-                <li>
-                  <a href="/termsconditions">Terms & Conditions</a>
-                </li>
-              </ul>
-            </div>
-            <div class="col-md-3 col-sm-12 mt-2 mt-md-0">
-              <ul class="social-link">
-              <li>
-                <a href="https://www.facebook.com/righthrsolutions/" target="_blank" class="social-link-item">
-                  <i class="bi bi-facebook"></i>
-                </a>
-              </li>
-              <li>
-                <a href="https://www.instagram.com/righthrsolutions/" target="_blank" class="social-link-item">
-                  <i class="bi bi-instagram"></i>
-                </a>
-              </li>
-              <li>
-                <a href=" https://twitter.com/righthrsolution/" target="_blank" class="social-link-item">
-                  <i class="bi bi-twitter-x"></i>
-                </a>
-              </li>
-            </ul>
-            </div>
-          </div>
-        </div>
-      </footer>
-      <!-- End Footer -->
-    </div>
-    <!-- End Page Content -->
-    <a href="#" class="back-to-top d-flex align-items-center justify-content-center">
-      <i class="bi bi-arrow-up-short"></i>
-    </a>
-    <!-- Google Translate Element (hidden) -->
-    <div id="google_translate_element" style="display: none;"></div>
-    <!-- Vendor JS Files -->
-    <script src="assets/vendor/jquery/jquery-3.7.0.min.js"></script>
-    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <!-- Template Main JS File -->
-    <script src="assets/js/main.js"></script>
-  </body>
-</html>
+      {% endblock content %}

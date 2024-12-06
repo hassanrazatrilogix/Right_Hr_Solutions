@@ -13,7 +13,7 @@
 1. Clone this repository:
    ```bash
    git clone https://github.com/exoticaitsolutions/Right-HR-Solutions.git
-   cd rightsolutions
+   cd Right_Hr_Solutions
 
 2. Create a virtual environment:
    python -m venv venv
@@ -26,7 +26,7 @@
     source venv/bin/activate
 
 4. Install the required dependencies:
-    pip install -r requirements.txt
+    pip install django
 
 5.  Start the development server:
 
