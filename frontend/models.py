@@ -5,6 +5,7 @@ from django.contrib.auth.models import (
     PermissionsMixin,
 )
 from frontend.utils import UserManager
+from django.contrib.postgres.fields import JSONField
 
 Role_CHOICES = [
     ("ADMIN", "Admin"),
@@ -66,17 +67,21 @@ class Appointment(models.Model):
 
 
 class Order(models.Model):
-
-    categoriesList = models.CharField(max_length=50)
-    servicesList = models.CharField(max_length=100)
-    upload_documents = models.FileField(upload_to='uploads/', null=True, blank=True)
-    document_type = models.CharField(max_length=255)
-    number_of_documents = models.IntegerField()
+    categoriesList = models.CharField(max_length=50)  
+    servicesList = models.CharField(max_length=100)  
     pick_date = models.DateField()
     pick_time = models.TimeField()
     comments_questions = models.TextField(blank=True, null=True)
     terms_accepted = models.BooleanField(default=False)
-    
 
     def __str__(self):
         return f"Order #{self.id} - {self.categoriesList} - {self.servicesList}"
+
+
+class Document(models.Model):
+    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    upload_documents = models.FileField(upload_to='documents/', blank=True, null=True)
+    type = models.CharField(max_length=50)
+
+    def __str__(self):
+        return f"Document for Order #{self.order.id} - {self.type}"

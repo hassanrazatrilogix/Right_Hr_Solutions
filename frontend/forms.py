@@ -1,5 +1,5 @@
 from django import forms
-from .models import *
+from .models import User,Appointment,Order,Document
 
 
 class UserRegistrationForm(forms.ModelForm):
@@ -39,19 +39,16 @@ class AppointmentForm(forms.ModelForm):
             raise forms.ValidationError("You must accept the terms and conditions.")
         return terms
 
+
+
 class OrderForm(forms.ModelForm):
     class Meta:
         model = Order
-        fields = ['categoriesList', 'servicesList', 'upload_documents', 'document_type', 
-                  'number_of_documents', 'pick_date', 'pick_time', 'comments_questions', 'terms_accepted']
-        
+        fields = ['categoriesList', 'servicesList', 'pick_date', 'pick_time', 'comments_questions', 'terms_accepted']
         widgets = {
             'pick_date': forms.DateInput(attrs={'type': 'date'}),
             'pick_time': forms.TimeInput(attrs={'type': 'time'}),
         }
 
-    def clean_terms_accepted(self):
-        terms_accepted = self.cleaned_data.get('terms_accepted')
-        if not terms_accepted:
-            raise forms.ValidationError("You must accept the terms and conditions.")
-        return terms_accepted
+
+

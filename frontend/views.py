@@ -4,7 +4,7 @@ from .models import *
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import PasswordResetForm
-
+from django.forms import modelformset_factory
 from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
@@ -76,17 +76,31 @@ def professional_services(request):
 
 def placeorder(request):
     if request.method == 'POST':
-        form = OrderForm(request.POST, request.FILES)
-        if form.is_valid():
-            order = form.save()
-            print(order)  
+        order_form = OrderForm(request.POST)
+        
+        files = request.FILES.getlist('upload_documents')
+        types = request.POST.getlist('type')
+         
+        if order_form.is_valid() and files and types:
+      
+            order = order_form.save()
+            
+            for i in range(len(files)):
+         
+                document = Document(order=order, upload_documents=files[i], type=types[i] if i < len(types) else None)
+                document.save()
+            
+            messages.success(request, 'Order and documents uploaded successfully.')
             return redirect('thankyou')
         else:
-            print("Form errors:", form.errors)  
+            messages.error(request, 'Please correct the errors below.')
     else:
-        form = OrderForm()
+        order_form = OrderForm()
 
-    return render(request, 'place-order.html', {'form': form})
+    return render(request, 'place-order.html', {
+        'order_form': order_form,
+    })
+
 
 
 def signup(request):

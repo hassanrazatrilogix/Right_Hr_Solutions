@@ -408,3 +408,37 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
+// step form--------------------
+
+document.addEventListener("DOMContentLoaded", () => {
+    const formContainer = document.getElementById("formContainer");
+  
+    // Handle click events on the form container
+    formContainer.addEventListener("click", (event) => {
+      if (event.target.classList.contains("plus")) {
+        // Clone the `.step_form_process` section
+        const currentProcess = event.target.closest(".step_form_process");
+        const clone = currentProcess.cloneNode(true);
+  
+        // Clear input values in the cloned section
+        const fileInput = clone.querySelector("input[type='file']");
+        if (fileInput) fileInput.value = "";
+  
+        const selectInput = clone.querySelector("select");
+        if (selectInput) selectInput.value = "";
+  
+        // Append the cloned section to the container
+        formContainer.appendChild(clone);
+      } else if (event.target.classList.contains("minus")) {
+        // Remove the closest `.step_form_process`
+        const currentProcess = event.target.closest(".step_form_process");
+  
+        // Ensure at least one section remains
+        if (formContainer.querySelectorAll(".step_form_process").length > 1) {
+          currentProcess.remove();
+        } else {
+          alert("At least one section must remain.");
+        }
+      }
+    });
+  });

@@ -27,7 +27,7 @@
                 <div class="row g-5 align-items-center justify-center">
                   <div class="col-md-12">
                     <div class="order-form-wrapper">
-                      <form method="post" action="{% url 'placeorder' %}"  class="needs-validation" id="dynamicForm" novalidate>
+                      <form method="post" action="{% url 'placeorder' %}" enctype="multipart/form-data" class="needs-validation" id="dynamicForm" novalidate>
                         {% csrf_token %}
                         <div class="form-section">
                           <div class="form-heading">
@@ -471,36 +471,44 @@
                             <h6 class="sub-title">Specify details unique to your requirements. </h6>
                           </div>
                           <div class="form-body">
-                            <div class="row g-4">
+                            
+                            <div id="formContainer">
+                              <div class="step_form_process">
+                    
+                                <div class="row g-4">
+                                  <div class="col-3 col-sm-3 col-md-5">
+                                    <label class="form-label">Documents</label>
+                                    <select class="form-select" name="type" required>
+                                      <option value="">Identity Card</option>
+                                      <option>Citizenship card</option>
+                                      <option>Resident card</option>
+                                      <option>Passport</option>
+                                      <option>Driving License</option>
+                                    </select>
+                                  </div>
+                                  <div class="col-6 col-sm-6 col-md-5">
+                                    <label class="form-label">Upload Documents</label>
+                                    <div class="input-group">
+                                      <input type="file" name="upload_documents" class="form-control" accept=".jpg, .jpeg, .png, .pdf" multiple required>
 
-                              <div class="col-12">
-                                <label for="uploadFile" class="form-label">Upload Documents</label>
-                                <div class="input-group">
-                                  <input type="file" class="form-control" id="uploadFile" name="upload_documents" 
-                                    accept=".jpg, .jpeg, .png, .pdf" multiple required>
+                                    </div>
+                                    <small class="form-text text-muted">Accepted formats: JPG, PNG, PDF. Max size: 5MB.</small>
+                                    <div class="invalid-feedback">Please upload a file in JPG, PNG, or PDF format.</div>
+                                  </div>
+                                  <div class="col-6 col-sm-6 col-md-2">
+                                    <div class="step_process">
+                                      <button type="button" class="plus btn btn-success">+</button>
+                                      <button type="button" class="minus btn btn-danger">-</button>
+                                    </div>
+                                  </div>
+                           
 
                                 </div>
-                                <small id="fileName" class="form-text text-muted">Accepted formats: JPG, PNG, PDF. Max
-                                  size: 5MB.</small>
-                                <div class="invalid-feedback">Please upload a file in JPG, PNG, or PDF format.</div>
                               </div>
+                            </div>
 
-                              <div class="col-12">
-                                <label for="documentType" class="form-label">Documents Type</label>
-                                <input type="text" class="form-control" id="documentType" name="document_type" placeholder="" value=""
-                                  required>
-                                <div class="invalid-feedback"> Enter Type Of Documents. </div>
-                              </div>
-                              <div class="col-3 col-sm-3 col-md-5">
-                                <label for="documentNumber" class="form-label">Number Of Documents</label>
-                                <select class="form-select" id="documentNumber" name="number_of_documents" required>
-                                  <option value="">Seclect</option>
-                                  <option>3</option>
-                                  <option>5</option>
-                                  <option>10</option>
-                                </select>
-                                <div class="invalid-feedback">Enter number of documents. </div>
-                              </div>
+                            <div class="row g-4">
+
                               <div class="col-5 col-sm-5 col-md-4">
                                 <label for="pickDate" class="form-label">Select Date</label>
                                 <input type="date" class="form-control" id="pickDate" name="pick_date" placeholder="Select Date" value=""
@@ -509,7 +517,7 @@
                               </div>
                               <div class="col-4 col-sm-4 col-md-3">
                                 <label for="pickTime" class="form-label">Set Time</label>
-                                <select class="form-control" id="pickTime" name="pick_time" required>
+                                <select class="form-control" id="pickTime" name ="pick_time" required>
                                   <option value="">Select a time</option>
                                 </select>
                                 <div class="invalid-feedback">Select between 8:00 AM and 6:00 PM.</div>
@@ -518,7 +526,7 @@
                                 <label for="commentsQuestions" class="form-label">Comments or Questions <span
                                     class="small">(Optional)</span>
                                 </label>
-                                <textarea class="form-control" id="commentsQuestions" name="comments_questions" placeholder=""></textarea>
+                                <textarea class="form-control" id="commentsQuestions" placeholder=""></textarea>
                                 <div class="invalid-feedback"> Please enter your comments or questions. </div>
                               </div>
                             </div>
@@ -534,7 +542,7 @@
                             <div class="row g-4">
                               <div class="col-12">
                                 <div class="form-check">
-                                  <input type="checkbox" class="form-check-input" id="acceptTermsConditions" name="terms_accepted" required>
+                                  <input type="checkbox" class="form-check-input" id="acceptTermsConditions" required>
                                   <label class="form-check-label" for="acceptTermsConditions">I do accept the <a
                                       href="/termsconditions">Terms and Conditions</a>
                                   </label>
