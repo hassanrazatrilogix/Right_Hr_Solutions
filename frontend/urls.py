@@ -1,9 +1,6 @@
 from django.urls import path
 from . import views
 
-from django.conf import settings
-from django.conf.urls.static import static
-
 urlpatterns = [
     path('', views.home, name='home'),
     path('about/', views.about, name='about'),
@@ -25,9 +22,6 @@ urlpatterns = [
     path('signin/', views.signin, name='signin'),
     path('signup/', views.signup, name='signup'),
     path('forgetpassword/', views.forgetpassword, name='forgetpassword'),
-    #  path('reset/<uidb64>/<token>/', views.password_reset_confirm, name='password_reset_confirm'),
-    path('termsconditions/', views.termsconditions, name='termsconditions'),
+    path('confirmpassword/<uidb64>/<token>/', views.confirmpassword, name='confirmpassword'),
     path('thankyou/', views.thankyou, name='thankyou'),
 ]
-
-

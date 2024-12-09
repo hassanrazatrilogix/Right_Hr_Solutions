@@ -49,7 +49,6 @@ class User(AbstractBaseUser, PermissionsMixin):
         return self.email
 
 
-
 class Appointment(models.Model):
 
     service = models.CharField(max_length=100)

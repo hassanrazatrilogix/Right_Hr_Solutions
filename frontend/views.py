@@ -4,14 +4,13 @@ from .models import *
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import PasswordResetForm
-from django.forms import modelformset_factory
-from django.contrib.sites.shortcuts import get_current_site
-from django.template.loader import render_to_string
-from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-from django.contrib.auth.tokens import default_token_generator as token_generator
-from django.core.mail import send_mail
-from django.conf import settings
 from django.contrib import messages
+from django.contrib.auth.tokens import default_token_generator
+from django.core.mail import send_mail
+from django.urls import reverse
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.template.loader import render_to_string
+from django.http import HttpResponse
 
 from .forms import *
 from .models import *
@@ -137,53 +136,82 @@ def signin(request):
 
 def forgetpassword(request):
     if request.method == "POST":
-        form = PasswordResetForm(request.POST)
-        if form.is_valid():
-            email = form.cleaned_data['email']
-            try:
-                user = User.objects.get(email=email)
-                
-                token = token_generator.make_token(user)
-                uid = urlsafe_base64_encode(str(user.pk).encode()).decode()
-                reset_link = f"{get_current_site(request).domain}/reset/{uid}/{token}/"
-                
-                subject = "Password Reset Request"
-                message = render_to_string('password_reset_email.html', {
-                    'user': user,
-                    'reset_link': reset_link,
-                })
-                send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [email])
+        email = request.POST.get('email')
 
-                messages.success(request, "Password reset link has been sent to your email.")
-                return redirect('forgetpassword')
-            except User.DoesNotExist:
-                messages.error(request, "Email not registered.")
-    else:
-        form = PasswordResetForm()
+        user = User.objects.filter(email=email).first()  
 
-    return render(request, 'forget-password.html', {'form': form})
+        if user:
+            token = default_token_generator.make_token(user)
+            uid = urlsafe_base64_encode(str(user.pk).encode('utf-8')) 
+            
+            reset_url = request.build_absolute_uri(
+                reverse('confirmpassword', kwargs={'uidb64': uid, 'token': token})
+            )
+            
+            subject = 'Password Reset Request'
+            
+            message = render_to_string('password_reset_email.html', {'reset_url': reset_url})
+            
+            send_mail(subject, message, 'pythonweb@exoticaitsolutions.com', [email])
+            messages.success(request, "Password reset link sent to your email.")
+        else:
+            messages.error(request, "No account found with this email address.")
+        
+        return redirect('forgetpassword')
 
-def password_reset_confirm(request, uidb64, token):
+    return render(request, 'forget-password.html')
+
+
+
+def confirmpassword(request, uidb64, token):
+ 
     try:
-        uid = urlsafe_base64_decode(uidb64).decode()
+        uid = urlsafe_base64_decode(uidb64).decode('utf-8')
+        print(f"Decoded UID: {uid}")
+
         user = User.objects.get(pk=uid)
 
-        if token_generator.check_token(user, token):
-            if request.method == 'POST':
-                form = SetPasswordForm(user, request.POST)
-                if form.is_valid():
-                    form.save()
-                    messages.success(request, "Your password has been reset successfully.")
-                    return redirect('login') 
-            else:
-                form = SetPasswordForm(user)
-            return render(request, 'password_reset_confirm.html', {'form': form})
+        if default_token_generator.check_token(user, token):
+            print("Token is valid.")
+            if request.method == "POST":
+            
+                new_password = request.POST.get('new-password')
+                confirm_password = request.POST.get('confirm-password')
+
+                print(f"New Password: {new_password}")
+                print(f"Confirm Password: {confirm_password}")
+
+                if new_password == confirm_password:
+                    print("Passwords match. Setting new password.")
+                   
+                    user.set_password(new_password)
+                    user.save()
+    
+                    user = User.objects.get(pk=user.pk)
+
+                    user_authenticated = authenticate(email=user.email, password=new_password)
+                    if user_authenticated is not None:
+                        login(request, user_authenticated)  
+                        print("User re-authenticated and logged in.")
+
+                        messages.success(request, "Your password has been reset successfully. Please sign in.")
+                        return redirect('signin')
+                    else:
+                        print("Authentication failed after password reset.")
+                        messages.error(request, "Authentication failed after password reset.")
+                else:
+                    messages.error(request, "Passwords do not match.")
+                    print("Passwords do not match.")
+            return render(request, 'confirm-password.html')
         else:
-            messages.error(request, "This password reset link is invalid or expired.")
-            return redirect('forgetpassword')
-    except (User.DoesNotExist, ValueError, TypeError):
-        messages.error(request, "Invalid token or user.")
-        return redirect('forgetpassword')
+            return HttpResponse('Invalid or expired link', status=400)
+    
+    except (TypeError, ValueError, OverflowError, User.DoesNotExist) as e:
+ 
+        print(f"Error during password reset: {str(e)}")
+        return HttpResponse('Invalid link', status=400)
+
+
 
 def termsconditions(request):
     return render(request, 'terms-conditions.html') 

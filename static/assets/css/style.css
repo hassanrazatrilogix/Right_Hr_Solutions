@@ -1038,6 +1038,7 @@
  .hero-banner .banner-content .hero-btn {
    background-color: var(--hr-secondary);
  }
+ 
  .hero-banner .banner-content .hero-btn:hover {
    background-color: var(--hr-primary);
  }
@@ -1222,6 +1223,7 @@
  .steps-grid .grid-item .grid-item-link .icon {
    width: 80px;
  }
+ 
  #government_excellence {
    background-color: var(--hr-white);
  }
@@ -1901,12 +1903,43 @@
  }
  
  .order-form-wrapper form .form-section:nth-child(2) {
-     background: #53225a;
-     color: #fff;
+   background: #53225a;
+   color: #fff;
  }
  
  .order-form-wrapper form .form-section:nth-child(2) label.form-label {
-     color: #fff;
+   color: #fff;
  }
  
  /* End CheckOut Page CSS Here */
+ 
+ /* 06-12-2024 */
+ /* Step form CSS */
+ 
+ .step_process {
+   display: flex;
+   align-items: center;
+   gap: 10px;
+   justify-content: end;
+   position: absolute;
+   right: 0;
+   bottom: 5px;
+ }
+ 
+ .step_process button {
+   background: #a01e66;
+   width: 30px;
+   height: 30px;
+   border-radius: 50%;
+   color: #fff;
+   text-align: center;
+   line-height: 30px;
+   font-size: 30px;
+   border: unset;
+   padding: unset;
+   box-shadow: 0px 0px 5px #a29f9f;
+ }
+ 
+ .step_form_process {
+   position: relative;
+ }

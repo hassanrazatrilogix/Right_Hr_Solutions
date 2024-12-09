@@ -476,7 +476,7 @@
                               <div class="step_form_process">
                     
                                 <div class="row g-4">
-                                  <div class="col-3 col-sm-3 col-md-5">
+                                  <div class="col-12 col-sm-12 col-md-6">
                                     <label class="form-label">Documents</label>
                                     <select class="form-select" name="type" required>
                                       <option value="">Identity Card</option>
@@ -486,7 +486,7 @@
                                       <option>Driving License</option>
                                     </select>
                                   </div>
-                                  <div class="col-6 col-sm-6 col-md-5">
+                                  <div class="col-12 col-sm-12 col-md-6">
                                     <label class="form-label">Upload Documents</label>
                                     <div class="input-group">
                                       <input type="file" name="upload_documents" class="form-control" accept=".jpg, .jpeg, .png, .pdf" multiple required>
@@ -495,27 +495,26 @@
                                     <small class="form-text text-muted">Accepted formats: JPG, PNG, PDF. Max size: 5MB.</small>
                                     <div class="invalid-feedback">Please upload a file in JPG, PNG, or PDF format.</div>
                                   </div>
-                                  <div class="col-6 col-sm-6 col-md-2">
+                                  <div class="col-12 col-sm-12 col-md-2">
                                     <div class="step_process">
                                       <button type="button" class="plus btn btn-success">+</button>
                                       <button type="button" class="minus btn btn-danger">-</button>
                                     </div>
                                   </div>
-                           
-
+                          
                                 </div>
                               </div>
                             </div>
 
                             <div class="row g-4">
 
-                              <div class="col-5 col-sm-5 col-md-4">
+                              <div class="col-12 col-sm-6 col-md-6">
                                 <label for="pickDate" class="form-label">Select Date</label>
                                 <input type="date" class="form-control" id="pickDate" name="pick_date" placeholder="Select Date" value=""
                                   required>
                                 <div class="invalid-feedback"> Please select a date. </div>
                               </div>
-                              <div class="col-4 col-sm-4 col-md-3">
+                              <div class="col-12 col-sm-6 col-md-6">
                                 <label for="pickTime" class="form-label">Set Time</label>
                                 <select class="form-control" id="pickTime" name ="pick_time" required>
                                   <option value="">Select a time</option>
