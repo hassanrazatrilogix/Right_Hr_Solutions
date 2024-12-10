@@ -26,10 +26,9 @@
     source venv/bin/activate
 
 4. Install the required dependencies:
-    pip install django
+    pip install -r requirements.txt
 
 5.  Start the development server:
-
-    python manage.py runserver
+    python3 manage.py runserver
 
 
