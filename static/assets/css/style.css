@@ -1943,3 +1943,333 @@
  .step_form_process {
    position: relative;
  }
+
+ #place_order .list-group-item-check:checked+.list-group-item {
+  background-color: #202020;
+}
+
+
+
+.cart-container .btn-purple {
+  background-color: #6c63ff;
+  color: white;
+}
+
+.cart-container .btn-purple:hover {
+  background-color: #5b52e6;
+}
+
+.cart-container .cart-table img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+}
+
+.cart-container .notification {
+  background: #eafbea;
+  border: 1px solid #a3d9a5;
+  padding: 15px;
+  border-radius: 5px;
+}
+.cart-container {
+max-width: 1320px;
+margin: 0 auto;
+background: #fff;
+padding: 20px;
+}
+.cart-container h1 {
+font-size: 45px;
+text-align: left;
+padding-left: 40px;
+color: #000;
+margin-bottom: 20px;
+}
+.cart-container .notification {
+display: flex;
+justify-content: space-between;
+align-items: center;
+padding: 15px;
+background: #f6f5f8;
+border-top: 3px solid #8fae1b;
+margin-bottom: 30px;
+}
+.cart-container .notification p {
+margin: 0;
+color: #515151;
+font-size: 18px;
+}
+.cart-container .continue-booking-btn {
+border: none;
+padding: 10px 20px;
+border-radius: 3px;
+cursor: pointer;
+color: #515151;
+background-color: #e9e6ed;
+font-size: 20px;
+font-weight: 600;
+text-transform: capitalize;
+}
+
+.cart-container .cart-table {
+width: 100%;
+border-collapse: collapse;
+margin-bottom: 0;
+}
+.cart-container .table-responsive td.text-start.d-flex.align-items-center {
+border-left: unset;
+border-right: unset;
+}
+.cart-container .cart-table th, .cart-container .cart-table td {
+
+padding: 15px;
+text-align: left;
+}
+.cart-container .table-content small {
+font-size: 17px;
+font-weight: 400;
+}
+.cart-container .table-content p {
+margin: 10px 0 30px;
+}
+.cart-container .cart-table th {
+font-weight: 600;
+font-size: 20px;
+}
+
+.cart-container .product-image {
+width: 50px;
+height: 50px;
+margin-right: 10px;
+}
+
+.cart-container button.btn.btn-danger.btn-sm {
+background: unset;
+color: #a00;
+font-size: 30px;
+border: unset;
+height: unset;
+width: unset;
+}
+.cart-container .coupon-container {
+display: flex;
+gap: 10px;
+margin-bottom: 20px;
+}
+
+.cart-container .coupon-input {
+flex: 1;
+padding: 8px;
+border: 1px solid #ddd;
+border-radius: 4px;
+}
+
+.cart-container .apply-coupon-btn {
+background: #007bff;
+color: white;
+border: none;
+padding: 8px 15px;
+border-radius: 4px;
+cursor: pointer;
+}
+
+.cart-container .cart-totals {
+text-align: right;
+}
+
+.cart-container .cart-totals p {
+margin: 10px 0;
+}
+
+.cart-container .cart-totals span {
+font-weight: bold;
+}
+
+.cart-container .checkout-btn {
+background: #6c63ff;
+color: white;
+border: none;
+padding: 10px 20px;
+border-radius: 4px;
+cursor: pointer;
+margin-top: 10px;
+}
+.cart-container .notification p span img {
+width: 20px;
+height: 20px;
+}
+
+.cart-container .notification p {
+display: flex;
+align-items: center;
+gap: 10px;
+}
+
+.cart-container .notification p span {
+display: inline-block;
+}
+.cart-container p.price {
+font-size: 18px;
+color: #ef3101;
+font-weight: 600;
+}
+.cart-container input.form-control:focus{
+border: 1px solid #cfc8d8;
+box-shadow: unset;
+}
+.cart-container input.form-control {
+float: left;
+box-sizing: border-box;
+border: 1px solid #cfc8d8;
+padding: 8px;
+margin: 0 7px 0 0;
+outline: 0;
+width: fit-content;
+font-size: 18px;
+background: #f7f7f7;
+border-radius: unset;
+}
+.cart-container .main-box-last {
+border: 1px solid #adb5bd;
+padding: 15px 10px !important;
+border-top: 0;
+width: 100%;
+margin: 0 auto;
+}
+.cart-container .main-box-last .col-md-8.col-12.mb-2 {
+padding: 0 !important;
+}
+
+.cart-container .main-box-last .col-md-4.col-12 {
+padding: 0 !important;
+}
+.cart-container button.btn.btn-primary {
+border: none;
+padding: 9px 15px;
+border-radius: 3px;
+cursor: pointer;
+color: #515151;
+background-color: #e9e6ed;
+font-size: 18px;
+font-weight: 600;
+width: 160px !important;
+text-align: center;
+}
+.cart-container button.btn-cupon {
+cursor: pointer;
+color: rgb(0 0 0 / 50%);
+background-color: rgb(233, 230, 237);
+font-size: 18px;
+font-weight: 600;
+text-align: center;
+width: 160px !important;
+border-width: initial;
+border-style: none;
+border-color: initial;
+border-image: initial;
+padding: 9px 15px;
+border-radius: 3px;
+text-transform: capitalize;
+}
+.cart-container .main-box-last .col-md-4.col-12 {
+margin-left: auto;
+text-align: right;
+}
+.cart-container .price {
+color: #ef3101;
+font-weight: bold;
+font-size: 18px;
+}
+.cart-container .main-subtotal table.table.table-bordered td {
+border-right: unset;
+border-left: unset;
+}
+.cart-container .main-subtotal table.table.table-bordered {
+max-width: 600px;
+border: 1px solid #adb5bd;
+margin-left: auto;
+}
+.cart-container td.fw-bold {
+font-size: 20px;
+color: #000;
+font-weight: 600;
+}
+.cart-container .main-subtotal h1 {
+font-size: 45px;
+padding-left: 0;
+color: #000;
+max-width: 600px;
+margin-left: auto;
+margin-top: 50px;
+margin-bottom: 15px;
+}
+.cart-container table.table.table-bordered tbody tr:hover {
+background: #f6f6f6;
+}
+.cart-container .main-subtotal button.btn.btn-purple.btn-lg {
+background: #7f54b3;
+padding: 40px 030px;
+max-width: 600px;
+width: 100%;
+display: block;
+margin-left: auto;
+margin-top: 30px;
+border-radius: 4px;
+font-size: 25px;
+font-weight: 700;
+}
+
+.cart-container .main-subtotal button.btn.btn-purple.btn-lg:hover {
+color: #fff;
+}
+@media (max-width:767px){
+  .cart-container input.form-control {
+width: 120px;
+}
+.cart-container h1 {
+font-size: 30px;
+text-align: left;
+padding-left: 0;
+margin-bottom: 10px;
+}
+.cart-container .main-subtotal h1 {
+font-size: 30px;
+max-width: 600px;
+margin-left: auto;
+margin-top: 30px;
+margin-bottom: 10px;
+}
+.cart-container .main-subtotal button.btn.btn-purple.btn-lg {
+padding: 25px 20px;
+margin-top: 20px;
+font-size: 22px;
+}
+.cart-container td.fw-bold, .cart-container .cart-table th {
+font-size: 18px;
+}
+.cart-container .notification {
+flex-direction: column;
+align-items: self-start;
+gap: 10px;
+}
+.cart-container .notification p {
+font-size: 16px;
+}
+.cart-container .continue-booking-btn {
+padding: 9px 18px;
+font-size: 18px;
+}
+.cart-container .price, .cart-container p.price {
+font-size: 16px;
+}
+.cart-container .table-content small {
+font-size: 14px;
+}
+.cart-container .cart-table th, .cart-container .cart-table td {
+padding: 10px 7px;
+}
+.cart-container button.btn.btn-primary {
+padding: 8px 15px;
+font-size: 16px;
+width: 150px !important;
+}
+}

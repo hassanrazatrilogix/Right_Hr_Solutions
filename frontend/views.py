@@ -1,9 +1,8 @@
 from django.shortcuts import render, redirect
+from django.shortcuts import  get_object_or_404
 from django.contrib.auth import authenticate, login
-from .models import *
 from django.contrib import messages
 from django.contrib.auth.models import User
-from django.contrib.auth.forms import PasswordResetForm
 from django.contrib import messages
 from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import send_mail
@@ -11,6 +10,7 @@ from django.urls import reverse
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.template.loader import render_to_string
 from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
 
 from .forms import *
 from .models import *
@@ -30,7 +30,7 @@ def appointment(request):
         form = AppointmentForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('thankyou')
+            return redirect('cart')
     else:
         form = AppointmentForm()
 
@@ -44,6 +44,20 @@ def checkout(request):
 
 def contactus(request):
     return render(request, 'contact-us.html') 
+
+def cart(request,order_id):
+    document_id = order_id
+    print("documnet id -------",document_id )
+    if not document_id:
+        return render(request, 'cart.html', {'error': 'No document ID provided.'})
+
+    document = get_object_or_404(Document, unique_id=document_id)
+    order = document.order
+
+    return render(request, 'cart.html', {
+        'order': order,
+        'document': document,
+    })
 
 def documenttranslationservice(request):
     return render(request, 'document-translation-service.html') 
@@ -72,25 +86,27 @@ def privacypolicy(request):
 def professional_services(request):
     return render(request, 'professional-services.html') 
 
-
+@login_required(login_url='signin')
 def placeorder(request):
     if request.method == 'POST':
-        order_form = OrderForm(request.POST)
-        
+        order_form = OrderForm(request.POST) 
         files = request.FILES.getlist('upload_documents')
         types = request.POST.getlist('type')
-         
+          
         if order_form.is_valid() and files and types:
-      
+            category_price = order_form.cleaned_data['category_price']
+
             order = order_form.save()
+            order.price = category_price 
+            order.save()
             
             for i in range(len(files)):
-         
-                document = Document(order=order, upload_documents=files[i], type=types[i] if i < len(types) else None)
+                document = Document(user=request.user, order=order, upload_documents=files[i], type=types[i] if i < len(types) else None)
                 document.save()
             
             messages.success(request, 'Order and documents uploaded successfully.')
-            return redirect('thankyou')
+
+            return redirect('cart_with_uuid', order_id=str(document.unique_id))
         else:
             messages.error(request, 'Please correct the errors below.')
     else:
@@ -99,7 +115,6 @@ def placeorder(request):
     return render(request, 'place-order.html', {
         'order_form': order_form,
     })
-
 
 
 def signup(request):
@@ -115,6 +130,7 @@ def signup(request):
         form = UserRegistrationForm()
 
     return render(request, 'sign-up.html', {'form': form})
+
 
 def signin(request):
     if request.method == 'POST':
@@ -177,9 +193,6 @@ def confirmpassword(request, uidb64, token):
             
                 new_password = request.POST.get('new-password')
                 confirm_password = request.POST.get('confirm-password')
-
-                print(f"New Password: {new_password}")
-                print(f"Confirm Password: {confirm_password}")
 
                 if new_password == confirm_password:
                     print("Passwords match. Setting new password.")

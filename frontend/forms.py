@@ -40,15 +40,32 @@ class AppointmentForm(forms.ModelForm):
         return terms
 
 
-
 class OrderForm(forms.ModelForm):
     class Meta:
         model = Order
-        fields = ['categoriesList', 'servicesList', 'pick_date', 'pick_time', 'comments_questions', 'terms_accepted']
+        fields = ['categoriesList', 'pick_date', 'pick_time', 'comments_questions', 'terms_accepted']
         widgets = {
             'pick_date': forms.DateInput(attrs={'type': 'date'}),
             'pick_time': forms.TimeInput(attrs={'type': 'time'}),
         }
 
+    category_price = forms.DecimalField(max_digits=10, decimal_places=2, required=False)
+
+    def clean(self):
+        cleaned_data = super().clean()
+        selected_category = cleaned_data.get('categoriesList')
+
+        if selected_category == 'Apostille Service':
+            cleaned_data['category_price'] = 109.00
+        elif selected_category == 'Background Check':
+            cleaned_data['category_price'] = 100.00
+        elif selected_category == 'Staffing & Recruitment':
+            cleaned_data['category_price'] = 110.00
+        elif selected_category == 'Training & Development':
+            cleaned_data['category_price'] = 120.00
+        else:
+            cleaned_data['category_price'] = 0.00
+
+        return cleaned_data
 
 

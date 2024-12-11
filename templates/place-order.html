@@ -44,6 +44,8 @@
                                   <img class="service-icon" src="{% static '' %}assets/img/icons/services-icon-apostille-services.svg"
                                     alt="Apostille Service">
                                   <h6 class="service-heading">Apostille Service</h6>
+                                  <p class="price">$109.00</p>
+                                  <input type="hidden" name="prices[Apostille_Service]" value="109.00">
                                 </div>
                               </label>
                               <input class="list-group-item-check pe-none" type="radio" name="categoriesList"
@@ -53,6 +55,8 @@
                                   <img class="service-icon" src="{% static '' %}assets/img/icons/services-icon-background-check.svg"
                                     alt="Background Checks">
                                   <h6 class="service-heading">Background Check</h6>
+                                  <p class="price">$100.00</p>
+                                  <input type="hidden" name="prices[Background_Check]" value="100.00">
                                 </div>
                               </label>
                               <input class="list-group-item-check pe-none" type="radio" name="categoriesList"
@@ -63,6 +67,8 @@
                                   <img class="service-icon" src="{% static '' %}assets/img/icons/services-icon-benefits-managemnet.svg"
                                     alt="Benefits Management">
                                   <h6 class="service-heading">Benefits Management</h6>
+                                  <p class="price">$150.00</p>
+                                  <input type="hidden" name="prices[Benefits_Management]" value="100.00">
                                 </div>
                               </label>
                               <input class="list-group-item-check pe-none" type="radio" name="categoriesList"
@@ -73,6 +79,8 @@
                                   <img class="service-icon" src="{% static '' %}assets/img/icons/services-icon-docu-notarization.svg"
                                     alt="Document Notarization">
                                   <h6 class="service-heading">Document Notarization</h6>
+                                  <p class="price">$140.00</p>
+                                  <input type="hidden" name="prices[Document_Notarization]" value="100.00">
                                 </div>
                               </label>
                               <input class="list-group-item-check pe-none" type="radio" name="categoriesList"
@@ -83,6 +91,8 @@
                                   <img class="service-icon" src="{% static '' %}assets/img/icons/services-icon-docu-translation.svg"
                                     alt="Document Translation">
                                   <h6 class="service-heading">Document Translation</h6>
+                                  <p class="price">$130.00</p>
+                                  <input type="hidden" name="prices[Document_Translation]" value="100.00">
                                 </div>
                               </label>
                               <input class="list-group-item-check pe-none" type="radio" name="categoriesList"
@@ -93,6 +103,8 @@
                                   <img class="service-icon" src="{% static '' %}assets/img/icons/services-icon-fingerprinting.svg"
                                     alt="Fingerprinting Services">
                                   <h6 class="service-heading">Fingerprinting Service</h6>
+                                  <p class="price">$125.00</p>
+                                  <input type="hidden" name="prices[Fingerprinting_Service]" value="100.00">
                                 </div>
                               </label>
                               <input class="list-group-item-check pe-none" type="radio" name="categoriesList"
@@ -102,6 +114,8 @@
                                   <img class="service-icon" src="{% static '' %}assets/img/icons/services-icon-payroll-management.svg"
                                     alt="Payroll Management">
                                   <h6 class="service-heading">Payroll Management</h6>
+                                  <p class="price">$110.00</p>
+                                  <input type="hidden" name="prices[Payroll_Management]" value="100.00">
                                 </div>
                               </label>
                               <input class="list-group-item-check pe-none" type="radio" name="categoriesList"
@@ -111,6 +125,8 @@
                                   <img class="service-icon" src="{% static '' %}assets/img/icons/services-icon-special-project.svg"
                                     alt="Special Projects">
                                   <h6 class="service-heading">Special HR Project</h6>
+                                  <p class="price">$110.00</p>
+                                  <input type="hidden" name="prices[Special_HR_Project]" value="100.00">
                                 </div>
                               </label>
                               <input class="list-group-item-check pe-none" type="radio" name="categoriesList"
@@ -122,6 +138,8 @@
                                     src="{% static '' %}assets/img/icons/services-icon-staffing-recruitment.svg"
                                     alt="Staffing & Recruitment">
                                   <h6 class="service-heading">Staffing & Recruitment</h6>
+                                  <p class="price">$110.00</p>
+                                  <input type="hidden" name="prices[Staffing_Recruitment]" value="100.00">
                                 </div>
                               </label>
                               <input class="list-group-item-check pe-none" type="radio" name="categoriesList"
@@ -133,336 +151,11 @@
                                     src="{% static '' %}assets/img/icons/services-icon-trainning-development.svg"
                                     alt="Training & Development">
                                   <h6 class="service-heading">Training & Development</h6>
+                                  <p class="price">$120.00</p>
+                                  <input type="hidden" name="prices[Training_Development]" value="100.00">
                                 </div>
                               </label>
                             </div>
-                          </div>
-                        </div>
-                        <div class="form-section" id="subcategoriesSection">
-                          <div class="form-heading">
-                            <h3 class="title">Select the Services You Need</h3>
-                            <h6 class="sub-title">Browse through specific services we offer. </h6>
-                          </div>
-                          <div class="form-body">
-                            <!-- Apostille Service -->
-                            <div class="service-list-group list-group list-group-checkable subcategory hidden"
-                              data-category="Apostille_Service">
-                              <input class="list-group-item-check pe-none" type="radio" name="servicesList"
-                                id="service_TaxProcessing" value="Complete Payroll & Tax Processing">
-                              <label class="list-group-item rounded-3 py-3" for="service_TaxProcessing">
-                                <div class="service-item-name">
-                                  <h6 class="service-heading">Complete Payroll & Tax Processing</h6>
-                                </div>
-                              </label>
-                              <input class="list-group-item-check pe-none" type="radio" name="servicesList"
-                                id="service_BenefitsDeductions" value="Benefits & Deductions Processing">
-                              <label class="list-group-item rounded-3 py-3" for="service_BenefitsDeductions">
-                                <div class="service-item-name">
-                                  <h6 class="service-heading">Benefits & Deductions Processing</h6>
-                                </div>
-                              </label>
-                              <input class="list-group-item-check pe-none" type="radio" name="servicesList"
-                                id="service_PayrollAccess" value="We Payroll Access & Employee Self Service">
-                              <label class="list-group-item rounded-3 py-3" for="service_PayrollAccess">
-                                <div class="service-item-name">
-                                  <h6 class="service-heading">We Payroll Access & Employee Self Service</h6>
-                                </div>
-                              </label>
-                              <input class="list-group-item-check pe-none" type="radio" name="servicesList"
-                                id="service_BenefitsAccrual" value="Paid Time Off & Benefits Accrual">
-                              <label class="list-group-item rounded-3 py-3" for="service_BenefitsAccrual">
-                                <div class="service-item-name">
-                                  <h6 class="service-heading">Paid Time Off & Benefits Accrual</h6>
-                                </div>
-                              </label>
-                              <input class="list-group-item-check pe-none" type="radio" name="servicesList"
-                                id="service_ChildSupport" value="Garnishment & Child Support Administration">
-                              <label class="list-group-item rounded-3 py-3" for="service_ChildSupport">
-                                <div class="service-item-name">
-                                  <h6 class="service-heading">Garnishment & Child Support Administration</h6>
-                                </div>
-                              </label>
-                              <input class="list-group-item-check pe-none" type="radio" name="servicesList"
-                                id="service_TaxFillingRemittance" value="Fed/state/local Tax Filling & Remittance">
-                              <label class="list-group-item rounded-3 py-3" for="service_TaxFillingRemittance">
-                                <div class="service-item-name">
-                                  <h6 class="service-heading">Fed/state/local Tax Filling & Remittance</h6>
-                                </div>
-                              </label>
-                            </div>
-
-                            <!-- Background Check -->
-                            <div class="service-list-group list-group list-group-checkable subcategory hidden"
-                              data-category="Background_Check">
-                              <input class="list-group-item-check pe-none" type="radio" name="servicesList"
-                                id="service_CriminalCheck" value="Criminal Background Check">
-                              <label class="list-group-item rounded-3 py-3" for="service_CriminalCheck">
-                                <div class="service-item-name">
-                                  <h6 class="service-heading">Criminal Background Check</h6>
-                                </div>
-                              </label>
-                              <input class="list-group-item-check pe-none" type="radio" name="servicesList"
-                                id="service_EmploymentVerification" value="Employment Verification">
-                              <label class="list-group-item rounded-3 py-3" for="service_EmploymentVerification">
-                                <div class="service-item-name">
-                                  <h6 class="service-heading">Employment Verification</h6>
-                                </div>
-                              </label>
-                              <input class="list-group-item-check pe-none" type="radio" name="servicesList"
-                                id="service_ReferenceCheck" value="Reference Check">
-                              <label class="list-group-item rounded-3 py-3" for="service_ReferenceCheck">
-                                <div class="service-item-name">
-                                  <h6 class="service-heading">Reference Check</h6>
-                                </div>
-                              </label>
-                              <input class="list-group-item-check pe-none" type="radio" name="servicesList"
-                                id="service_EducationVerification" value="Education Verification">
-                              <label class="list-group-item rounded-3 py-3" for="service_EducationVerification">
-                                <div class="service-item-name">
-                                  <h6 class="service-heading">Education Verification</h6>
-                                </div>
-                              </label>
-                              <input class="list-group-item-check pe-none" type="radio" name="servicesList"
-                                id="service_DrugScreening" value="Drug Screening">
-                              <label class="list-group-item rounded-3 py-3" for="service_DrugScreening">
-                                <div class="service-item-name">
-                                  <h6 class="service-heading">Drug Screening</h6>
-                                </div>
-                              </label>
-                            </div>
-
-                            <!-- Benefits Management -->
-                            <div class="service-list-group list-group list-group-checkable subcategory hidden"
-                              data-category="Benefits_Management">
-                              <input class="list-group-item-check pe-none" type="radio" name="servicesList"
-                                id="service_HealthInsurance" value="Health Insurance Administration">
-                              <label class="list-group-item rounded-3 py-3" for="service_HealthInsurance">
-                                <div class="service-item-name">
-                                  <h6 class="service-heading">Health Insurance Administration</h6>
-                                </div>
-                              </label>
-                              <input class="list-group-item-check pe-none" type="radio" name="servicesList"
-                                id="service_RetirementPlans" value="Retirement Plans Management">
-                              <label class="list-group-item rounded-3 py-3" for="service_RetirementPlans">
-                                <div class="service-item-name">
-                                  <h6 class="service-heading">Retirement Plans Management</h6>
-                                </div>
-                              </label>
-                              <input class="list-group-item-check pe-none" type="radio" name="servicesList"
-                                id="service_LifeInsurance" value="Life Insurance Benefits">
-                              <label class="list-group-item rounded-3 py-3" for="service_LifeInsurance">
-                                <div class="service-item-name">
-                                  <h6 class="service-heading">Life Insurance Benefits</h6>
-                                </div>
-                              </label>
-                              <input class="list-group-item-check pe-none" type="radio" name="servicesList"
-                                id="service_DisabilityPlans" value="Disability Plans Management">
-                              <label class="list-group-item rounded-3 py-3" for="service_DisabilityPlans">
-                                <div class="service-item-name">
-                                  <h6 class="service-heading">Disability Plans Management</h6>
-                                </div>
-                              </label>
-                            </div>
-
-                            <!-- Document Notarization -->
-                            <div class="service-list-group list-group list-group-checkable subcategory hidden"
-                              data-category="Document_Notarization">
-                              <input class="list-group-item-check pe-none" type="radio" name="servicesList"
-                                id="service_Affidavits" value="Affidavits Notarization">
-                              <label class="list-group-item rounded-3 py-3" for="service_Affidavits">
-                                <div class="service-item-name">
-                                  <h6 class="service-heading">Affidavits Notarization</h6>
-                                </div>
-                              </label>
-                              <input class="list-group-item-check pe-none" type="radio" name="servicesList"
-                                id="service_Contracts" value="Contracts Notarization">
-                              <label class="list-group-item rounded-3 py-3" for="service_Contracts">
-                                <div class="service-item-name">
-                                  <h6 class="service-heading">Contracts Notarization</h6>
-                                </div>
-                              </label>
-                              <input class="list-group-item-check pe-none" type="radio" name="servicesList"
-                                id="service_PowerOfAttorney" value="Power of Attorney Notarization">
-                              <label class="list-group-item rounded-3 py-3" for="service_PowerOfAttorney">
-                                <div class="service-item-name">
-                                  <h6 class="service-heading">Power of Attorney Notarization</h6>
-                                </div>
-                              </label>
-                              <input class="list-group-item-check pe-none" type="radio" name="servicesList"
-                                id="service_PropertyDocuments" value="Property Documents Notarization">
-                              <label class="list-group-item rounded-3 py-3" for="service_PropertyDocuments">
-                                <div class="service-item-name">
-                                  <h6 class="service-heading">Property Documents Notarization</h6>
-                                </div>
-                              </label>
-                            </div>
-
-
-                            <!-- Document Translation -->
-                            <div class="service-list-group list-group list-group-checkable subcategory hidden"
-                              data-category="Document_Translation">
-                              <input class="list-group-item-check pe-none" type="radio" name="servicesList"
-                                id="service_LegalDocuments" value="Legal Documents Translation">
-                              <label class="list-group-item rounded-3 py-3" for="service_LegalDocuments">
-                                <div class="service-item-name">
-                                  <h6 class="service-heading">Legal Documents Translation</h6>
-                                </div>
-                              </label>
-                              <input class="list-group-item-check pe-none" type="radio" name="servicesList"
-                                id="service_BusinessContracts" value="Business Contracts Translation">
-                              <label class="list-group-item rounded-3 py-3" for="service_BusinessContracts">
-                                <div class="service-item-name">
-                                  <h6 class="service-heading">Business Contracts Translation</h6>
-                                </div>
-                              </label>
-                              <input class="list-group-item-check pe-none" type="radio" name="servicesList"
-                                id="service_Certificates" value="Certificates Translation">
-                              <label class="list-group-item rounded-3 py-3" for="service_Certificates">
-                                <div class="service-item-name">
-                                  <h6 class="service-heading">Certificates Translation</h6>
-                                </div>
-                              </label>
-                              <input class="list-group-item-check pe-none" type="radio" name="servicesList"
-                                id="service_TechnicalManuals" value="Technical Manuals Translation">
-                              <label class="list-group-item rounded-3 py-3" for="service_TechnicalManuals">
-                                <div class="service-item-name">
-                                  <h6 class="service-heading">Technical Manuals Translation</h6>
-                                </div>
-                              </label>
-                            </div>
-
-
-                            <!-- Fingerprinting Service -->
-                            <div class="service-list-group list-group list-group-checkable subcategory hidden"
-                              data-category="Fingerprinting_Service">
-                              <input class="list-group-item-check pe-none" type="radio" name="servicesList"
-                                id="service_CriminalFingerprinting" value="Criminal Fingerprinting Service">
-                              <label class="list-group-item rounded-3 py-3" for="service_CriminalFingerprinting">
-                                <div class="service-item-name">
-                                  <h6 class="service-heading">Criminal Fingerprinting Service</h6>
-                                </div>
-                              </label>
-                              <input class="list-group-item-check pe-none" type="radio" name="servicesList"
-                                id="service_EmploymentFingerprinting" value="Employment Fingerprinting Service">
-                              <label class="list-group-item rounded-3 py-3" for="service_EmploymentFingerprinting">
-                                <div class="service-item-name">
-                                  <h6 class="service-heading">Employment Fingerprinting Service</h6>
-                                </div>
-                              </label>
-                              <input class="list-group-item-check pe-none" type="radio" name="servicesList"
-                                id="service_ImmigrationFingerprinting" value="Immigration Fingerprinting Service">
-                              <label class="list-group-item rounded-3 py-3" for="service_ImmigrationFingerprinting">
-                                <div class="service-item-name">
-                                  <h6 class="service-heading">Immigration Fingerprinting Service</h6>
-                                </div>
-                              </label>
-                            </div>
-
-                            <!-- Payroll Management -->
-                            <div class="service-list-group list-group list-group-checkable subcategory hidden"
-                              data-category="Payroll_Management">
-                              <input class="list-group-item-check pe-none" type="radio" name="servicesList"
-                                id="service_FullCyclePayroll" value="Full-Cycle Payroll Management">
-                              <label class="list-group-item rounded-3 py-3" for="service_FullCyclePayroll">
-                                <div class="service-item-name">
-                                  <h6 class="service-heading">Full-Cycle Payroll Management</h6>
-                                </div>
-                              </label>
-                              <input class="list-group-item-check pe-none" type="radio" name="servicesList"
-                                id="service_ComplianceReporting" value="Compliance & Reporting">
-                              <label class="list-group-item rounded-3 py-3" for="service_ComplianceReporting">
-                                <div class="service-item-name">
-                                  <h6 class="service-heading">Compliance & Reporting</h6>
-                                </div>
-                              </label>
-                              <input class="list-group-item-check pe-none" type="radio" name="servicesList"
-                                id="service_DirectDeposits" value="Direct Deposits Setup">
-                              <label class="list-group-item rounded-3 py-3" for="service_DirectDeposits">
-                                <div class="service-item-name">
-                                  <h6 class="service-heading">Direct Deposits Setup</h6>
-                                </div>
-                              </label>
-                            </div>
-
-                            <!-- Special HR Project -->
-                            <div class="service-list-group list-group list-group-checkable subcategory hidden"
-                              data-category="Special_HR_Project">
-                              <input class="list-group-item-check pe-none" type="radio" name="servicesList"
-                                id="service_HRPolicyDevelopment" value="HR Policy Development">
-                              <label class="list-group-item rounded-3 py-3" for="service_HRPolicyDevelopment">
-                                <div class="service-item-name">
-                                  <h6 class="service-heading">HR Policy Development</h6>
-                                </div>
-                              </label>
-                              <input class="list-group-item-check pe-none" type="radio" name="servicesList"
-                                id="service_PerformanceManagement" value="Performance Management">
-                              <label class="list-group-item rounded-3 py-3" for="service_PerformanceManagement">
-                                <div class="service-item-name">
-                                  <h6 class="service-heading">Performance Management</h6>
-                                </div>
-                              </label>
-                              <input class="list-group-item-check pe-none" type="radio" name="servicesList"
-                                id="service_ChangeManagement" value="Change Management">
-                              <label class="list-group-item rounded-3 py-3" for="service_ChangeManagement">
-                                <div class="service-item-name">
-                                  <h6 class="service-heading">Change Management</h6>
-                                </div>
-                              </label>
-                            </div>
-
-                            <!-- Staffing & Recruitment -->
-                            <div class="service-list-group list-group list-group-checkable subcategory hidden"
-                              data-category="Staffing_Recruitment">
-                              <input class="list-group-item-check pe-none" type="radio" name="servicesList"
-                                id="service_TemporaryStaffing" value="Temporary Staffing">
-                              <label class="list-group-item rounded-3 py-3" for="service_TemporaryStaffing">
-                                <div class="service-item-name">
-                                  <h6 class="service-heading">Temporary Staffing</h6>
-                                </div>
-                              </label>
-                              <input class="list-group-item-check pe-none" type="radio" name="servicesList"
-                                id="service_PermanentPlacement" value="Permanent Placement">
-                              <label class="list-group-item rounded-3 py-3" for="service_PermanentPlacement">
-                                <div class="service-item-name">
-                                  <h6 class="service-heading">Permanent Placement</h6>
-                                </div>
-                              </label>
-                              <input class="list-group-item-check pe-none" type="radio" name="servicesList"
-                                id="service_ExecutiveRecruitment" value="Executive Recruitment">
-                              <label class="list-group-item rounded-3 py-3" for="service_ExecutiveRecruitment">
-                                <div class="service-item-name">
-                                  <h6 class="service-heading">Executive Recruitment</h6>
-                                </div>
-                              </label>
-                            </div>
-
-                            <!-- Training & Development -->
-                            <div class="service-list-group list-group list-group-checkable subcategory hidden"
-                              data-category="Training_Development">
-                              <input class="list-group-item-check pe-none" type="radio" name="servicesList"
-                                id="service_SkillsWorkshops" value="Skills Workshops">
-                              <label class="list-group-item rounded-3 py-3" for="service_SkillsWorkshops">
-                                <div class="service-item-name">
-                                  <h6 class="service-heading">Skills Workshops</h6>
-                                </div>
-                              </label>
-                              <input class="list-group-item-check pe-none" type="radio" name="servicesList"
-                                id="service_LeadershipTraining" value="Leadership Training">
-                              <label class="list-group-item rounded-3 py-3" for="service_LeadershipTraining">
-                                <div class="service-item-name">
-                                  <h6 class="service-heading">Leadership Training</h6>
-                                </div>
-                              </label>
-                              <input class="list-group-item-check pe-none" type="radio" name="servicesList"
-                                id="service_TeamBuilding" value="Team Building Exercises">
-                              <label class="list-group-item rounded-3 py-3" for="service_TeamBuilding">
-                                <div class="service-item-name">
-                                  <h6 class="service-heading">Team Building Exercises</h6>
-                                </div>
-                              </label>
-                            </div>
-
-
                           </div>
                         </div>
                         <div class="form-section" id="customizeOrderSection">
@@ -525,7 +218,7 @@
                                 <label for="commentsQuestions" class="form-label">Comments or Questions <span
                                     class="small">(Optional)</span>
                                 </label>
-                                <textarea class="form-control" id="commentsQuestions" placeholder=""></textarea>
+                                <textarea class="form-control" id="commentsQuestions" placeholder="" name ="comments_questions" ></textarea>
                                 <div class="invalid-feedback"> Please enter your comments or questions. </div>
                               </div>
                             </div>

@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from .views import cart
 
 urlpatterns = [
     path('', views.home, name='home'),
@@ -9,6 +10,8 @@ urlpatterns = [
     path('backgroundcheck/', views.backgroundcheck, name='backgroundcheck'),
     path('checkout/', views.checkout, name='checkout'),
     path('contactus/', views.contactus, name='contactus'),
+    path('cart/', cart, name='cart'),
+    path('cart/<str:order_id>/', cart, name='cart_with_uuid'),
     path('documenttranslationservice/', views.documenttranslationservice, name='documenttranslationservice'),
     path('faqs/', views.faqs, name='faqs'),
     path('fingerprintingservice/', views.fingerprintingservice, name='fingerprintingservice'),
@@ -17,6 +20,7 @@ urlpatterns = [
     path('hrsolutions/', views.hrsolutions, name='hrsolutions'),
     path('notarypublicservice/', views.notarypublicservice, name='notarypublicservice'),
     path('privacypolicy/', views.privacypolicy, name='privacypolicy'),
+    path('termsconditions/', views.termsconditions, name='termsconditions'),
     path('professional_services/', views.professional_services, name='professional_services'),
     path('placeorder/', views.placeorder, name='placeorder'),
     path('signin/', views.signin, name='signin'),

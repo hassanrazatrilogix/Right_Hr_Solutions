@@ -1,0 +1,182 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Right HR Solutions – HR Solutions & Professional Services{% endblock title %}
+
+ {% block content %}
+
+ <div class="cart-container">
+  <h1>Cart</h1>
+  <div class="notification">
+    <p><span><img src="images/circle.png" alt=""></span>{{ order.categoriesList }} has been added to your cart.</p>
+    <button class="continue-booking-btn">Continue booking</button>
+  </div>
+  <div class="table-responsive ">
+      <table class="table table-bordered align-middle text-center cart-table">
+        <thead class="table-light">
+          <tr>
+            <th></th>
+            <th></th>
+            <th>Product</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Subtotal</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <button class="btn btn-danger btn-sm">&times;</button>
+            </td>
+            <td> <img src="images/closeup-of-fingerprint-on-paper-2021-08-27-00-02-30-utc-scaled-300x300.webp" alt="Product Image" class="product-image me-3"></td>
+            <td class="text-start d-flex align-items-center">
+             
+              <div class="table-content ">
+                <p class="mb-0">{{ order.categoriesList }}</p>
+                <small>{{ order.pick_date }}</small>
+              </div>
+            </td>
+            <td><p class="price">{{ order.price }}</p></td>
+            <td></td>
+            <td><p class="price">{{ order.price }}</p></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Coupon Section -->
+    <div class="row mb-2 main-box-last">
+      <div class="col-md-8 col-12 mb-2  ">
+        <input type="text" class="form-control" placeholder="Enter coupon code">
+        <button class="btn btn-primary w-100">Apply Coupon</button>
+      </div>
+      <div class="col-md-4 col-12">
+          <button class="btn-cupon">Update cart</button>
+      </div>
+    </div>
+
+    <!-- Cart Totals -->
+    <div class="main-subtotal">
+      <h1>Cart totals</h1>
+      <table class="table table-bordered">
+          <tbody>
+            <tr>
+              <td class="fw-bold">Subtotal</td>
+              <td class=" price">$330.00</td>
+            </tr>
+            <tr>
+              <td class="fw-bold">Total</td>
+              <td class="price">$330.00</td>
+            </tr>
+          </tbody>
+        </table>
+      <button class="btn btn-purple btn-lg">Proceed to Checkout</button>
+    </div>
+  </div>
+
+  <section class="footer-main">
+    <div class="container">
+      <div class="row g-3">
+        <div class="col-12">
+          <div class="footer-logo">
+            <a href="/">
+              <img class="img-fluid" src="{% static '' %}assets/img/logo.svg" alt="logo">
+            </a>
+          </div>
+        </div>
+        <!-- Footer Menu -->
+        <div class="col-md-7 col-sm-12">              
+          <div class="footer-menu">
+            <div class="menu-group">
+              <h5 class="menu-title">HR Solutions</h5>
+              <ul class="menu-list">
+                <li>
+                  <a href="/hrsolutions#Benefits_Management">Benefits Management</a>
+                </li>
+                <li>
+                  <a href="/hrsolutions#Payroll_Management">Payroll Management</a>
+                </li>
+                <li>
+                  <a href="/hrsolutions#Special_HR_Project">Special HR Project</a>
+                </li>
+                <li>
+                  <a href="/hrsolutions#Staffing_Recruitment">Staffing & Recruitment</a>
+                </li>
+                <li>
+                  <a href="/hrsolutions#Training_Development">Training & Development</a>
+                </li>
+              </ul>
+            </div>
+            <div class="menu-group">
+              <h5 class="menu-title">Professional Services</h5>
+              <ul class="menu-list">
+                <li>
+                  <a href="/professional_services#Apostille_Service">Apostille Service</a>
+                </li>
+                <li>
+                  <a href="/professional_services#Background_Check">Background Check</a>
+                </li>
+                <li>
+                  <a href="/professional_services#Document_Notarization">Document Notarization</a>
+                </li>
+                <li>
+                  <a href="/professional_services#Document_Translation">Document Translation</a>
+                </li>
+                <li>
+                  <a href="/professional_services#Fingerprinting_Service">Fingerprinting Service</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="partner-logo">
+            <div class="partner-logo-list">
+              <img class="img-fluid" src="{% static '' %}assets/img/icons/partner-logo-boca-chamber.png" alt="Boca Chamber Logo">
+              <img class="img-fluid" src="{% static '' %}assets/img/icons/partner-logo-nna-services.png" alt="NNA Services Logo">
+              <img class="img-fluid" src="{% static '' %}assets/img/icons/partner-logo-shrm.png" alt="SHRM Logo">
+              <img class="img-fluid" src="{% static '' %}assets/img/icons/partner-logo-bbb-trust.png" alt="BBB Trust Logo">
+              <img class="img-fluid" src="{% static '' %}assets/img/icons/partner-logo-signix.png" alt="Signix Logo">
+            </div>
+          </div>
+        </div>
+        <!-- Contact Info & Newsletter -->
+        <div class="col-md-5 col-sm-12">
+          <div class="contact-info">
+            <div class="info-item w-100">
+              <p class="heading">Opening Hours</p>
+              <h5 class="info">Monday - Friday > 9.00 AM to 6.00 PM</h5>
+            </div>
+            <div class="info-item">
+              <p class="heading">Phone</p>
+              <h5 class="info">(561) 491-9550</h5>
+            </div>
+            <div class="info-item">
+              <p class="heading">Email</p>
+              <h5 class="info">info@rightrsolutions.com</h5>
+            </div>
+            <div class="info-item">
+              <p class="heading">Business Address</p>
+              <h5 class="info">1600 NW 2nd Ave; Suite 20 Boca Raton, Fl. 33432</h5>
+            </div>
+          </div>
+          <div class="footer-newsletter">
+            <form method="get" class="needs-validation" novalidate onsubmit="return preloadEmail()">
+              <div class="input-group">
+                <input type="email" class="form-control" placeholder="Enter your email" id="newsletterEmail" required>
+                <div class="input-group-append">
+                  <button class="btn" type="submit" id="submitNewsletter" disabled>Contact Us</button>
+                </div>
+                <div class="invalid-feedback"> Please enter a valid email address. </div>
+              </div>
+            </form>
+          </div>
+          <div class="footer-seal">
+            <div class="seal-list">
+              <img class="img-fluid" src="{% static '' %}assets/img/icons/seal-notary.svg" alt="Notary Public Seal">
+              <img class="img-fluid" src="{% static '' %}assets/img/icons/seal-10years.svg" alt="Ten Years Celebrating Seal">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+ {% endblock content %}
