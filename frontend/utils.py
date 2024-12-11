@@ -1,6 +1,5 @@
 from django.contrib.auth.models import BaseUserManager
 
-
 class UserManager(BaseUserManager):
     def create_user(self, username, email, password=None, **extra_fields):
         if not email:
@@ -27,17 +26,3 @@ class UserManager(BaseUserManager):
             raise ValueError("Superuser must have is_superuser=True.")
 
         return self.create_user(username, email, password, **extra_fields)
-
-
-
-
-from django.core.mail import send_mail
-from django.conf import settings
-from django.shortcuts import reverse
-
-def send_password_reset_email(user, email):
-    subject = "Password Reset Request"
-    thank_you_url = reverse('confirmpassword')
-    message = f"Hello \n\nYou requested a password reset. Please click the link below to reset your password:\n{settings.SITE_URL}{thank_you_url}\n\nThank you!"
-    
-    send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [email])
