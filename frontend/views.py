@@ -118,19 +118,19 @@ def placeorder(request):
 
 
 def signup(request):
-    if request.method == 'POST': 
+    if request.method == 'POST':
         form = UserRegistrationForm(request.POST)
         if form.is_valid():
-            form.save()
+            user = form.save()
             messages.success(request, "User created successfully!")
             return redirect('signin')
         else:
-            print(form.errors)  
+            for error in form.errors.values():
+                messages.error(request, error)
     else:
         form = UserRegistrationForm()
 
     return render(request, 'sign-up.html', {'form': form})
-
 
 def signin(request):
     if request.method == 'POST':
@@ -141,7 +141,7 @@ def signin(request):
         if user is not None:
             login(request, user)
             messages.success(request, "Logged in successfully!")
-            return redirect('thankyou')  
+            return redirect('thank-you')  
         else:
             messages.error(request, "Invalid credentials. Please try again.")
             print("Invalid credentials. Please try again.")
@@ -161,7 +161,7 @@ def forgetpassword(request):
             uid = urlsafe_base64_encode(str(user.pk).encode('utf-8')) 
             
             reset_url = request.build_absolute_uri(
-                reverse('confirmpassword', kwargs={'uidb64': uid, 'token': token})
+                reverse('confirm-password', kwargs={'uidb64': uid, 'token': token})
             )
             
             subject = 'Password Reset Request'
@@ -173,7 +173,7 @@ def forgetpassword(request):
         else:
             messages.error(request, "No account found with this email address.")
         
-        return redirect('forgetpassword')
+        return redirect('forget-password')
 
     return render(request, 'forget-password.html')
 

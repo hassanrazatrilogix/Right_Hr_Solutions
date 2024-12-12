@@ -10,7 +10,7 @@ import uuid
 
 Role_CHOICES = [
     ("ADMIN", "Admin"),
-    ("STAFF", "Staff"),
+    ("STAFF", "Client"),
 ]
 
 class User(AbstractBaseUser, PermissionsMixin):

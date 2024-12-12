@@ -54,6 +54,17 @@
                     <h3 class="title">Register</h3>
                     <h6 class="sub-title">Create Your Account For Free </h6>
                   </div>
+                    <!-- Display messages -->
+                    {% if messages %}
+                    <div class="messages">
+                        {% for message in messages %}
+                            <div class="alert {% if message.tags %} alert-{{ message.tags }} {% endif %}">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
                   <form method="post" action="{% url 'signup' %}" class="needs-validation" novalidate>
                     {% csrf_token %}
                     <div class="form-body">
@@ -119,7 +130,7 @@
                         <div class="col-12">
                           <div class="form-check">
                             <input type="checkbox" class="form-check-input" id="acceptTermsConditions" name="accept_terms_conditions" required>
-                            <label class="form-check-label" for="acceptTermsConditions">I do accept the <a href="/termsconditions">Terms and Conditions</a></label>
+                            <label class="form-check-label" for="acceptTermsConditions">I do accept the <a href="/terms-conditions">Terms and Conditions</a></label>
                             <div class="invalid-feedback">You must accept the terms and conditions.</div>
                           </div>
                         </div>
@@ -165,10 +176,10 @@
             <div class="col-md-12">
               <ul class="inline-menu">
                 <li>
-                  <a href="/privacypolicy">Privacy Policy</a>
+                  <a href="/privacy-policy">Privacy Policy</a>
                 </li>
                 <li>
-                  <a href="/termsconditions">Terms & Conditions</a>
+                  <a href="/terms-conditions">Terms & Conditions</a>
                 </li>
               </ul>
             </div>

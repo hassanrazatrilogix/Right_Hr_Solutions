@@ -1,5 +1,7 @@
+import re
 from django import forms
 from .models import User,Appointment,Order,Document
+from django.core.exceptions import ValidationError
 
 
 class UserRegistrationForm(forms.ModelForm):
@@ -9,9 +11,38 @@ class UserRegistrationForm(forms.ModelForm):
         model = User
         fields = ['username', 'first_name', 'last_name', 'email', 'phone_number', 'password', 'company_name', 'position', 'address', 'country', 'state', 'zip_code', 'accept_terms_conditions']
 
+    def clean_email(self):
+        email = self.cleaned_data['email']
+        email_regex = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+        
+        if not re.match(email_regex, email):
+            raise ValidationError("Enter a valid email address.")
+        
+        if User.objects.filter(email=email).exists():
+            raise ValidationError("This email is already in use. Please use a different email address.")
+        
+        return email
+
+    def clean_password(self):
+        password = self.cleaned_data['password']
+        
+        # Password validation criteria
+        if len(password) < 8:
+            raise ValidationError("Password must be at least 8 characters long.")
+        if not re.search(r'[A-Z]', password):
+            raise ValidationError("Password must contain at least one uppercase letter.")
+        if not re.search(r'[a-z]', password):
+            raise ValidationError("Password must contain at least one lowercase letter.")
+        if not re.search(r'[0-9]', password):
+            raise ValidationError("Password must contain at least one number.")
+        if not re.search(r'[!@#$%^&*(),.?":{}|<>]', password):
+            raise ValidationError("Password must contain at least one special character.")
+        
+        return password
+
     def save(self, commit=True):
         user = super().save(commit=False)
-        user.set_password(self.cleaned_data['password']) 
+        user.set_password(self.cleaned_data['password'])
         if commit:
             user.save()
         return user
