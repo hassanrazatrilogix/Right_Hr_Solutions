@@ -53,6 +53,10 @@ pip install psycopg2-binary
 ```
 python -m pip install --upgrade pip setuptools
 ```
+***SocialAuth***
+```
+pip install django-allauth
+```
 
 ## Environment Variables
  To run this project, you will need to add the following environment variables to your .env file

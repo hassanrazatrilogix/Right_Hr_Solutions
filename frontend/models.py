@@ -10,7 +10,7 @@ import uuid
 
 Role_CHOICES = [
     ("ADMIN", "Admin"),
-    ("STAFF", "Client"),
+    ("STAFF", "Staff"),
 ]
 
 class User(AbstractBaseUser, PermissionsMixin):
@@ -88,3 +88,16 @@ class Document(models.Model):
         return f"Document for Order #{self.order.id} - {self.type}"
 
 
+class BillingDetails(models.Model):
+    
+    first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50)
+    email = models.EmailField()
+    phone_number = models.CharField(max_length=15)
+    address = models.TextField()
+    country = models.CharField(max_length=50)
+    state = models.CharField(max_length=50) 
+    zip_code = models.CharField(max_length=10)
+    
+    def __str__(self):
+        return f"Checkout for {self.user.username}"

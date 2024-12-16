@@ -53,6 +53,16 @@
                     <h3 class="title">Welcome Back</h3>
                     <h6 class="sub-title">Enter Your Credential to Login </h6>
                   </div>
+                  <div class="container">
+                    {% if messages %}
+                        <div class="alert-container">
+                            {% for message in messages %}
+                                <div class="alert alert-{{ message.tags }} mt-2">
+                                    {{ message }}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
                   <form method="post" action="{% url 'signin' %}" class="needs-validation" novalidate>
                     {% csrf_token %}
                     <div class="form-body">
@@ -83,20 +93,11 @@
                 
                   <div class="form-footer text-center">
                     <h6 class="note">or continue using</h6>
+                    {% load socialaccount %}
                     <ul class="social-auth">
                       <li class="social-item">
-                        <a href="#">
-                          <i class="bi bi-google"></i>
-                        </a>
-                      </li>
-                      <li class="social-item">
-                        <a href="#">
-                          <i class="bi bi-facebook"></i>
-                        </a>
-                      </li>
-                      <li class="social-item">
-                        <a href="#">
-                          <i class="bi bi-github"></i>
+                        <a href="{% provider_login_url 'google' %}">
+                          <i class="bi bi-google"></i> Login with Google
                         </a>
                       </li>
                     </ul>

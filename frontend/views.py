@@ -11,9 +11,12 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.template.loader import render_to_string
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseRedirect
+from django.contrib.auth import get_user_model
+from frontend.models import User
 
-from .forms import *
-from .models import *
+from .forms import AppointmentForm , BillingDetailsForm , OrderForm , UserRegistrationForm
+from .models import Document
 
 def home(request):
     return render(request, 'index.html')  
@@ -39,15 +42,30 @@ def appointment(request):
 def backgroundcheck(request):
     return render(request, 'background-check.html') 
 
-def checkout(request):
-    return render(request, 'checkout.html') 
+def checkout(request, order_id=None):
+
+    if request.method == "POST":
+        form = BillingDetailsForm(request.POST)
+        if form.is_valid():
+            billing_details = form.save(commit=False)
+            billing_details.user = request.user
+            billing_details.save()
+            messages.success(request, 'Your billing details have been saved successfully!')
+            return HttpResponseRedirect(reverse('thank-you'))
+        else:
+            messages.error(request, 'There were errors with your submission.')
+    else:
+        form = BillingDetailsForm()
+
+    return render(request, 'checkout.html', {
+        # 'order': order,
+    })
 
 def contactus(request):
     return render(request, 'contact-us.html') 
 
 def cart(request,order_id):
     document_id = order_id
-    print("documnet id -------",document_id )
     if not document_id:
         return render(request, 'cart.html', {'error': 'No document ID provided.'})
 
@@ -121,12 +139,16 @@ def signup(request):
     if request.method == 'POST':
         form = UserRegistrationForm(request.POST)
         if form.is_valid():
-            user = form.save()
+            form.save()
             messages.success(request, "User created successfully!")
             return redirect('signin')
         else:
-            for error in form.errors.values():
-                messages.error(request, error)
+            password_errors = form.errors.get('password', [])
+            context = {
+                'form': form,
+                'password_errors': password_errors
+            }
+            return render(request, 'sign-up.html', context)
     else:
         form = UserRegistrationForm()
 
@@ -141,7 +163,7 @@ def signin(request):
         if user is not None:
             login(request, user)
             messages.success(request, "Logged in successfully!")
-            return redirect('thank-you')  
+            return redirect('home')
         else:
             messages.error(request, "Invalid credentials. Please try again.")
             print("Invalid credentials. Please try again.")
@@ -155,7 +177,6 @@ def forgetpassword(request):
         email = request.POST.get('email')
 
         user = User.objects.filter(email=email).first()  
-
         if user:
             token = default_token_generator.make_token(user)
             uid = urlsafe_base64_encode(str(user.pk).encode('utf-8')) 
@@ -172,7 +193,7 @@ def forgetpassword(request):
             messages.success(request, "Password reset link sent to your email.")
         else:
             messages.error(request, "No account found with this email address.")
-        
+            print("no user exist with this mail")
         return redirect('forget-password')
 
     return render(request, 'forget-password.html')
@@ -180,7 +201,6 @@ def forgetpassword(request):
 
 
 def confirmpassword(request, uidb64, token):
- 
     try:
         uid = urlsafe_base64_decode(uidb64).decode('utf-8')
         print(f"Decoded UID: {uid}")
@@ -231,3 +251,9 @@ def termsconditions(request):
 
 def thankyou(request):
     return render(request, 'thank-you.html') 
+
+@login_required(login_url='signin')
+def adminpanel(request):
+    User = get_user_model() 
+    users = User.objects.all() 
+    return render(request, 'home.html', {'users': users}) 

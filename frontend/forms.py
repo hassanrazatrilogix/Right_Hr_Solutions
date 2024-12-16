@@ -1,6 +1,6 @@
 import re
 from django import forms
-from .models import User,Appointment,Order,Document
+from .models import User, Appointment, Order, Document, BillingDetails
 from django.core.exceptions import ValidationError
 
 
@@ -26,7 +26,6 @@ class UserRegistrationForm(forms.ModelForm):
     def clean_password(self):
         password = self.cleaned_data['password']
         
-        # Password validation criteria
         if len(password) < 8:
             raise ValidationError("Password must be at least 8 characters long.")
         if not re.search(r'[A-Z]', password):
@@ -100,3 +99,7 @@ class OrderForm(forms.ModelForm):
         return cleaned_data
 
 
+class BillingDetailsForm(forms.ModelForm):
+    class Meta:
+        model = BillingDetails
+        fields = ['first_name', 'last_name', 'email', 'phone_number', 'address', 'country', 'state', 'zip_code']

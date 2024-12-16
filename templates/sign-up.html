@@ -55,7 +55,7 @@
                     <h6 class="sub-title">Create Your Account For Free </h6>
                   </div>
                     <!-- Display messages -->
-                    {% if messages %}
+                    <!-- {% if messages %}
                     <div class="messages">
                         {% for message in messages %}
                             <div class="alert {% if message.tags %} alert-{{ message.tags }} {% endif %}">
@@ -63,98 +63,91 @@
                             </div>
                         {% endfor %}
                     </div>
-                {% endif %}
+                {% endif %} -->
 
-                  <form method="post" action="{% url 'signup' %}" class="needs-validation" novalidate>
-                    {% csrf_token %}
-                    <div class="form-body">
+                <form method="post" action="{% url 'signup' %}" class="needs-validation" novalidate>
+                  {% csrf_token %}
+                  <div class="form-body">
                       <div class="row g-3">
-                        <div class="col-sm-6">
-                          <input type="text" class="form-control" id="firstName" name="first_name" placeholder="First name" value="" required>
-                          <div class="invalid-feedback">First name is required.</div>
-                        </div>
-                        <div class="col-sm-6">
-                          <input type="text" class="form-control" id="lastName" name="last_name" placeholder="Last name" value="" required>
-                          <div class="invalid-feedback">Last name is required.</div>
-                        </div>
-                        <div class="col-sm-12">
-                          <input type="email" class="form-control" id="emailAddeass" name="email" placeholder="Your Email" value="" required>
-                          <div class="invalid-feedback">Enter a valid email address.</div>
-                        </div>
-                        <div class="col-sm-12">
-                          <input type="tel" class="form-control" id="phoneNumber" name="phone_number" placeholder="Phone Number" value="" required>
-                          <div class="invalid-feedback">Enter phone number.</div>
-                        </div>
-                        <div class="col-sm-12">
-                          <input type="password" class="form-control" id="password" name="password" placeholder="Password" value="" required>
-                          <div class="invalid-feedback">Enter a strong password.</div>
-                        </div>
-                        <div class="col-sm-6">
-                          <input type="text" class="form-control" id="CompanyName" name="company_name" placeholder="Company Name" value="" required>
-                          <div class="invalid-feedback">Company name is required.</div>
-                        </div>
-                        <div class="col-sm-6">
-                          <input type="text" class="form-control" id="Position" name="position" placeholder="Position" value="" required>
-                          <div class="invalid-feedback">Position is required.</div>
-                        </div>
-                        <div class="col-12">
-                          <input type="text" class="form-control" id="address" name="address" placeholder="Enter Your Address" value="" required>
-                          <div class="invalid-feedback">Enter your address.</div>
-                        </div>
-                        <div class="col-md-4">
-                          <select class="form-select" name="country" id="country" required>
-                              <option value="">Select Country</option> 
-                              <option value="US">United States</option>
-                              <option value="FR">France</option>
-                              <option value="ES">Spain</option>
-                              <option value="UK">United Kingdom</option>
-                          </select>
-                          <div class="invalid-feedback">Please select a valid country.</div>
-                      </div>
-                      
-                      <div class="col-md-4">
-                        <select class="form-select" name="state" id="state" required>
-                            <option value="">Select State</option> 
-                            <option value="FL">Florida</option>
-                            <option value="CA">California</option>
-                            <option value="NY">New York</option>
-                            <option value="TX">Texas</option>
-                        </select>
-                        <div class="invalid-feedback">Please select a valid state.</div>
-                    </div>
-                    
-                        <div class="col-md-4">
-                          <input type="text" class="form-control" id="zip" name="zip_code" placeholder="Zip code" required>
-                          <div class="invalid-feedback">Zip code required.</div>
-                        </div>
-                        <div class="col-12">
-                          <div class="form-check">
-                            <input type="checkbox" class="form-check-input" id="acceptTermsConditions" name="accept_terms_conditions" required>
-                            <label class="form-check-label" for="acceptTermsConditions">I do accept the <a href="/terms-conditions">Terms and Conditions</a></label>
-                            <div class="invalid-feedback">You must accept the terms and conditions.</div>
+                          <div class="col-sm-6">
+                              <input type="text" class="form-control" id="firstName" name="first_name" placeholder="First name" value="" required>
+                              <div class="invalid-feedback">First name is required.</div>
                           </div>
+                          <div class="col-sm-6">
+                              <input type="text" class="form-control" id="lastName" name="last_name" placeholder="Last name" value="" required>
+                              <div class="invalid-feedback">Last name is required.</div>
+                          </div>
+                          <div class="col-sm-12">
+                              <input type="email" class="form-control" id="emailAddeass" name="email" placeholder="Your Email" value="" required>
+                              <div class="invalid-feedback">Enter a valid email address.</div>
+                          </div>
+                          <div class="col-sm-12">
+                              <input type="tel" class="form-control" id="phoneNumber" name="phone_number" placeholder="Phone Number" value="" required>
+                              <div class="invalid-feedback">Enter phone number.</div>
+                          </div>
+                          <div class="col-sm-12">
+                            <input type="password" class="form-control" id="password" name="password" placeholder="Password" value="" required>
+                            {% for error in form.password.errors %}
+                                <div class="text-danger">{{ error }}</div>
+                            {% endfor %}
+                            <div class="invalid-feedback">Enter a strong password.</div>
                         </div>
+                          <div class="col-sm-6">
+                              <input type="text" class="form-control" id="CompanyName" name="company_name" placeholder="Company Name" value="" required>
+                              <div class="invalid-feedback">Company name is required.</div>
+                          </div>
+                          <div class="col-sm-6">
+                              <input type="text" class="form-control" id="Position" name="position" placeholder="Position" value="" required>
+                              <div class="invalid-feedback">Position is required.</div>
+                          </div>
+                          <div class="col-12">
+                              <input type="text" class="form-control" id="address" name="address" placeholder="Enter Your Address" value="" required>
+                              <div class="invalid-feedback">Enter your address.</div>
+                          </div>
+                          <div class="col-md-4">
+                              <select class="form-select" name="country" id="country" required>
+                                  <option value="">Select Country</option> 
+                                  <option value="US">United States</option>
+                                  <option value="FR">France</option>
+                                  <option value="ES">Spain</option>
+                                  <option value="UK">United Kingdom</option>
+                              </select>
+                              <div class="invalid-feedback">Please select a valid country.</div>
+                          </div>
+                          <div class="col-md-4">
+                              <select class="form-select" name="state" id="state" required>
+                                  <option value="">Select State</option> 
+                                  <option value="FL">Florida</option>
+                                  <option value="CA">California</option>
+                                  <option value="NY">New York</option>
+                                  <option value="TX">Texas</option>
+                              </select>
+                              <div class="invalid-feedback">Please select a valid state.</div>
+                          </div>
+                          <div class="col-md-4">
+                              <input type="text" class="form-control" id="zip" name="zip_code" placeholder="Zip code" required>
+                              <div class="invalid-feedback">Zip code required.</div>
+                          </div>
+                          <div class="col-12">
+                              <div class="form-check">
+                                  <input type="checkbox" class="form-check-input" id="acceptTermsConditions" name="accept_terms_conditions" required>
+                                  <label class="form-check-label" for="acceptTermsConditions">I do accept the <a href="/terms-conditions">Terms and Conditions</a></label>
+                                  <div class="invalid-feedback">You must accept the terms and conditions.</div>
+                              </div>
+                          </div>
                       </div>
                       <button class="btn btn-auth" type="submit" id="submitButton" disabled>Register</button>
-                    </div>
-                  </form>
+                  </div>
+              </form>
+              
                   
                   <div class="form-footer text-center">
                     <h6 class="note">or continue using</h6>
+                    {% load socialaccount %}
                     <ul class="social-auth">
                       <li class="social-item">
-                        <a href="#">
-                          <i class="bi bi-google"></i>
-                        </a>
-                      </li>
-                      <li class="social-item">
-                        <a href="#">
-                          <i class="bi bi-facebook"></i>
-                        </a>
-                      </li>
-                      <li class="social-item">
-                        <a href="#">
-                          <i class="bi bi-github"></i>
+                        <a href="{% provider_login_url 'google' %}">
+                          <i class="bi bi-google"></i> Login with Google
                         </a>
                       </li>
                     </ul>
