@@ -27,3 +27,7 @@ venv/
 .history
 
 frontend/__pycache__/*
+
+
+# Credentials
+.env
