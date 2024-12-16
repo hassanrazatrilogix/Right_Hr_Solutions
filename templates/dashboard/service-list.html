@@ -1,0 +1,23 @@
+{% extends 'dashboard-base.html' %}
+{% load static %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<div class="user_details_sec">
+   
+    <h1>Services</h1>
+    <a href="{% url 'service_create' %}">Add New Service</a>
+    <ul>
+        {% for service in services %}
+        <li>
+            <img src="{{ service.icon.url }}" alt="{{ service.name }}" width="50">
+            {{ service.name }} - ${{ service.price }}
+            <a href="{% url 'service_update' service.pk %}">Edit</a>
+            <a href="{% url 'service_delete' service.pk %}">Delete</a>
+        </li>
+        {% endfor %}
+    </ul>
+
+
+</div>
+
+    {% endblock %}

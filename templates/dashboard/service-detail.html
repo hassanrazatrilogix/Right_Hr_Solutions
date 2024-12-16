@@ -1,0 +1,18 @@
+{% extends 'dashboard-base.html' %}
+{% load static %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+    <div class="user_details_sec">
+        <h1>{{ service.name }}</h1>
+        <img src="{{ service.icon.url }}" alt="{{ service.name }}" width="100">
+        <p>Price: ${{ service.price }}</p>
+        <a href="{% url 'service_detail_update_delete' service.pk %}">Edit</a>
+        <form method="post" action="{% url 'service_detail_update_delete' service.pk %}">
+            {% csrf_token %}
+            <button type="submit" formmethod="delete">Delete</button>
+        </form>
+        <a href="{% url 'service_list_create' %}">Back to List</a>
+        
+    </div>
+
+{% endblock %}

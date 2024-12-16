@@ -1,0 +1,16 @@
+{% extends 'dashboard-base.html' %}
+{% load static %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+    <div class="user_details_sec">
+        <h1>Delete Service</h1>
+        <p>Are you sure you want to delete "{{ service.name }}"?</p>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit">Yes, Delete</button>
+            <a href="{% url 'service_list' %}">Cancel</a>
+        </form>
+        
+    </div>
+
+{% endblock %}

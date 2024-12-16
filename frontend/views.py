@@ -13,9 +13,11 @@ from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.contrib.auth import get_user_model
-from frontend.models import User
+from frontend.models import User , Service
+from django.conf import settings
+from django.views import View
 
-from .forms import AppointmentForm , BillingDetailsForm , OrderForm , UserRegistrationForm
+from .forms import AppointmentForm , BillingDetailsForm , OrderForm , UserRegistrationForm , ServiceForm , ContactUs
 from .models import Document
 
 def home(request):
@@ -33,7 +35,7 @@ def appointment(request):
         form = AppointmentForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('cart')
+            return redirect('thank-you')
     else:
         form = AppointmentForm()
 
@@ -61,8 +63,36 @@ def checkout(request, order_id=None):
         # 'order': order,
     })
 
-def contactus(request):
-    return render(request, 'contact-us.html') 
+def contact(request):
+    if request.method == 'POST':
+        form = ContactUs(request.POST)
+        if form.is_valid():
+            contact_message = form.save()
+
+            subject = 'New Contact Us Submission'
+            message = (
+                f"Name: {contact_message.name}\n"
+                f"Email: {contact_message.email}\n"
+                f"Phone: {contact_message.phone}\n"
+                f"Address: {contact_message.address}\n"
+                f"Message: {contact_message.comments}"
+            )
+            from_email = settings.DEFAULT_FROM_EMAIL
+            recipient_list = [settings.DEFAULT_FROM_EMAIL]
+
+            try:
+                send_mail(subject, message, from_email, recipient_list)
+                messages.success(request, 'Your message has been sent successfully!')
+            except Exception as e:
+                messages.error(request, f'Error sending email: {str(e)}')
+
+            return redirect('thank-you')
+        else:
+            messages.error(request, 'Please correct the errors below.')
+    else:
+        form = ContactUs()
+
+    return render(request, 'contact-us.html', {'form': form})
 
 def cart(request,order_id):
     document_id = order_id
@@ -110,7 +140,8 @@ def placeorder(request):
         order_form = OrderForm(request.POST) 
         files = request.FILES.getlist('upload_documents')
         types = request.POST.getlist('type')
-          
+
+
         if order_form.is_valid() and files and types:
             category_price = order_form.cleaned_data['category_price']
 
@@ -129,9 +160,10 @@ def placeorder(request):
             messages.error(request, 'Please correct the errors below.')
     else:
         order_form = OrderForm()
-
+        services = Service.objects.all()
     return render(request, 'place-order.html', {
         'order_form': order_form,
+        'services': services  
     })
 
 
@@ -252,8 +284,47 @@ def termsconditions(request):
 def thankyou(request):
     return render(request, 'thank-you.html') 
 
+
+        
 @login_required(login_url='signin')
 def adminpanel(request):
     User = get_user_model() 
     users = User.objects.all() 
     return render(request, 'home.html', {'users': users}) 
+
+# service - CRUD
+
+def service_list(request):
+    services = Service.objects.all()
+    return render(request, 'service-list.html', {'services': services})
+
+
+def service_create(request):
+    if request.method == 'POST':
+        form = ServiceForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('service_list')
+    else:
+        form = ServiceForm()
+    return render(request, 'service-form.html', {'form': form})
+
+
+def service_update(request, pk):
+    service = get_object_or_404(Service, pk=pk)
+    if request.method == 'POST':
+        form = ServiceForm(request.POST, request.FILES, instance=service)
+        if form.is_valid():
+            form.save()
+            return redirect('service_list')
+    else:
+        form = ServiceForm(instance=service)
+    return render(request, 'service-form.html', {'form': form})
+
+
+def service_delete(request, pk):
+    service = get_object_or_404(Service, pk=pk)
+    if request.method == 'POST':
+        service.delete()
+        return redirect('service_list')
+    return render(request, 'service-confirm-delete.html', {'service': service})

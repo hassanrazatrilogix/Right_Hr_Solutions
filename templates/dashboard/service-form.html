@@ -1,0 +1,16 @@
+{% extends 'dashboard-base.html' %}
+{% load static %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<div class="user_details_sec">
+    <!-- service_form.html -->
+    <h1>{% if form.instance.pk %}Edit{% else %}Add{% endif %} Service</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Save</button>
+        <a href="{% url 'service_list' %}">Cancel</a>
+    </form>
+
+</div>
+{% endblock %}

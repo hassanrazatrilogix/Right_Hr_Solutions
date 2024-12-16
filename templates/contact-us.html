@@ -74,39 +74,40 @@
                   </div>
                   <!-- Contact Form -->
                   <div class="contact-form">
-                    <form method="get" action="/thank-you" class="needs-validation" novalidate>
+                    <form method="post" action="{% url 'contact-us' %}"class="needs-validation" novalidate>
+                      {% csrf_token %}
                       <div class="row g-4">
                         <div class="col-12">
                           <label for="yourName" class="form-label">Name</label>
-                          <input type="text" class="form-control" id="yourName" placeholder="" required>
+                          <input type="text" class="form-control" id="yourName" name="name" placeholder="" name=" " required>
                           <div class="invalid-feedback"> Name is required. </div>
                         </div>
                         <div class="col-lg-6">
                           <label for="emailAddress" class="form-label">Email</label>
-                          <input type="email" class="form-control" id="emailAddress" placeholder="" required>
+                          <input type="email" class="form-control" id="emailAddress" name="email"  placeholder="" required>
                           <div class="invalid-feedback">Enter valid email.</div>
                         </div>
                         <div class="col-lg-6">
                           <label for="phoneNumber" class="form-label">Phone</label>
-                          <input type="tel" class="form-control" id="phoneNumber" placeholder="" required>
+                          <input type="tel" class="form-control" id="phoneNumber" name="phone" placeholder="" required>
                           <div class="invalid-feedback">Enter phone number.</div>
                         </div>
                         <div class="col-12">
                           <label for="address" class="form-label">Address</label>
-                          <input type="text" class="form-control" id="address" placeholder="" required>
+                          <input type="text" class="form-control" id="address" name="address" placeholder=""  required>
                           <div class="invalid-feedback">Enter your address. </div>
                         </div>                        
                         <div class="col-12">
                           <label for="commentsQuestions" class="form-label">Comments or Questions <span
                               class="small">(Optional)</span>
                           </label>
-                          <textarea class="form-control" id="commentsQuestions"
+                          <textarea class="form-control" id="commentsQuestions" name="comments"
                             placeholder="" value=""></textarea>
                           <div class="invalid-feedback">Enter your comments or questions. </div>
                         </div>
                         <div class="col-12">
                           <div class="form-check">
-                            <input type="checkbox" class="form-check-input" id="acceptTermsConditions" required>
+                            <input type="checkbox" class="form-check-input" id="acceptTermsConditions" name="accept_terms" required>
                             <label class="form-check-label" for="acceptTermsConditions">I do accept the <a
                               href="/terms-conditions">Terms and Conditions</a>
                           </label>

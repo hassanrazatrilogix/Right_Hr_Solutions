@@ -1,6 +1,6 @@
 from django.urls import path,include
 from . import views
-from .views import cart, checkout
+from .views import cart, checkout , service_list, service_create, service_update, service_delete
 
 urlpatterns = [
     path('', views.home, name='home'),
@@ -8,7 +8,7 @@ urlpatterns = [
     path('apostille-services/', views.apostilleservices, name='apostille-services'),
     path('appoinment/', views.appointment, name='appoinment'),
     path('background-check/', views.backgroundcheck, name='background-check'),
-    path('contact-us/', views.contactus, name='contact-us'),
+    path('contact-us/', views.contact, name='contact-us'),
     path('cart/', cart, name='cart'),
     path('cart/<str:order_id>/', cart, name='cart_with_uuid'),
     path('checkout/', checkout, name='checkout'),
@@ -31,4 +31,10 @@ urlpatterns = [
     path('thank-you/', views.thankyou, name='thank-you'),
     path('home/', views.adminpanel, name='home'),
     path('accounts/', include('allauth.urls')),
+
+
+    path('service/', service_list, name='service_list'),  
+    path('create/', service_create, name='service_create'),  
+    path('<int:pk>/update/', service_update, name='service_update'),  
+    path('<int:pk>/delete/', service_delete, name='service_delete'),  
 ]

@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import (
     AbstractBaseUser,
-    BaseUserManager,
+    User,
     PermissionsMixin,
 )
 from frontend.utils import UserManager
@@ -89,7 +89,7 @@ class Document(models.Model):
 
 
 class BillingDetails(models.Model):
-    
+    user = models.ForeignKey(User, on_delete=models.CASCADE) 
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     email = models.EmailField()
@@ -101,3 +101,26 @@ class BillingDetails(models.Model):
     
     def __str__(self):
         return f"Checkout for {self.user.username}"
+
+
+class ContactUs(models.Model):
+    name = models.CharField(max_length=25)
+    email=models.EmailField()
+    phone=models.CharField(max_length=15)
+    address=models.TextField()
+    comments = models.TextField(blank=True, null=True)
+    accepted_terms = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"{self.name} ({self.email})"
+    
+
+class Service(models.Model):
+    name = models.CharField(max_length=255)
+    icon = models.ImageField(upload_to='services/icons/')
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+
+    def __str__(self):
+        return self.name
+    
+

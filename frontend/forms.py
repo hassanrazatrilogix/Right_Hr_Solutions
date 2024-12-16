@@ -1,6 +1,6 @@
 import re
 from django import forms
-from .models import User, Appointment, Order, Document, BillingDetails
+from .models import User, Appointment, Order, ContactUs, BillingDetails, Service
 from django.core.exceptions import ValidationError
 
 
@@ -103,3 +103,13 @@ class BillingDetailsForm(forms.ModelForm):
     class Meta:
         model = BillingDetails
         fields = ['first_name', 'last_name', 'email', 'phone_number', 'address', 'country', 'state', 'zip_code']
+
+class ContactUs(forms.ModelForm):
+    class Meta:
+        model = ContactUs
+        fields = ['name', 'email', 'phone', 'address', 'comments', 'accepted_terms']
+
+class ServiceForm(forms.ModelForm):
+    class Meta:
+        model = Service
+        fields = ['name', 'icon', 'price']       

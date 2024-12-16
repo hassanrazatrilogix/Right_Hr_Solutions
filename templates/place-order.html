@@ -36,19 +36,22 @@
                           </div>
                           <div class="form-body">
                             <div class="category-list-group list-group list-group-checkable">
+
+                              {% for service in services %}
                               <input class="list-group-item-check pe-none" type="radio" name="categoriesList"
-                                data-category="Apostille_Service" id="Apostille_Service" value="Apostille Service"
-                               >
-                              <label class="list-group-item rounded-3 py-3" for="Apostille_Service">
+                              data-category="{{ service.name }}" id="{{ service.name }}" value="{{ service.name }}">
+                       <label class="list-group-item rounded-3 py-3" for="{{ service.name }}">
                                 <div class="service-category">
-                                  <img class="service-icon" src="{% static '' %}assets/img/icons/services-icon-apostille-services.svg"
+                                  <img class="service-icon" src="{{ service.icon.url }}"
                                     alt="Apostille Service">
-                                  <h6 class="service-heading">Apostille Service</h6>
-                                  <p class="price">$109.00</p>
+                                  <h6 class="service-heading">{{ service.name }}</h6>
+                                  <p class="price">${{ service.price }}</p>
                                   <input type="hidden" name="prices[Apostille_Service]" value="109.00">
                                 </div>
                               </label>
-                              <input class="list-group-item-check pe-none" type="radio" name="categoriesList"
+                              {% endfor %}
+
+                              <!-- <input class="list-group-item-check pe-none" type="radio" name="categoriesList"
                                 data-category="Background_Check" id="Background_Check" value="Background Check">
                               <label class="list-group-item rounded-3 py-3" for="Background_Check">
                                 <div class="service-category">
@@ -154,7 +157,7 @@
                                   <p class="price">$120.00</p>
                                   <input type="hidden" name="prices[Training_Development]" value="100.00">
                                 </div>
-                              </label>
+                              </label> -->
                             </div>
                           </div>
                         </div>
