@@ -18,7 +18,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     first_name = models.CharField(max_length=255, blank=False)
     last_name = models.CharField(max_length=255, blank=False)
     email = models.EmailField(unique=True)
-    phone_number = models.CharField(max_length=15, blank=False)  
+    phone_number = models.CharField(max_length=30, blank=False)  
 
  
     password = models.CharField(max_length=255)
@@ -29,7 +29,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     address = models.CharField(max_length=1024, blank=False)
     country = models.CharField(max_length=255, blank=False)
     state = models.CharField(max_length=255, blank=False)
-    zip_code = models.CharField(max_length=20, blank=False)
+    zip_code = models.IntegerField(max_length=20, blank=False)
 
 
     accept_terms_conditions = models.BooleanField(default=False)

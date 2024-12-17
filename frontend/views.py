@@ -170,21 +170,32 @@ def placeorder(request):
 def signup(request):
     if request.method == 'POST':
         form = UserRegistrationForm(request.POST)
+        print("start-------------")
         if form.is_valid():
+            print("form is valid --------------")
             form.save()
             messages.success(request, "User created successfully!")
             return redirect('signin')
         else:
+            print("form is invalid ------------")
             password_errors = form.errors.get('password', [])
+            email_errors = form.errors.get('email', [])
+            print("email_errors : ", email_errors)
+            phone_number_errors = form.errors.get('phone_number', [])
+            print("phone_number_errors : ", phone_number_errors)
             context = {
                 'form': form,
-                'password_errors': password_errors
+                'password_errors': password_errors,
+                'email_errors': email_errors,
+                'phone_number_errors': phone_number_errors
             }
+       
             return render(request, 'sign-up.html', context)
     else:
         form = UserRegistrationForm()
 
     return render(request, 'sign-up.html', {'form': form})
+
 
 def signin(request):
     if request.method == 'POST':
@@ -204,32 +215,36 @@ def signin(request):
     return render(request, 'sign-in.html')
 
 
+
 def forgetpassword(request):
+    context = {}
     if request.method == "POST":
         email = request.POST.get('email')
 
-        user = User.objects.filter(email=email).first()  
-        if user:
-            token = default_token_generator.make_token(user)
-            uid = urlsafe_base64_encode(str(user.pk).encode('utf-8')) 
-            
-            reset_url = request.build_absolute_uri(
-                reverse('confirm-password', kwargs={'uidb64': uid, 'token': token})
-            )
-            
-            subject = 'Password Reset Request'
-            
-            message = render_to_string('password_reset_email.html', {'reset_url': reset_url})
-            
-            send_mail(subject, message, 'pythonweb@exoticaitsolutions.com', [email])
-            messages.success(request, "Password reset link sent to your email.")
+        if not email:
+            context['message'] = "Enter a valid email address."
         else:
-            messages.error(request, "No account found with this email address.")
-            print("no user exist with this mail")
-        return redirect('forget-password')
+            user = User.objects.filter(email=email).first()
+            if user:
+                token = default_token_generator.make_token(user)
+                uid = urlsafe_base64_encode(str(user.pk).encode('utf-8')) 
+                
+                reset_url = request.build_absolute_uri(
+                    reverse('confirm-password', kwargs={'uidb64': uid, 'token': token})
+                )
+                
+                subject = 'Password Reset Request'
+                
+                message = render_to_string('password_reset_email.html', {'reset_url': reset_url})
+                
+                send_mail(subject, message, 'pythonweb@exoticaitsolutions.com', [email])
+                messages.success(request, "Password reset link sent to your email.")
+                context['message'] = "Password reset link sent to your email."
+            else:
+                messages.error(request, "No account found with this email address.")
+                context['message'] = "No account found with this email address."
 
-    return render(request, 'forget-password.html')
-
+    return render(request, 'forget-password.html', context)
 
 
 def confirmpassword(request, uidb64, token):
