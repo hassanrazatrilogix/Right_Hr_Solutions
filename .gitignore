@@ -29,8 +29,6 @@ venv/
 frontend/__pycache__/*
 
 
-# Credentials
+# Ignore sensitive files
 .env
-
-# Ignore settings.py
-settings.py
+rightsolutions/settings.py
