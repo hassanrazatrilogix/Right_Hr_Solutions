@@ -2,17 +2,19 @@
 {% load static %}
 {% block title %}Dashboard{% endblock %}
 {% block content %}
-<div class="user_details_sec">
+<div class="user_details_sec add_new_service">
    
     <h1>Services</h1>
-    <a href="{% url 'service_create' %}">Add New Service</a>
+    <a class="add_new_service_btn" href="{% url 'service_create' %}">Add New Service</a>
     <ul>
         {% for service in services %}
         <li>
             <img src="{{ service.icon.url }}" alt="{{ service.name }}" width="50">
-            {{ service.name }} - ${{ service.price }}
-            <a href="{% url 'service_update' service.pk %}">Edit</a>
-            <a href="{% url 'service_delete' service.pk %}">Delete</a>
+            <h4 class="service_name">{{ service.name }} </h4> <p class="service_name">${{ service.price }}</p>
+            <div class="service_btns">
+            <a class="edit_btn" href="{% url 'service_update' service.pk %}">Edit</a>
+            <a class="delete_btn"  href="{% url 'service_delete' service.pk %}">Delete</a>
+            </div>
         </li>
         {% endfor %}
     </ul>

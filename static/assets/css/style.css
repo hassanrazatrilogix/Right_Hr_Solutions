@@ -1917,13 +1917,13 @@
  /* Step form CSS */
  
  .step_process {
-   display: flex;
-   align-items: center;
-   gap: 10px;
-   justify-content: end;
-   position: absolute;
-   right: 0;
-   bottom: 5px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: end;
+  position: absolute;
+  right: 15px;
+  bottom: 20px;
  }
  
  .step_process button {
@@ -1942,6 +1942,11 @@
  
  .step_form_process {
    position: relative;
+   background: #ececec;
+    margin-bottom: 30px;
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid #b3b3b3;
  }
 
  #place_order .list-group-item-check:checked+.list-group-item {
@@ -1983,6 +1988,9 @@ text-align: left;
 padding-left: 40px;
 color: #000;
 margin-bottom: 20px;
+}
+.invalid-feedback {
+  font-size: 15px;
 }
 .cart-container .notification {
 display: flex;
@@ -2273,3 +2281,5 @@ font-size: 16px;
 width: 150px !important;
 }
 }
+
+

@@ -2,22 +2,15 @@
 {% load static %}
 {% block title %}Dashboard{% endblock %}
 {% block content %}
-    <div class="user_details_sec">
-        {% for user in users %}
-        <div class="details_user">
-            <div class="us_img">
-                <img src="{% static 'dashboard/images/profile.png' %}" alt="Profile Image">
-            </div>
-            <div class="user_text">
-                <h3>{{ user.first_name }} {{ user.last_name }}</h3>
-                <p>{{ user.email }}</p>
-                <p>{{ user.phone_number }}</p>
-            </div>
-        </div>
-        {% empty %}
-        <p>No users found.</p>
-        {% endfor %}
-        
-    </div>
+<div class="user_details_sec">
+  <h1>Welcome to our dashboard</h1>
 
+    <div class="home_dashboard">
+        <img class="img-fluid" src="{% static '' %}assets/img/logo.svg" alt="logo">
+        <h3>Welcome to HR Right Solutions</h3>
+        <p>"Welcome to our dashboard – your central hub for insights, data, and seamless management. Explore, analyze, and take control with ease!"</p>
+    </div>
+   
+    
+</div>
 {% endblock %}

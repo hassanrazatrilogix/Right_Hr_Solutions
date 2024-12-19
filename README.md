@@ -44,10 +44,6 @@ pip install -r requirements.txt
 
 # Individual Dependencies
 
-***psycopg2***
-```
-pip install psycopg2-binary
-```
 
 ***Setuptools***
 ```

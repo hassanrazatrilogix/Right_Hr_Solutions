@@ -63,18 +63,19 @@
                     <div class="row g-3">
                       <div class="col-sm-6">
                         <input type="text" class="form-control" id="firstName" name="first_name"
-                          placeholder="First name" value="" required>
+                          placeholder="First name" value="{{ form.first_name.value|default:'' }}" required>
                         <div class="invalid-feedback">First name is required.</div>
                       </div>
                       <div class="col-sm-6">
                         <input type="text" class="form-control" id="lastName" name="last_name" placeholder="Last name"
-                          value="" required>
+                          value="{{ form.last_name.value|default:'' }}" required>
                         <div class="invalid-feedback">Last name is required.</div>
                       </div>
                       <div class="col-sm-12">
                         <input type="email" name="email" id="emailAddeass" placeholder="email"
                           class="form-control {% if email_errors %}is-invalid{% endif %}"
                           value="{{ form.email.value|default:'' }}" required>
+                          <div class="invalid-feedback">E-mail is required.</div>
                         {% for error in email_errors %}
                         <div class="invalid-feedback">{{ error }}</div>
                         {% endfor %}
@@ -84,6 +85,7 @@
                           id="phoneNumber" name="phone_number" placeholder="Phone Number "
                           value="{{ form.phone_number.value|default:'' }}" required
                           pattern="^\+?\d{1,4}[-.\s]?\(?\d{1,5}\)?[-.\s]?\d{1,9}[-.\s]?\d{1,9}$">
+                          <div class="invalid-feedback">Phone Number is required.</div>
                         {% for error in phone_number_errors %}
                         <div class="invalid-feedback">{{ error }}</div>
                         {% endfor %}
@@ -91,7 +93,7 @@
 
                       <div class="col-sm-12">
                         <input type="password" class="form-control" id="password" name="password" placeholder="Password"
-                          value="" required>
+                          value="{{ form.password.value|default:'' }}" required>
                         {% for error in form.password.errors %}
                         <div class="text-danger">{{ error }}</div>
                         {% endfor %}
@@ -99,17 +101,17 @@
                       </div>
                       <div class="col-sm-6">
                         <input type="text" class="form-control" id="CompanyName" name="company_name"
-                          placeholder="Company Name" value="" required>
+                          placeholder="Company Name" value="{{ form.company_name.value|default:'' }}" required>
                         <div class="invalid-feedback">Company name is required.</div>
                       </div>
                       <div class="col-sm-6">
                         <input type="text" class="form-control" id="Position" name="position" placeholder="Position"
-                          value="" required>
+                          value="{{ form.position.value|default:'' }}" required>
                         <div class="invalid-feedback">Position is required.</div>
                       </div>
                       <div class="col-12">
                         <input type="text" class="form-control" id="address" name="address"
-                          placeholder="Enter Your Address" value="" required>
+                          placeholder="Enter Your Address" value="{{ form.address.value|default:'' }}" required>
                         <div class="invalid-feedback">Enter your address.</div>
                       </div>
                       <div class="col-md-4">

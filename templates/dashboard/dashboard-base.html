@@ -18,7 +18,7 @@
 				<div class="bottom_menu_sec">
 					<ul>
 						<li><a href="/home" class="menu-item active"><img src="{% static '' %}dashboard/images/home-page.png" alt="">Home</a></li>
-						<li><a href="#" class="menu-item"><img src="{% static '' %}dashboard/images/user.png" alt="">Users</a></li>
+						<li><a href="/user" class="menu-item"><img src="{% static '' %}dashboard/images/user.png" alt="">Users</a></li>
 					
 						<li><a href="/service" class="menu-item"><img src="{% static '' %}dashboard/images/purse.png" alt="">Services</a></li>
 						
@@ -27,12 +27,15 @@
 					</ul>										
 				</div>
 				<div class="log_out_sec">
-					<a href="/" class="log_ot"><img src="{% static '' %}dashboard/images/sign-out-option.png" class="sign_out" alt="">Log Out</a>
+					<a href="{% url 'logout' %}" class="log_ot">
+						<img src="{% static 'dashboard/images/sign-out-option.png' %}" class="sign_out" alt="Sign Out">
+						Log Out
+					  </a>					  
 				</div>
 			</div>
             <div class="right_sidebar">
                 <div class="main_title">
-                    <h2 class="title">Home</h2>
+                   <a href="/" ><h2 class="title">Home</h2></a> 
                 </div>
         <main>
             {% block content %}

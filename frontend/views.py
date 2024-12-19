@@ -16,9 +16,11 @@ from django.contrib.auth import get_user_model
 from frontend.models import User , Service
 from django.conf import settings
 from django.views import View
-
+from django.contrib.auth import logout
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 from .forms import AppointmentForm , BillingDetailsForm , OrderForm , UserRegistrationForm , ServiceForm , ContactUs
-from .models import Document
+from .models import Document , NewsletterSubscriber
 
 def home(request):
     return render(request, 'index.html')  
@@ -36,10 +38,19 @@ def appointment(request):
         if form.is_valid():
             form.save()
             return redirect('thank-you')
+        else:
+            email_errors = form.errors.get('email', [])
+            if email_errors:
+                specific_email_error = email_errors[0]  
+            else:
+                specific_email_error = None
+            print("email_errors : ", specific_email_error)
+            return render(request, 'appoinment.html', {'form': form, 'specific_email_error': specific_email_error})
     else:
         form = AppointmentForm()
 
     return render(request, 'appoinment.html', {'form': form})
+
 
 def backgroundcheck(request):
     return render(request, 'background-check.html') 
@@ -88,23 +99,67 @@ def contact(request):
 
             return redirect('thank-you')
         else:
+            error_messages = form.errors.as_data()
+            context_errors = {}
+            for field, errors in error_messages.items():
+                # Convert each error to a clean string
+                clean_errors = [error.message for error in errors]
+                # Further clean up the error message
+                context_errors[field] = [err.replace("['", "").replace("']", "") for err in clean_errors]
+            
             messages.error(request, 'Please correct the errors below.')
+            return render(request, 'contact-us.html', {'form': form, 'errors': context_errors})
+
     else:
         form = ContactUs()
 
     return render(request, 'contact-us.html', {'form': form})
 
+
+@csrf_exempt
+def newsletter_submission(request):
+    if request.method == "POST":
+        email = request.POST.get("email")
+        if email:
+            try:
+                subscriber, created = NewsletterSubscriber.objects.get_or_create(email=email)
+                if not created:
+                    return JsonResponse({"message": "You are already subscribed.", "status": "error"})
+
+                send_mail(
+                    subject="Newsletter Subscription Confirmation",
+                    message="Thank you for subscribing to our newsletter!",
+                    from_email="pythonweb@exoticaitsolutions.com",
+                    recipient_list=[email],
+                    fail_silently=False,
+                )
+
+                return JsonResponse({"message": "Thank you for subscribing!", "status": "success"})
+            except Exception as e:
+                return JsonResponse({"message": f"Error: {str(e)}", "status": "error"})
+        else:
+            return JsonResponse({"message": "Invalid email address.", "status": "error"})
+    return JsonResponse({"message": "Invalid request method.", "status": "error"})
+
+
 def cart(request,order_id):
+   
     document_id = order_id
     if not document_id:
         return render(request, 'cart.html', {'error': 'No document ID provided.'})
 
     document = get_object_or_404(Document, unique_id=document_id)
+
+  
     order = document.order
+
+    order_categories = order.categoriesList
+    service_data = Service.objects.get(id=order_categories)
 
     return render(request, 'cart.html', {
         'order': order,
         'document': document,
+        'service_name':service_data
     })
 
 def documenttranslationservice(request):
@@ -136,7 +191,9 @@ def professional_services(request):
 
 @login_required(login_url='signin')
 def placeorder(request):
+
     if request.method == 'POST':
+       
         order_form = OrderForm(request.POST) 
         files = request.FILES.getlist('upload_documents')
         types = request.POST.getlist('type')
@@ -170,14 +227,14 @@ def placeorder(request):
 def signup(request):
     if request.method == 'POST':
         form = UserRegistrationForm(request.POST)
-        print("start-------------")
+
         if form.is_valid():
-            print("form is valid --------------")
+      
             form.save()
             messages.success(request, "User created successfully!")
-            return redirect('signin')
+            return redirect('welcome')
         else:
-            print("form is invalid ------------")
+
             password_errors = form.errors.get('password', [])
             email_errors = form.errors.get('email', [])
             print("email_errors : ", email_errors)
@@ -205,16 +262,20 @@ def signin(request):
         user = authenticate(request, email=email, password=password)
         if user is not None:
             login(request, user)
-            messages.success(request, "Logged in successfully!")
-            return redirect('home')
+
+            if user.is_staff or user.is_superuser:  
+                return redirect('home') 
+            else:
+                return redirect('professional-services') 
         else:
             messages.error(request, "Invalid credentials. Please try again.")
-            print("Invalid credentials. Please try again.")
             return redirect('signin')
 
     return render(request, 'sign-in.html')
 
-
+def logout_view(request):
+    logout(request) 
+    return redirect('/')
 
 def forgetpassword(request):
     context = {}
@@ -299,21 +360,27 @@ def termsconditions(request):
 def thankyou(request):
     return render(request, 'thank-you.html') 
 
+def welcome(request):
+    return render(request, 'welcome.html') 
 
-        
+      
 @login_required(login_url='signin')
 def adminpanel(request):
+    return render(request, 'home.html') 
+
+@login_required(login_url='signin')
+def user(request):
     User = get_user_model() 
     users = User.objects.all() 
-    return render(request, 'home.html', {'users': users}) 
+    return render(request, 'user.html', {'users': users}) 
 
 # service - CRUD
-
+@login_required(login_url='signin')
 def service_list(request):
     services = Service.objects.all()
     return render(request, 'service-list.html', {'services': services})
 
-
+@login_required(login_url='signin')
 def service_create(request):
     if request.method == 'POST':
         form = ServiceForm(request.POST, request.FILES)
@@ -324,7 +391,7 @@ def service_create(request):
         form = ServiceForm()
     return render(request, 'service-form.html', {'form': form})
 
-
+@login_required(login_url='signin')
 def service_update(request, pk):
     service = get_object_or_404(Service, pk=pk)
     if request.method == 'POST':
@@ -336,7 +403,7 @@ def service_update(request, pk):
         form = ServiceForm(instance=service)
     return render(request, 'service-form.html', {'form': form})
 
-
+@login_required(login_url='signin')
 def service_delete(request, pk):
     service = get_object_or_404(Service, pk=pk)
     if request.method == 'POST':

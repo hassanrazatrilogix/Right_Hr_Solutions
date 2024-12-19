@@ -1,6 +1,6 @@
 from django.urls import path,include
 from . import views
-from .views import cart, checkout , service_list, service_create, service_update, service_delete
+from .views import cart, checkout , service_list, service_create, service_update, service_delete,logout_view
 
 urlpatterns = [
     path('', views.home, name='home'),
@@ -9,6 +9,7 @@ urlpatterns = [
     path('appoinment/', views.appointment, name='appoinment'),
     path('background-check/', views.backgroundcheck, name='background-check'),
     path('contact-us/', views.contact, name='contact-us'),
+    path("newsletter-submission/", views.newsletter_submission, name="newsletter_submission"),
     path('cart/', cart, name='cart'),
     path('cart/<str:order_id>/', cart, name='cart_with_uuid'),
     path('checkout/', checkout, name='checkout'),
@@ -26,10 +27,13 @@ urlpatterns = [
     path('placeorder/', views.placeorder, name='placeorder'),
     path('signin/', views.signin, name='signin'),
     path('signup/', views.signup, name='signup'),
+    path('logout/', logout_view, name='logout'),
     path('forget-password/', views.forgetpassword, name='forget-password'),
     path('confirm-password/<uidb64>/<token>/', views.confirmpassword, name='confirm-password'),
     path('thank-you/', views.thankyou, name='thank-you'),
+    path('welcome/', views.welcome, name='welcome'),
     path('home/', views.adminpanel, name='home'),
+    path('user/', views.user, name='user'),
     path('accounts/', include('allauth.urls')),
 
 

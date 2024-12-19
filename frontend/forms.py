@@ -48,6 +48,9 @@ class UserRegistrationForm(forms.ModelForm):
 
     def clean_phone_number(self):
         phone_number = self.cleaned_data['phone_number']
+
+        if len(phone_number) < 10:
+            raise ValidationError("Phone number must be at least 10 characters.")
         
         # Regular expression to match various phone number formats
         phone_regex = r'^\+?\d{1,3}?[-.\s]?(\(\d{1,4}\)|\d{1,4})[-.\s]?\d{1,9}([-.\s]?\d{1,9})*$'
@@ -75,8 +78,24 @@ class AppointmentForm(forms.ModelForm):
     class Meta:
         model = Appointment
         fields = ['service', 'date', 'time', 'name', 'email', 'phone', 'address', 'comments', 'terms']
+
+    def clean_email(self):
+        email = self.cleaned_data['email']
+       
+        email_regex = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
         
-        widgets = {
+        if not re.match(email_regex, email):
+            raise ValidationError("Enter a valid email address.")
+   
+        if not email.endswith('.com'):
+            raise ValidationError("Email domain must end with '.com'.")
+        
+        if Appointment.objects.filter(email=email).exists():
+            raise ValidationError("This email is already in use. Please use a different email address.")
+        
+        return email   
+         
+    widgets = {
             'date': forms.DateInput(attrs={'type': 'date'}),
             'time': forms.TimeInput(attrs={'type': 'time'}),
         }
@@ -104,7 +123,7 @@ class OrderForm(forms.ModelForm):
         selected_category = cleaned_data.get('categoriesList')
 
         if selected_category == 'Apostille Service':
-            cleaned_data['category_price'] = 109.00
+            cleaned_data['category_price'] = 109.000
         elif selected_category == 'Background Check':
             cleaned_data['category_price'] = 100.00
         elif selected_category == 'Staffing & Recruitment':
@@ -127,6 +146,19 @@ class ContactUs(forms.ModelForm):
         model = ContactUs
         fields = ['name', 'email', 'phone', 'address', 'comments', 'accepted_terms']
 
+    def clean_email(self):
+        email = self.cleaned_data['email']
+       
+        email_regex = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+        
+        if not re.match(email_regex, email):
+            raise ValidationError("Enter a valid email address.")
+        
+        if not email.endswith('.com'):
+            raise ValidationError("Email domain must end with .com")
+        
+        return email
+    
 class ServiceForm(forms.ModelForm):
     class Meta:
         model = Service

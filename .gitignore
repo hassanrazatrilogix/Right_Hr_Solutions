@@ -31,3 +31,6 @@ frontend/__pycache__/*
 
 # Credentials
 .env
+
+# Ignore settings.py
+settings.py

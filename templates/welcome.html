@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Right HR Solutions – HR Solutions & Professional Services{% endblock title %}
+
+ {% block content %}
+
+ <section id="thank_you" class="d-flex align-items-center justify-center">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-73 m-auto text-center">
+        <div class="section-heading">
+          <h2 class="title">Welcome to Right HR Solutions!</h2>
+          <h5 class="sub-title">Welcome to our website! We're thrilled to have you here. Explore our offerings, learn more about what we do, and discover how we can serve you best.</h5>
+        </div>
+        <div class="section-content text-center">
+          <div class="thank-you-content">
+            <img class="img-fluid" src="{% static '' %}assets/img/image/welcome.png" alt="Welcome">
+          </div>
+          <a href="/" class="btn btn-big mt-5 Back_to_home_btn">Back to Home</a>
+          <a href="/signin" class="btn btn-big mt-5 login_btn">Login</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+        <!-- End Thank You Section  -->
+      </main>
+      <!-- End Main Body -->
+
+      <!-- Footer Bottom Section -->
+ {% endblock content %}
