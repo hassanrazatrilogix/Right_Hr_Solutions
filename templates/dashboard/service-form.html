@@ -3,14 +3,80 @@
 {% block title %}Dashboard{% endblock %}
 {% block content %}
 <div class="user_details_sec edit_service">
-    <!-- service_form.html -->
-    <h1>{% if form.instance.pk %}Edit{% else %}Add{% endif %} Service</h1>
+
+    <div class="top_main_heading services_sec_top">
+        <div class="heading_breadcrumbs">
+            <h1>{% if form.instance.pk %}Edit{% else %}Add{% endif %} Service</h1>
+            <nav aria-label="Breadcrumb">
+                <ul class="breadcrumb">
+                <li><a href="/dashboard/">Dashboard</a></li>
+                <li><a href="/current-page">Service</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="top_add_services">
+            <a class="cancel_edit_btn btn btn-secondary" href="{% url 'service_list' %}">Back to List</a>
+        </div>
+    </div>
+
+   
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Save</button>
-        <a class="cancel_edit_btn" href="{% url 'service_list' %}">Cancel</a>
-    </form>
+        
+        <div class="form-group">
+            <label for="id_service_type">Service Type</label>
+            <select name="service_type" id="id_service_type" class="form-control">
+                {% for service_type in form.service_type.field.queryset %}
+                    <option value="{{ service_type.id }}" {% if service_type.id == form.service_type.value %}selected{% endif %}>
+                        {{ service_type.name }}
+                    </option>
+                {% endfor %}
+            </select>
+            {% if form.service_type.errors %}
+                <span class="error">{{ form.service_type.errors.0 }}</span>
+            {% endif %}
+        </div>
+       
+        <div class="form-group">
+            <label for="id_name">Service Name</label>
+            <input type="text" name="name" id="id_name" value="{{ form.name.value|default_if_none:'' }}" class="form-control">
+            {% if form.name.errors %}
+                <span class="error">{{ form.name.errors.0 }}</span>
+            {% endif %}
+        </div>
 
+    
+        <div class="form-group main_service_icon">
+            <div class="service_icon">
+                <label for="id_icon">Service Icon</label>
+                <input type="file" name="icon" id="id_icon" class="form-control">
+            </div>
+            {% if form.instance.icon %}
+            <div class="Current_icon">
+                <p>Currently icon :</p>
+                <img src="{{ form.instance.icon.url }}" alt="Current Icon" style="max-width: 100px; margin-top: 10px;">
+            </div>
+            {% endif %}
+            {% if form.icon.errors %}
+                <span class="error">{{ form.icon.errors.0 }}</span>
+            {% endif %}
+        </div>
+
+ 
+        <div class="form-group">
+            <label for="id_price">Price</label>
+            <input type="number" step="0.01" name="price" id="id_price" value="{{ form.price.value|default_if_none:'' }}" class="form-control">
+            {% if form.price.errors %}
+                <span class="error">{{ form.price.errors.0 }}</span>
+            {% endif %}
+        </div>
+
+      
+
+
+   
+        <button type="submit" class="btn btn-primary">Save</button>
+      
+    </form>
 </div>
 {% endblock %}

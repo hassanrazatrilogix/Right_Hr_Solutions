@@ -12,15 +12,21 @@ from django.template.loader import render_to_string
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
-from django.contrib.auth import get_user_model
-from frontend.models import User , Service
+from frontend.models import User 
 from django.conf import settings
 from django.views import View
 from django.contrib.auth import logout
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from .forms import AppointmentForm , BillingDetailsForm , OrderForm , UserRegistrationForm , ServiceForm , ContactUs
+from .forms import AppointmentForm , BillingDetailsForm , OrderForm , UserRegistrationForm  , ContactUs
 from .models import Document , NewsletterSubscriber
+from dashboard.models import Service , Cart
+from django.core.mail import EmailMultiAlternatives
+from django.template.loader import get_template
+from django.http import JsonResponse
+from .models import NewsletterSubscriber  
+from django.template import Context
+
 
 def home(request):
     return render(request, 'index.html')  
@@ -44,7 +50,6 @@ def appointment(request):
                 specific_email_error = email_errors[0]  
             else:
                 specific_email_error = None
-            print("email_errors : ", specific_email_error)
             return render(request, 'appoinment.html', {'form': form, 'specific_email_error': specific_email_error})
     else:
         form = AppointmentForm()
@@ -102,9 +107,9 @@ def contact(request):
             error_messages = form.errors.as_data()
             context_errors = {}
             for field, errors in error_messages.items():
-                # Convert each error to a clean string
+              
                 clean_errors = [error.message for error in errors]
-                # Further clean up the error message
+              
                 context_errors[field] = [err.replace("['", "").replace("']", "") for err in clean_errors]
             
             messages.error(request, 'Please correct the errors below.')
@@ -126,13 +131,22 @@ def newsletter_submission(request):
                 if not created:
                     return JsonResponse({"message": "You are already subscribed.", "status": "error"})
 
-                send_mail(
-                    subject="Newsletter Subscription Confirmation",
-                    message="Thank you for subscribing to our newsletter!",
-                    from_email="pythonweb@exoticaitsolutions.com",
-                    recipient_list=[email],
-                    fail_silently=False,
+                htmly = get_template('email-template/subscribe-mail.html')
+                html_content = htmly.render({"email": email})
+
+             
+                plaintext = get_template('email-template/mail.txt')
+                plain_content = plaintext.render({"email": email})
+
+
+                msg = EmailMultiAlternatives(
+                    subject="Thank You for Subscribing to Our Newsletter!",
+                    body=plain_content,
+                    from_email=settings.DEFAULT_FROM_EMAIL,
+                    to=[email],
                 )
+                msg.attach_alternative(html_content, "text/html")
+                msg.send()
 
                 return JsonResponse({"message": "Thank you for subscribing!", "status": "success"})
             except Exception as e:
@@ -142,25 +156,38 @@ def newsletter_submission(request):
     return JsonResponse({"message": "Invalid request method.", "status": "error"})
 
 
-def cart(request,order_id):
-   
+
+def cart(request, order_id):
     document_id = order_id
     if not document_id:
         return render(request, 'cart.html', {'error': 'No document ID provided.'})
 
     document = get_object_or_404(Document, unique_id=document_id)
-
-  
     order = document.order
 
-    order_categories = order.categoriesList
-    service_data = Service.objects.get(id=order_categories)
+    cart_items = Cart.objects.filter(user=request.user)
+
+    if not cart_items.exists():
+        return render(request, 'cart.html', {'error': 'No cart items found for this order.'})
+
+    total_price = sum(cart.service.price * cart.quantity for cart in cart_items)
+    total_quantity = sum(cart.quantity for cart in cart_items)
 
     return render(request, 'cart.html', {
         'order': order,
         'document': document,
-        'service_name':service_data
+        'services': cart_items,
+        'total_price': total_price,
+        'total_quantity': total_quantity,
     })
+
+
+# @login_required
+# def remove_cart_item(request, item_id):
+#     cart_item = get_object_or_404(Cart, id=item_id, user=request.user)
+#     cart_item.delete()
+#     return redirect('cart_with_order', order_id=cart_item.order.unique_id)
+
 
 def documenttranslationservice(request):
     return render(request, 'document-translation-service.html') 
@@ -191,37 +218,62 @@ def professional_services(request):
 
 @login_required(login_url='signin')
 def placeorder(request):
-
     if request.method == 'POST':
-       
-        order_form = OrderForm(request.POST) 
+        USER = request.user
+        order_form = OrderForm(request.POST)
         files = request.FILES.getlist('upload_documents')
         types = request.POST.getlist('type')
-
 
         if order_form.is_valid() and files and types:
             category_price = order_form.cleaned_data['category_price']
 
-            order = order_form.save()
-            order.price = category_price 
+            order = order_form.save(commit=False)
+            order.user = request.user 
+            order.price = category_price  
             order.save()
             
             for i in range(len(files)):
-                document = Document(user=request.user, order=order, upload_documents=files[i], type=types[i] if i < len(types) else None)
+                document = Document(
+                    user=request.user, 
+                    order=order, 
+                    upload_documents=files[i], 
+                    type=types[i] if i < len(types) else None
+                )
                 document.save()
+
+            selected_services = request.POST.getlist('categoriesList')  
+            for service_id in selected_services:
+                service = Service.objects.get(id=service_id)
+                cart_item, created = Cart.objects.get_or_create(
+                    user=request.user,
+                    service=service,
+                    defaults={'quantity': 1, 'service_name': service.name, 'service_price': service.price}
+                )
+                
+                if not created:
+                    # If the cart item already exists, increase the quantity
+                    cart_item.quantity += 1
+                    cart_item.save()
             
             messages.success(request, 'Order and documents uploaded successfully.')
+            card_data = Cart.objects.all()
+            for cart in card_data:
+                print("cart -------- : ", cart)
 
+            # Redirect to cart with unique order ID
+            # return redirect('cart_with_uuid', order_id=str(order.id))
             return redirect('cart_with_uuid', order_id=str(document.unique_id))
         else:
             messages.error(request, 'Please correct the errors below.')
     else:
         order_form = OrderForm()
         services = Service.objects.all()
+
     return render(request, 'place-order.html', {
         'order_form': order_form,
         'services': services  
     })
+
 
 
 def signup(request):
@@ -230,7 +282,26 @@ def signup(request):
 
         if form.is_valid():
       
-            form.save()
+            user = form.save()
+            username = user.first_name
+            email = user.email
+            d = {'username': username}
+
+            plaintext = get_template('email-template/mail.txt')
+            htmly = get_template('email-template/welcome-mail.html')
+
+            text_content = plaintext.render(d)
+            html_content = htmly.render(d)
+            
+            msg = EmailMultiAlternatives(
+                subject="Welcome to Our Platform",
+                body=text_content,
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                to=[email],
+            )
+            msg.attach_alternative(html_content, "text/html")
+            msg.send()
+            
             messages.success(request, "User created successfully!")
             return redirect('welcome')
         else:
@@ -264,7 +335,7 @@ def signin(request):
             login(request, user)
 
             if user.is_staff or user.is_superuser:  
-                return redirect('home') 
+                return redirect('/dashboard/')
             else:
                 return redirect('professional-services') 
         else:
@@ -289,16 +360,27 @@ def forgetpassword(request):
             if user:
                 token = default_token_generator.make_token(user)
                 uid = urlsafe_base64_encode(str(user.pk).encode('utf-8')) 
-                
+   
                 reset_url = request.build_absolute_uri(
                     reverse('confirm-password', kwargs={'uidb64': uid, 'token': token})
                 )
                 
-                subject = 'Password Reset Request'
-                
-                message = render_to_string('password_reset_email.html', {'reset_url': reset_url})
-                
-                send_mail(subject, message, 'pythonweb@exoticaitsolutions.com', [email])
+                htmly = get_template('email-template/forget-mail.html')
+                html_content = htmly.render({"reset_url": "reset_url"}) # to-do
+
+             
+                plaintext = get_template('email-template/mail.txt')
+                plain_content = plaintext.render({"reset_url": "reset-url"})
+
+                msg = EmailMultiAlternatives(
+                    subject='Password Reset Request',
+                    body=plain_content,
+                    from_email=settings.DEFAULT_FROM_EMAIL,
+                    to=[email],
+                )
+
+                msg.attach_alternative(html_content, "text/html")
+                msg.send()
                 messages.success(request, "Password reset link sent to your email.")
                 context['message'] = "Password reset link sent to your email."
             else:
@@ -364,49 +446,5 @@ def welcome(request):
     return render(request, 'welcome.html') 
 
       
-@login_required(login_url='signin')
-def adminpanel(request):
-    return render(request, 'home.html') 
 
-@login_required(login_url='signin')
-def user(request):
-    User = get_user_model() 
-    users = User.objects.all() 
-    return render(request, 'user.html', {'users': users}) 
 
-# service - CRUD
-@login_required(login_url='signin')
-def service_list(request):
-    services = Service.objects.all()
-    return render(request, 'service-list.html', {'services': services})
-
-@login_required(login_url='signin')
-def service_create(request):
-    if request.method == 'POST':
-        form = ServiceForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            return redirect('service_list')
-    else:
-        form = ServiceForm()
-    return render(request, 'service-form.html', {'form': form})
-
-@login_required(login_url='signin')
-def service_update(request, pk):
-    service = get_object_or_404(Service, pk=pk)
-    if request.method == 'POST':
-        form = ServiceForm(request.POST, request.FILES, instance=service)
-        if form.is_valid():
-            form.save()
-            return redirect('service_list')
-    else:
-        form = ServiceForm(instance=service)
-    return render(request, 'service-form.html', {'form': form})
-
-@login_required(login_url='signin')
-def service_delete(request, pk):
-    service = get_object_or_404(Service, pk=pk)
-    if request.method == 'POST':
-        service.delete()
-        return redirect('service_list')
-    return render(request, 'service-confirm-delete.html', {'service': service})

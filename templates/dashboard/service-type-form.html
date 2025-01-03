@@ -1,0 +1,41 @@
+{% extends 'dashboard-base.html' %}
+{% load static %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<div class="user_details_sec">
+    <div class="top_main_heading services_sec_top">
+        <div class="heading_breadcrumbs">
+            <h1>{% if form.instance.pk %}Edit Service Type{% else %}Add Service Type{% endif %}</h1>
+            <nav aria-label="Breadcrumb">
+                <ul class="breadcrumb">
+                <li><a href="/dashboard/">Dashboard</a></li>
+                <li><a href="/current-page">Services-Types</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="top_add_services">
+            <a href="{% url 'service_type_list' %}" class="btn back_to_list">Back to List</a>
+        </div>
+    </div>
+    
+ <div class="edit_service">
+    <form method="post" class="edit_services_type">
+        {% csrf_token %}
+        
+      
+        <div class="form-group">
+            <label for="id_name">Service Type Name</label>
+            <input type="text" name="name" id="id_name" value="{{ form.name.value|default_if_none:'' }}" class="form-control">
+            {% if form.name.errors %}
+                <span class="error">{{ form.name.errors.0 }}</span>
+            {% endif %}
+        </div>
+        
+
+        <button type="submit" class="btn btn-primary">Save</button>
+       
+    </form>
+</div>
+</div>
+{% endblock %}
+

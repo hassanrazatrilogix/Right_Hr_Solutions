@@ -1,0 +1,82 @@
+{% extends 'dashboard-base.html' %}
+{% block title %}Edit User{% endblock %}
+{% block content %}
+<main>
+            
+    <div class="user_details_sec edit_service" bis_skin_checked="1">
+    
+        <div class="top_main_heading services_sec_top" bis_skin_checked="1">
+            <div class="heading_breadcrumbs" bis_skin_checked="1">
+                <h1>Add Pages</h1>
+                <nav aria-label="Breadcrumb">
+                    <ul class="breadcrumb">
+                    <li><a href="/dashboard/">Dashboard</a></li>
+                    <li><a href="/current-page">Pages</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="top_add_services" bis_skin_checked="1">
+                <a class="cancel_edit_btn btn btn-secondary" href="/dashboard/pages">Back to List</a>
+            </div>
+        </div>
+    
+       
+        <form method="post" enctype="multipart/form-data">
+            <input type="hidden" name="csrfmiddlewaretoken" value="TpXlv3Ser1S0SY3g0hM5IR5nX4BwgMCHYufQtpo4r3eV8FoSs3bv51Qpu9YzvKfm">
+           
+            <div class="form-group" bis_skin_checked="1">
+                <label for="id_name">Page Name</label>
+                <input type="text" name="name" id="id_name" value="" class="form-control">
+                
+            </div>
+            
+            <div class="form-group" bis_skin_checked="1">
+                <label for="id_name">Page Heading</label>
+                <input type="text" name="name" id="id_name" value="" class="form-control">
+                
+            </div>
+
+            <div class="form-group description-custome" bis_skin_checked="1">
+                <label for="id_name">Page description</label>
+                <textarea name="content" id="editor">
+                    &lt;p&gt;This is some sample content.&lt;/p&gt;
+                </textarea>
+                <script>
+                    ClassicEditor
+                        .create( document.querySelector( '#editor' ) )
+                        .catch( error => {
+                            console.error( error );
+                        } );
+                </script>                
+            </div>
+            <div class="form-group description-custome" bis_skin_checked="1">
+                <label for="id_name">Page Banner</label>
+                <input type="file" id="myfile" name="myfile">
+                
+            </div>
+
+            <div class="form-group description-custome" bis_skin_checked="1">
+                <label for="id_name">Page meta Title</label>
+                <input type="text" name="name" id="id_name" value="" class="form-control">
+                
+            </div>
+            <div class="form-group description-custome" bis_skin_checked="1">
+                <label for="id_name">Page meta description</label>
+                <input type="text" name="name" id="id_name" value="" class="form-control">
+                
+            </div>
+            <div class="form-group description-custome" bis_skin_checked="1">
+                <label for="id_name">Page meta keywords</label>
+                <input type="text" name="name" id="id_name" value="" class="form-control">
+                
+            </div>
+
+
+
+            <button type="submit" class="btn btn-primary">Save</button>
+          
+        </form>
+    </div>
+    
+            </main>
+{% endblock %}

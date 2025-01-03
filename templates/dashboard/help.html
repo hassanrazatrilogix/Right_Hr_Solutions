@@ -1,0 +1,54 @@
+{% extends 'dashboard-base.html' %}
+{% block title %}Edit User{% endblock %}
+{% block content %}
+<main>
+    <script src="https://cdn.ckeditor.com/ckeditor5/12.0.0/classic/ckeditor.js"></script>  
+    <div class="user_details_sec edit_service" bis_skin_checked="1">
+    
+        <div class="top_main_heading services_sec_top" bis_skin_checked="1">
+            <div class="heading_breadcrumbs" bis_skin_checked="1">
+                <h1>Help</h1>
+                <nav aria-label="Breadcrumb">
+                    <ul class="breadcrumb">
+                    <li><a href="/dashboard/">Dashboard</a></li>
+                    <li><a href="/current-page">help</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="top_add_services" bis_skin_checked="1">
+                <a class="cancel_edit_btn btn btn-secondary" href="/dashboard/service/">Back to List</a>
+            </div>
+        </div>
+        <div class="faq-container">
+            <div class="faq-item">
+              <div class="faq-question">
+                What is CodePen?
+                <span class="arrow">▶</span>
+              </div>
+              <div class="faq-answer">
+                CodePen is an online code editor and learning environment for front-end development.
+              </div>
+            </div>
+            <div class="faq-item">
+              <div class="faq-question">
+                How can I create a Pen?
+                <span class="arrow">▶</span>
+              </div>
+              <div class="faq-answer">
+                You can create a Pen by signing up on CodePen and clicking the "New Pen" button.
+              </div>
+            </div>
+            <div class="faq-item">
+              <div class="faq-question">
+                Is CodePen free to use?
+                <span class="arrow">▶</span>
+              </div>
+              <div class="faq-answer">
+                Yes, CodePen has a free tier with limited features. Pro accounts offer advanced features.
+              </div>
+            </div>
+          </div>
+    </div>
+    
+            </main>
+{% endblock %}

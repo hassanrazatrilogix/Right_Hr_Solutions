@@ -1,8 +1,9 @@
 import re
 from django import forms
-from .models import User, Appointment, Order, ContactUs, BillingDetails, Service
+from .models import User, Appointment, Order, ContactUs, BillingDetails
+from dashboard.models import Service , ServiceType
 from django.core.exceptions import ValidationError
-
+from django.contrib.auth import get_user_model
 
 class UserRegistrationForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput)
@@ -67,6 +68,26 @@ class UserRegistrationForm(forms.ModelForm):
             user.save()
         return user
 
+class UserEditForm(forms.ModelForm):
+    class Meta:
+        model = get_user_model()
+        fields = [
+            'first_name', 
+            'last_name', 
+            'email', 
+            'phone_number', 
+            'company_name', 
+            'position', 
+            'address', 
+            'country', 
+            'state', 
+            'zip_code', 
+            'is_superuser'
+        ]
+        widgets = {
+            'email': forms.TextInput(attrs={'readonly': 'readonly'}),  # Make the email field read-only
+        }
+
 
 class PasswordResetForm(forms.Form):
     email = forms.EmailField(label="Email", max_length=254)
@@ -108,6 +129,10 @@ class AppointmentForm(forms.ModelForm):
 
 
 class OrderForm(forms.ModelForm):
+    category_price = forms.DecimalField(
+        max_digits=10, decimal_places=2, required=False, widget=forms.HiddenInput()
+    )
+
     class Meta:
         model = Order
         fields = ['categoriesList', 'pick_date', 'pick_time', 'comments_questions', 'terms_accepted']
@@ -116,24 +141,29 @@ class OrderForm(forms.ModelForm):
             'pick_time': forms.TimeInput(attrs={'type': 'time'}),
         }
 
-    category_price = forms.DecimalField(max_digits=10, decimal_places=2, required=False)
-
     def clean(self):
         cleaned_data = super().clean()
-        selected_category = cleaned_data.get('categoriesList')
+        categoriesList = cleaned_data.get('categoriesList')
 
-        if selected_category == 'Apostille Service':
-            cleaned_data['category_price'] = 109.000
-        elif selected_category == 'Background Check':
-            cleaned_data['category_price'] = 100.00
-        elif selected_category == 'Staffing & Recruitment':
-            cleaned_data['category_price'] = 110.00
-        elif selected_category == 'Training & Development':
-            cleaned_data['category_price'] = 120.00
+        if categoriesList:
+            try:
+                service = Service.objects.get(id=categoriesList.id)
+                cleaned_data['category_price'] = service.price
+            except Service.DoesNotExist:
+                raise forms.ValidationError("The selected service does not exist.")
         else:
-            cleaned_data['category_price'] = 0.00
+            raise forms.ValidationError("You must select a service category.")
 
         return cleaned_data
+
+    def save(self, commit=True):
+        order = super().save(commit=False)
+        order.price = self.cleaned_data.get('category_price', 0.00)
+
+        if commit:
+            order.save()
+
+        return order
 
 
 class BillingDetailsForm(forms.ModelForm):
@@ -149,7 +179,7 @@ class ContactUs(forms.ModelForm):
     def clean_email(self):
         email = self.cleaned_data['email']
        
-        email_regex = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+        email_regex = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'   
         
         if not re.match(email_regex, email):
             raise ValidationError("Enter a valid email address.")
@@ -162,4 +192,12 @@ class ContactUs(forms.ModelForm):
 class ServiceForm(forms.ModelForm):
     class Meta:
         model = Service
-        fields = ['name', 'icon', 'price']       
+        fields = [ 'service_type','name',  'price','icon']
+        widgets = {
+            'service_type': forms.Select(attrs={'class': 'form-control'}),
+        } 
+
+class ServiceTypeForm(forms.ModelForm):
+    class Meta:
+        model = ServiceType
+        fields = ['name']       

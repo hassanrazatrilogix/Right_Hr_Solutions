@@ -2,84 +2,89 @@
 {% load static %}
 {% block title %}Right HR Solutions – HR Solutions & Professional Services{% endblock title %}
 
- {% block content %}
+{% block content %}
 
- <div class="cart-container">
-  {% if error %}
-  <div class="error-message" style="color: red; font-weight: bold;">
-      {{ error }}
-  </div>
-{% endif %}
-  <h1>Cart</h1>
-  <div class="notification">
-    <p><span><img src="{% static '' %}assets/img/image/circle.png" alt=""></span>{{ order.categoriesList }} has been added to your cart.</p>
-    <button class="continue-booking-btn">Continue booking</button>
-  </div>
-  <div class="table-responsive ">
-      <table class="table table-bordered align-middle text-center cart-table">
-        <thead class="table-light">
-          <tr>
-            <th></th>
-            <th></th>
-            <th>Product</th>
-            <th>Price</th>
-            <th>Quantity</th>
-            <th>Subtotal</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>
-              <button class="btn btn-danger btn-sm">&times;</button>
-            </td>
-            <td> <img src="{{ service_name.icon.url}}" alt="Product Image" class="product-image me-3"></td>
-            <td class="text-start d-flex align-items-center">
-             
-              <div class="table-content ">
-                <p class="mb-0">{{ service_name.name}}</p>
-                <small>{{ order.pick_date }}</small>
-              </div>
-            </td>
-            <td><p class="price">${{ service_name.price }}</p></td>
-            <td>1</td>
-            <td><p class="price">${{ service_name.price }}</p></td>
-          </tr>
-        </tbody>
-      </table>
+<div class="cart-container">
+    {% if error %}
+    <div class="error-message" style="color: red; font-weight: bold;">
+        {{ error }}
+    </div>
+    {% endif %}
+    <div class="cart_title_header">
+    <h1>Cart</h1>
+    <div class="addt_to cart_btn">
+    <img class="img-fluid"  src="{% static 'assets/img/image/cartbowl.png' %}"  alt="logo">
+    <span class="count">{{ total_quantity }}</span>
+</div>
+</div>
+    <div class="notification">
+        <p><span><img src="{% static 'assets/img/image/circle.jpg' %}" alt=""></span>{{ order.categoriesList }} has been added to your cart.</p>
+        <button class="continue-booking-btn">Continue booking</button>
+    </div>
+    
+    <div class="table-responsive ">
+        <table class="table table-bordered align-middle text-center cart-table">
+            <thead class="table-light">
+                <tr>
+                    <th></th>
+                    <th>Product</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Subtotal</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for service in services %}
+                <tr>
+                    <td>
+                        <button class="btn btn-danger btn-sm">&times;</button>
+                    </td>
+                    <!-- <td><img src="{{ service.service_name.icon.url }}" alt="Product Image" class="product-image me-3"></td> -->
+                    <td class="text-start d-flex align-items-center">
+                        <div class="table-content">
+                            <p class="mb-0">{{ service.service }}</p>
+                            <small>{{ order.pick_date }}</small>
+                        </div>
+                    </td>
+                    <td><p class="price">${{ service.service_price }}</p></td>
+                    <td>{{ service.quantity }}</td>
+                    <td><p class="price">${{ service.service_price|floatformat:2 }}</p></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
 
     <!-- Coupon Section -->
     <div class="row mb-2 main-box-last">
-      <div class="col-md-8 col-12 mb-2  ">
-        <input type="text" class="form-control" placeholder="Enter coupon code">
-        <button class="btn btn-primary w-100">Apply Coupon</button>
-      </div>
-      <div class="col-md-4 col-12">
-          <button class="btn-cupon">Update cart</button>
-      </div>
+        <div class="col-md-8 col-12 mb-2  ">
+            <input type="text" class="form-control" placeholder="Enter coupon code">
+            <button class="btn btn-primary w-100">Apply Coupon</button>
+        </div>
+        <div class="col-md-4 col-12">
+            <button class="btn-cupon">Update cart</button>
+        </div>
     </div>
 
     <!-- Cart Totals -->
     <div class="main-subtotal">
-      <h1>Cart totals</h1>
-      <table class="table table-bordered">
-          <tbody>
-            <tr>
-              <td class="fw-bold">Subtotal</td>
-              <td class=" price">${{ service_name.price }}</td>
-            </tr>
-            <tr>
-              <td class="fw-bold">Total</td>
-              <td class="price">${{ service_name.price }}</td>
-            </tr>
-          </tbody>
+        <h1>Cart totals</h1>
+        <table class="table table-bordered">
+            <tbody>
+                <tr>
+                    <td class="fw-bold">Subtotal</td>
+                    <td class="price">${{ total_price|floatformat:2 }}</td>
+                </tr>
+                <tr>
+                    <td class="fw-bold">Total</td>
+                    <td class="price">${{ total_price|floatformat:2 }}</td>
+                </tr>
+            </tbody>
         </table>
         <button class="btn btn-purple btn-lg">
-          <a href="{% url 'checkout_with_uuid' document.unique_id %}" class="text-white text-decoration-none">Proceed to Checkout</a>
+            <a href="{% url 'checkout_with_uuid' document.unique_id %}" class="text-white text-decoration-none">Proceed to Checkout</a>
         </button>
     </div>
-  </div>
+</div>
 
-
-
- {% endblock content %}
+{% endblock content %}

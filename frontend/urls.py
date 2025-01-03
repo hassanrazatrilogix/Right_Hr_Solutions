@@ -1,6 +1,6 @@
 from django.urls import path,include
 from . import views
-from .views import cart, checkout , service_list, service_create, service_update, service_delete,logout_view
+from .views import cart, checkout ,logout_view
 
 urlpatterns = [
     path('', views.home, name='home'),
@@ -32,13 +32,5 @@ urlpatterns = [
     path('confirm-password/<uidb64>/<token>/', views.confirmpassword, name='confirm-password'),
     path('thank-you/', views.thankyou, name='thank-you'),
     path('welcome/', views.welcome, name='welcome'),
-    path('home/', views.adminpanel, name='home'),
-    path('user/', views.user, name='user'),
     path('accounts/', include('allauth.urls')),
-
-
-    path('service/', service_list, name='service_list'),  
-    path('create/', service_create, name='service_create'),  
-    path('<int:pk>/update/', service_update, name='service_update'),  
-    path('<int:pk>/delete/', service_delete, name='service_delete'),  
 ]

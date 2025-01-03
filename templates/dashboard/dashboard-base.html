@@ -7,36 +7,81 @@
     <title>{% block title %}{% endblock %}</title>
     <link rel="icon" href="{% static '' %}assets/img/favicon.svg">
     <link rel="stylesheet" href="{% static '' %}dashboard/css/main.css">
+	<script src="https://cdn.ckeditor.com/ckeditor5/12.0.0/classic/ckeditor.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />  
+
+	
 </head>
 <body class="dashboard_sec">
     <div class="main_dashboard_sec">
 		<div class="inner_dashhboard">
 			<div class="left_sidebar">
 				<div class="top_admin_sec">
-					<a href="" class="main_admin"><img src="{% static '' %}dashboard/images/user-admin.png" class="user_img" alt="">Admin</a>
+					<a href="" class="main_admin"><img src="{% static 'assets/img/logo.svg' %}" class="user_img" alt=""></a>
 				</div>
 				<div class="bottom_menu_sec">
 					<ul>
-						<li><a href="/home" class="menu-item active"><img src="{% static '' %}dashboard/images/home-page.png" alt="">Home</a></li>
-						<li><a href="/user" class="menu-item"><img src="{% static '' %}dashboard/images/user.png" alt="">Users</a></li>
+						<li><a href="/dashboard/" class="menu-item {% if request.path == '/dashboard/' %}active{% endif %}"><img src="{% static '' %}dashboard/images/home-page.png" alt="">Dashboard</a></li>
+						<li><a href="/dashboard/user" class="menu-item {% if request.path == '/dashboard/user/' %}active{% endif %}"><img src="{% static '' %}dashboard/images/user.png" alt="">Users</a></li>
 					
-						<li><a href="/service" class="menu-item"><img src="{% static '' %}dashboard/images/purse.png" alt="">Services</a></li>
+						<li class="menu-item-with-submenu">
+							<a href="#" 
+							   class="menu-item {% if request.path == '/dashboard/service/' %}active{% endif %}" 
+							   onclick="toggleSubmenu(event)">
+								<img src="{% static 'dashboard/images/purse.png' %}" alt=""> 
+								Services
+								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+									<path d="M201.4 374.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 306.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"/>
+								</svg>
+							</a>
+							<ul class="submenu">
+								<li><a href="/dashboard/service/"><i class="fa-brands fa-servicestack"></i>Service</a></li>
+								<li><a href="/dashboard/service-types/"><i class="fa-solid fa-list"></i>Service Type</a></li>
+							</ul>
+						</li>
 						
-						<li><a href="#" class="menu-item"><img src="{% static '' %}dashboard/images/settings.png" alt="">Settings</a></li>
-						<li><a href="#" class="menu-item"><img src="{% static '' %}dashboard/images/help-web-button.png" alt="">Help</a></li>
+						<li class="menu-item-with-submenu">
+							<a href=""
+								class="menu-item {% if request.path == '/dashboard/setting/' %}active{% endif %}" onclick="toggleSubmenu(event)"><img
+									src="{% static '' %}dashboard/images/settings.png" alt="">Settings <svg xmlns="http://www.w3.org/2000/svg"
+									viewBox="0 0 448 512">
+									<path
+										d="M201.4 374.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 306.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z">
+									</path>
+								</svg></a>
+							<ul class="submenu">
+								<li><a href="/dashboard/pages"><i class="fa-solid fa-file-lines"></i>Pages</a></li>
+								<li><a href="/dashboard/section-list"><i class="fa-solid fa-section"></i>Section</a></li>
+								<li><a href="/dashboard/content-list"><i class="fa-solid fa-pen"></i>Content</a></li>
+							</ul>
+						
+						</li>
+						<li><a href="/dashboard/help" class="menu-item {% if request.path == '/dashboard/help/' %}active{% endif %}"><img src="{% static '' %}dashboard/images/help-web-button.png" alt="">Help</a></li>
 					</ul>										
 				</div>
-				<div class="log_out_sec">
-					<a href="{% url 'logout' %}" class="log_ot">
-						<img src="{% static 'dashboard/images/sign-out-option.png' %}" class="sign_out" alt="Sign Out">
-						Log Out
-					  </a>					  
-				</div>
+				
 			</div>
             <div class="right_sidebar">
-                <div class="main_title">
-                   <a href="/" ><h2 class="title">Home</h2></a> 
-                </div>
+				
+				<div class="main_title">
+					<div class="top_right_main">
+						<a href="/" ><h2 class="title">Home</h2></a> 
+					</div>
+					<div class="dropdown">
+						<div class="admin_dropdown">
+							<button class="dropdown-toggle" >
+								<a href="{% url 'logout' %}">sign Out</a>
+							  </button>
+							  
+							
+						</div>
+						
+					</div>
+					
+				</div>
+					
+			
+				
         <main>
             {% block content %}
 

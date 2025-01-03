@@ -1,0 +1,84 @@
+{% extends 'dashboard-base.html' %}
+{% block title %}Edit User{% endblock %}
+{% block content %}
+<main>
+    <script src="https://cdn.ckeditor.com/ckeditor5/12.0.0/classic/ckeditor.js"></script>  
+    <div class="user_details_sec edit_service" bis_skin_checked="1">
+    
+        <div class="top_main_heading services_sec_top" bis_skin_checked="1">
+            <div class="heading_breadcrumbs" bis_skin_checked="1">
+                <h1>Add Content</h1>
+                <nav aria-label="Breadcrumb">
+                    <ul class="breadcrumb">
+                    <li><a href="/dashboard/">Dashboard</a></li>
+                    <li><a href="/current-page">Content</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="top_add_services" bis_skin_checked="1">
+                <a class="cancel_edit_btn btn btn-secondary" href="/dashboard/content-list">Back to List</a>
+            </div>
+        </div>
+    
+       
+        <form method="post" enctype="multipart/form-data">
+            <input type="hidden" name="csrfmiddlewaretoken" value="TpXlv3Ser1S0SY3g0hM5IR5nX4BwgMCHYufQtpo4r3eV8FoSs3bv51Qpu9YzvKfm">
+           
+            <div class="form-group" bis_skin_checked="1">
+                <label for="id_name">Select Page</label>
+                <select name="cars" id="cars" form="carform">
+                    <option value="volvo">Home</option>
+                    <option value="saab">About us</option>
+                    <option value="opel">Professional Services</option>
+                  </select>                
+            </div>
+            
+            <div class="form-group" bis_skin_checked="1">
+                <label for="id_name">Select Section </select></label>
+                <select name="cars" id="cars" form="carform">
+                    <option value="volvo">Header section</option>
+                    <option value="saab">Footer Section</option>
+                    <option value="opel">About us</option>
+                  </select>                    
+            </div>
+            <div class="form-group description-custome" bis_skin_checked="1">
+                <label for="id_name">content heading</label>
+                <input type="text" name="name" id="id_name" value="" class="form-control">
+                
+            </div>
+            <div class="form-group description-custome" bis_skin_checked="1">
+                <label for="id_name"> description</label>
+                <textarea name="content" id="editor">
+                    &lt;p&gt;This is some sample content.&lt;/p&gt;
+                </textarea>
+                <script>
+                    ClassicEditor
+                        .create( document.querySelector( '#editor' ) )
+                        .catch( error => {
+                            console.error( error );
+                        } );
+                </script>
+                
+            </div>
+            <div class="form-group description-custome" bis_skin_checked="1">
+                <label for="id_name">content image</label>
+                <input type="file" id="myfile" name="myfile">
+                
+            </div>
+
+            <div class="form-group description-custome" bis_skin_checked="1">
+                <label for="id_name">content button</label>
+                <input type="text" name="name" id="id_name" value="" class="form-control">
+                
+            </div>
+         
+
+
+
+            <button type="submit" class="btn btn-primary">Save</button>
+          
+        </form>
+    </div>
+    
+            </main>
+{% endblock %}

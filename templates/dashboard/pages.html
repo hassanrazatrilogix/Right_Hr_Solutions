@@ -1,0 +1,102 @@
+{% extends 'dashboard-base.html' %}
+{% block title %}Edit User{% endblock %}
+{% block content %}
+<main>
+            
+    <div class="user_details_sec" bis_skin_checked="1">
+        <div class="top_main_heading services_sec_top" bis_skin_checked="1">
+            <div class="heading_breadcrumbs" bis_skin_checked="1">
+                <h1>Pages</h1>
+                <nav aria-label="Breadcrumb">
+                    <ul class="breadcrumb">
+                    <li><a href="/dashboard/">Dashboard</a></li>
+                    <li><a href="/current-page">Page-list</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="top_add_services" bis_skin_checked="1">
+                <a class="add_new_service_btn" href="/dashboard/page-add">Add New Page</a>
+            </div>
+        </div>
+        <div class="main_search_pagination" bis_skin_checked="1">
+            <div class="search_bar" bis_skin_checked="1">
+                <form method="get" action="">
+                    <div class="inner_search_bar" bis_skin_checked="1">
+                        <button type="submit">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                <path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"></path>
+                            </svg>
+                        </button>             
+                        <input type="text" name="q" placeholder="Search users by name, email " value="">
+                    </div>           
+                </form>
+            </div>
+
+            <div class="pagination-section" bis_skin_checked="1">
+                <ul class="pagination">
+                    
+                    <li class="prev_btn disabled hidden"><span>‹ Prev</span></li>
+                    
+            
+                    
+                    
+                    <li class="active"><a href="?q=&amp;page=1">1</a></li>
+                    
+                    
+                    
+                    <li><a href="?q=&amp;page=2">2</a></li>
+                    
+                    
+            
+                    
+                    <li class="next_btn"><a href="?q=&amp;page=">Next ›</a></li>
+                    
+                </ul>
+            </div>
+        </div>
+
+        <table class="user_table">
+            <thead>
+                <tr>
+                    <th>Ref No</th>
+                    <th>Profile Image</th>
+                    <th>Pages Name</th>
+                    <th>Pages Heading</th>
+                    <th>Pages description</th>
+                    <th>Actions</th>
+                   
+                    
+                </tr>
+            </thead>
+            <tbody>
+                
+                <tr>
+                    <td>1</td>
+                    <td>
+                        <img src="/static/dashboard/images/profile.png" alt="Profile Image" class="profile_img">
+                    </td>
+                    <td>demo</td>
+                    <td>demo</td>
+                    <td>demo</td>
+                   
+                    
+                    <td>
+                        <a href="/dashboard/page-edit" class="edit_btn-2">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </a>
+                        <a href="/dashboard/page-edit" class="edit_btn-2">
+                            <i class="fa-solid fa-trash"></i>
+                        </a>
+                        
+                    </td>
+                    
+                </tr>
+                
+            
+                
+            </tbody>
+        </table>
+    </div>
+
+        </main>
+{% endblock %}

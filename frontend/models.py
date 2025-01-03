@@ -4,6 +4,7 @@ from django.contrib.auth.models import (
     User,
     PermissionsMixin,
 )
+from dashboard.models import Service
 from frontend.utils import UserManager
 
 import uuid
@@ -29,8 +30,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     address = models.CharField(max_length=1024, blank=False)
     country = models.CharField(max_length=255, blank=False)
     state = models.CharField(max_length=255, blank=False)
-    zip_code = models.IntegerField(max_length=20, blank=False)
-
+    zip_code = models.CharField(max_length=10, null=False, blank=False, default="00000")
+    
 
     accept_terms_conditions = models.BooleanField(default=False)
 
@@ -67,7 +68,8 @@ class Appointment(models.Model):
 
 
 class Order(models.Model):
-    categoriesList = models.CharField(max_length=50)   
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    categoriesList = models.ForeignKey(Service, on_delete=models.CASCADE)   
     price = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)  
     pick_date = models.DateField()
     pick_time = models.TimeField()
@@ -122,12 +124,6 @@ class NewsletterSubscriber(models.Model):
         return self.email
     
     
-class Service(models.Model):
-    name = models.CharField(max_length=255)
-    icon = models.ImageField(upload_to='services/icons/')
-    price = models.DecimalField(max_digits=10, decimal_places=2)
 
-    def __str__(self):
-        return self.name
     
 

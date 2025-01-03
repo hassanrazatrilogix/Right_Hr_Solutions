@@ -1,0 +1,12 @@
+{% extends 'dashboard-base.html' %}
+{% block title %}Edit User{% endblock %}
+{% block content %}
+    <div class="edit_user_form">
+        <h3>Edit User: <span>{{ user.first_name }} {{ user.last_name }}</span></h3>
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Save Changes</button>
+        </form>
+    </div>
+{% endblock %}

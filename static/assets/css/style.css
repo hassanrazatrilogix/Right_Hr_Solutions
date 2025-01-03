@@ -129,11 +129,13 @@
  .btn {
    outline: none;
    font-weight: 500;
-   padding: 0.5rem 1rem;
+   padding: 0.5rem;
    background-color: var(--hr-accent);
    color: var(--hr-white);
  }
- 
+ ul.nav-menu {
+  gap: 0.75rem;
+}
  .btn.disabled,
  .btn:disabled,
  fieldset:disabled {
@@ -752,13 +754,15 @@
  }
  
  .header-wrapper {
-   width: 100%;
-   height: 80px;
-   display: flex;
-   flex-wrap: nowrap;
-   justify-content: space-between;
-   align-items: center;
- }
+  width: 100%;
+  height: 80px;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+   /*max-width: 100%;
+  padding: 0 15px;*/
+}
  
  .site-logo {
    height: 60px;
@@ -797,9 +801,10 @@
  }
  
  .navbar ul {
-   margin-bottom: 0;
-   padding-left: 0;
- }
+  margin-bottom: 0;
+  padding-left: 0;
+  margin-right: 20px;
+}
  
  .nav-menu li,
  .nav-btn li {
@@ -821,7 +826,7 @@
    align-items: center;
    -ms-flex-pack: distribute;
    justify-content: space-around;
-   gap: 0.75rem;
+   gap: 0.50rem;
    width: max-content;
  }
  
@@ -2102,8 +2107,8 @@ cursor: pointer;
 margin-top: 10px;
 }
 .cart-container .notification p span img {
-width: 20px;
-height: 20px;
+width: 25px;
+height: 25px;
 }
 
 .cart-container .notification p {
@@ -2229,6 +2234,9 @@ font-weight: 700;
 .cart-container .main-subtotal button.btn.btn-purple.btn-lg:hover {
 color: #fff;
 }
+
+
+
 @media (max-width:767px){
   .cart-container input.form-control {
 width: 120px;
@@ -2283,3 +2291,647 @@ width: 150px !important;
 }
 
 
+/* 24-12-2024 */
+section.product_sec {
+  background: #e0e0e0;
+}
+
+.section-main {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  justify-content: space-between;
+}
+
+.product-main {
+  flex: 0 0 24%;
+  max-width: 24%;
+  background: #fff;
+  padding: 10px 10px 25px;
+  border: 1px solid rgb(0 0 0 / 22%);
+  /* box-shadow: 0 0 5px rgb(0 0 0 / 25%); */
+  border-radius: 12px;
+  transition: 0.3s all;
+}
+.product-main .image img {width: 100%;
+  height: 100%;
+  object-fit: contain;}
+
+.product-main .content h2 {
+  font-size: 20px;
+  margin-top: 12px;
+  font-weight: 900;
+  color: #a82064;
+}
+.product-main .content {
+  min-height: 120px;
+  margin-bottom: 15px;
+}
+
+.product-main .content p {
+  font-size: 15px;
+  font-weight: 700;
+  color: #000;
+}
+
+.product-main .btn {
+  background: #ff8b34;
+  padding: 5px 15px;
+  font-weight: 800;
+}
+.product-main .btn:hover {
+  background: #000;
+}
+.product-variation select#price-options {
+  font-size: 13px;
+  border: 0;
+  border-radius: 5px;
+  padding: 5px 10px;
+  font-weight: 600;
+  background: #a82064;
+    color: #fff;
+}
+
+.product-main:hover {
+  background: #a82064;
+}
+.product-main:hover .content h2 {
+  color: #fff;
+}
+.product-main:hover .product-variation select#price-options {
+  background: #fff;
+  color: #000;
+}
+.product-main:hover .content p {
+  color: #ff8641;
+}
+.product-variation label.variation-label {
+  color: #000;
+  padding-bottom: 5px;
+  text-transform: capitalize;
+  font-size: 13px;
+}
+.product-main .image {
+  border-radius: 6px;
+  overflow: hidden;
+  height: 200px;
+  width: 100%;
+}
+
+.cart_title_header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.cart_title_header .addt_to.cart_btn img {
+  max-width: 45px;
+}
+
+.cart_title_header .addt_to.cart_btn span.count {
+  display: block;
+  position: absolute;
+  top: -4px;
+  right: -7px;
+  background: #a82064;
+  width: 15px;
+  height: 15px;
+  color: #fff;
+  text-align: center;
+  line-height: 15px;
+  border-radius: 50%;
+  font-weight: 800;
+}
+
+.addt_to.cart_btn {
+  position: relative;
+}
+.product-main:hover .product-variation label.variation-label {
+  color: #fff;
+}
+section.product_sec h2 {
+  margin-bottom: 20px;
+}
+
+/* 26-12-2024 */
+
+.nav-action ul.nav-btn li.nav-btn-item {
+  display: flex;
+  gap: 0.45rem;
+}
+
+
+
+.bg {
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.home_banner_text {
+  clip-path: polygon(0 0, 43% 0, 53% 79%, 45% 100%, 0 100%, 0% 50%);
+  background: rgb(160 30 102 / 90%);
+  padding: 163px 0 78px;
+}
+
+.inner_banner_text {
+  max-width: 1380px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+h1.banner_title {
+  font-size: 90px;
+  font-weight: 800;
+  line-height: 82px;
+  color: #F49020;
+  max-width: 650px;
+  margin: 0;
+}
+
+h1.banner_title span {
+  font-size: 72px;
+  font-weight: 800;
+  line-height: 42px;
+  color: #fff;
+}
+.inner_banner_text p {
+  margin: 38px 0 28px;
+  font-size: 21px;
+  font-weight: 600;
+  line-height: 36px;
+  text-transform: uppercase;
+  color: #fff;
+  max-width: 537px;
+}
+.btnn a {
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 32px;
+  color: #fff;
+  text-decoration: none;
+  padding: 12px 28px;
+  background: #F49020;
+  border-radius: 100px;
+  display: inline-block;
+transition: 0.3s all;
+}
+.notary_sec::before {
+  background: linear-gradient(106.37deg, #53225A 2.41%, #1F0423 100.35%);
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 90%;
+}
+
+.notary_sec {
+  position: relative;
+}
+
+.inner_services_sec {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  padding: 99px 0 115px;
+}
+.notry_services {
+  background: linear-gradient(339.13deg, rgba(75, 26, 82, 0.6) 1.75%, rgba(244, 144, 32, 0.6) 94.36%);
+  padding: 32px 13px;
+  border-radius: 20px;
+  border: 1px solid #FFC931;
+  flex: 0 0 22%;
+  max-width: 22%;
+}
+.top_img {
+  text-align: center;
+  height: 100px;
+}
+.content_area .dropdown-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.top_img img {
+  height: 100%;
+  width: auto;
+  object-fit: contain;
+  max-width: 110px;
+}
+.middle_title h3 {
+  margin: 26px 0 0;
+}
+.middle_title p {
+  margin: 6px 0 8px;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 23px;
+  color: #fff;
+}
+.price_text p {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 18.99px;
+  background: #000;
+  padding: 5px 7px;
+  color: #fff;
+  width: fit-content;
+  margin: 0;
+  margin-top: 8px;
+}
+.cart_btn a {
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 17.81px;
+  border-radius: 5px;
+  text-decoration: none;
+  background: #F49020;
+  padding: 10px 40px;
+  color: #000;
+  display: inline-block;
+  margin-top: 15px;
+  text-transform: uppercase;
+transition: 0.3s all;
+}
+.price_text span {
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 21.37px;
+  padding: 3px 5px;
+  background: #A01E66;
+  display: inline-block;
+}
+.upload_document a {
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 17.81px;
+  color: #fff;
+  background: #A01E66;
+  padding: 7px 9px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: fit-content;
+  margin-top: 12px;
+}
+.notry_services .dropdown-container select {
+  background: #2A0230;
+  color: #fff;
+  padding: 3px 4px;
+  border: 0;
+}
+.middle_title h3 {
+  margin: 26px 0 0;
+  font-size: 22px;
+  font-weight: 800;
+  line-height: 26.11px;
+  color: #fff;
+}
+.top_title h2 {
+  font-size: 40px;
+  font-weight: 600;
+  line-height: 47px;
+  color: #000000;
+  margin: 0 0 30px;
+}
+.top_title h2 span {
+  display: block;
+  color: #A01E66;
+}
+.main_description h3 {
+  font-size: 36px;
+  font-weight: 600;
+  line-height: 50px;
+  color: #000;
+  margin: 0;
+}
+
+.main_description h3 span {
+  color: #A01E66;
+}
+.main_description p {
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 37px;
+  color: #000;
+  margin: 22px 0 18px;
+}
+.main_description  h4 {
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 32px;
+  color: #000;
+  margin: 0 0 25px;
+}
+.schedule_btn a {
+  padding: 12px 25px;
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 32px;
+  border-radius: 100px;
+  background: #A01E66;
+  text-decoration: none;
+  color: #fff;
+  display: inline-block;
+transition: 0.3s all;
+}
+.arrow_img {
+  text-align: center;
+  padding-top: 24px;
+}
+section.services_in_florida {
+  padding: 50px 0 25px;
+}
+.services_cover {
+  padding: 30px 0 80px;
+  background: #A01E66;
+}
+.services_covers ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+}
+.services_covers ul li {
+  display: flex;
+  gap: 6px;
+  flex: 0 0 48%;
+  max-width: 48%;
+  margin-bottom: 12px;
+}
+
+.services_covers ul li p {
+  margin: 0;
+}
+.services_covers ul li p {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 37px;
+  color: #fff;
+}
+.check_img {
+  height: 26px;
+  margin-top: 7px;
+}
+.services_covers {
+  margin: 38px 0 26px;
+}
+.service_cover h3 {
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 37px;
+  text-align: left;
+  margin: 0;
+  color: #ffff;
+}
+.notary.duties h3 {
+  font-size: 33px;
+  font-weight: 600;
+  line-height: 40px;
+  max-width: 1150px;
+}
+.notary.duties {
+  padding-top: 48px;
+}
+.notary.duties .services_covers {
+  margin-bottom: 0;
+}
+.services_covers ul li:last-child {
+  margin-bottom: 0;
+}
+.service_cover p {
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 37px;
+  color: #fff;
+  margin: 0;
+}
+.btnn a:hover, .schedule_btn a:hover {
+  background: #000;
+}
+.cart_btn a:hover {
+  background: #000;
+  color: #fff;
+}
+.content_area {
+  min-height: 190px;
+}
+
+section.home_baner_sec.bg {
+  padding: 0;
+}
+
+
+
+
+
+
+@media (max-width: 1200px) {
+  .section-main {
+    gap: 13px;
+}
+.product-main {
+  flex: 0 0 32%;
+  max-width: 32%;
+}
+h1.banner_title {
+  font-size: 70px;
+  line-height: 72px;
+}
+h1.banner_title span {
+  font-size: 60px;
+}
+.inner_banner_text p {
+  margin: 28px 0;
+  font-size: 16px;
+  line-height: 26px;
+  max-width: 437px;
+}
+.main_description h3 {
+  font-size: 30px;
+  line-height: 40px;
+}
+.notry_services {
+  flex: 0 0 23%;
+  max-width: 23%;
+}
+.middle_title h3 {
+  font-size: 20px;
+}
+.cart_btn a {
+  padding: 10px 35px;
+}
+.notry_services .dropdown-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+}
+
+@media (max-width: 991px) {
+	.notry_services {
+    flex: 0 0 48%;
+    max-width: 48%;
+}
+.inner_services_sec {
+    padding: 50px 0;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+.content_area {
+    min-height: 130px;
+}
+
+}
+
+
+@media (max-width: 767px) {
+  .product-main {
+    flex: 0 0 48%;
+    max-width: 48%;
+}
+.section-main {
+  gap: 15px;
+  justify-content: center;
+}
+.service_cover h3 {
+  font-size: 30px;
+}
+.services_covers ul li p {
+  font-size: 18px;
+  line-height: 25px;
+}
+.services_covers ul {
+  justify-content: space-between;
+}
+.check_img {
+  margin-top: 2px;
+}
+.service_cover p, .main_description p {
+  font-size: 16px;
+  line-height: 26px;
+}
+.notary.duties h3 {
+  font-size: 25px;
+  line-height: 35px;
+}
+h1.banner_title {
+  font-size: 50px;
+  line-height: 52px;
+}
+h1.banner_title span {
+  font-size: 40px;
+}
+.home_banner_text {
+  clip-path: polygon(0 0, 50% 0, 70% 79%, 53% 100%, 0 100%, 0% 50%);
+  padding: 70px 0 78px;
+}
+.inner_banner_text p {
+  max-width: 357px;
+}
+.top_title h2 {
+  font-size: 35px;
+  line-height: 43px;
+}
+.main_description h3 {
+  font-size: 25px;
+  line-height: 35px;
+}
+.schedule_btn a {
+  font-size: 18px;
+  line-height: 24px;
+}
+.btnn a {
+  font-size: 18px;
+  line-height: 25px;
+}
+
+
+}
+
+@media (max-width: 567px) {
+	.notry_services {
+    flex: 0 0 100%;
+    max-width: 100%;
+}
+.top_img img {
+    height: auto;
+    width: auto;
+	max-width: 100px;
+}
+.services_covers ul li {
+    flex: 0 0 100%;
+    max-width: 100%;
+    margin-bottom: 15px;
+}
+.notary.duties {
+    padding-top: 30px;
+}
+.notary.duties h3 {
+    font-size: 22px;
+    line-height: 32px;
+}
+.services_covers ul li p {
+    font-size: 16px;
+}
+.services_cover {
+    padding: 40px 0;
+}
+.services_covers {
+    margin: 28px 0 26px;
+}
+.main_description  h4 {
+    font-size: 18px;
+    line-height: 28px;
+}
+
+h1.banner_title {
+    font-size: 40px;
+    line-height: 42px;
+}
+h1.banner_title span {
+    font-size: 30px;
+}
+.inner_banner_text p {
+    margin: 10px 0;
+    font-size: 14px;
+    line-height: 26px;
+    max-width: 217px;
+}
+.btnn a, .schedule_btn a {
+    font-size: 16px;
+    padding: 8px 22px;
+}
+.main_description h3 {
+    font-size: 20px;
+    line-height: 30px;
+	margin: 0 0 10px;
+}
+.top_img {
+    height: auto;
+}
+.content_area {
+    min-height: auto;
+}
+.arrow_img img {
+    max-width: 25px;
+}
+section.home_baner_sec.bg {
+  background-position: center;
+}
+	
+}
+
+
+@media (max-width: 480px) {
+  
+  .product-main {
+    flex: 0 0 100%;
+    max-width: 100%;
+}
+.product-main .content {
+  min-height: auto;
+}
+}
