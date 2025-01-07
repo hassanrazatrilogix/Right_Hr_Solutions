@@ -86,16 +86,15 @@
                 <td>Pending</td>
                 <td>{{ order.terms_accepted|yesno:"Yes,No" }}</td>
                 <td>
-                    <ul>
-                        {% for document in order.document_set.all %}
-                        <li>
-                            <strong>Type:</strong> {{ document.type }} <br>
-                            <a href="{{ document.upload_documents.url }}" target="_blank">View Document</a>
-                        </li>
-                        {% empty %}
-                        <li>No documents uploaded</li>
-                        {% endfor %}
-                    </ul>
+                    
+                    {% if order.document_set.exists %}
+                    <a href="{% url 'download_order_files' order.id %}" class="btn btn-primary">
+                        Download Files
+                    </a>
+                    {% else %}
+                        No Document uploaded
+                    {% endif %}
+
                 </td>
             </tr>
             {% endfor %}

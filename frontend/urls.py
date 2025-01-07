@@ -33,4 +33,6 @@ urlpatterns = [
     path('thank-you/', views.thankyou, name='thank-you'),
     path('welcome/', views.welcome, name='welcome'),
     path('accounts/', include('allauth.urls')),
+
+    path('download_order_files/<int:order_id>/', views.download_order_files, name='download_order_files')
 ]

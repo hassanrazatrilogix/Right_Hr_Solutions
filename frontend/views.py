@@ -24,8 +24,12 @@ from dashboard.models import Service , Cart
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import get_template
 from django.http import JsonResponse
-from .models import NewsletterSubscriber  
+from .models import NewsletterSubscriber, Order
 from django.template import Context
+import zipfile
+import os
+from django.http import HttpResponse
+from io import BytesIO
 
 
 def home(request):
@@ -444,6 +448,28 @@ def thankyou(request):
 
 def welcome(request):
     return render(request, 'welcome.html') 
+
+
+def download_order_files(request, order_id):
+    # Get the order and associated files
+    order = Order.objects.get(id=order_id)
+    files = order.document_set.all()
+
+    # Create a zip file in memory
+    zip_buffer = BytesIO()
+    with zipfile.ZipFile(zip_buffer, 'w') as zip_file:
+        for uploaded_file in files:
+            file_path = uploaded_file.upload_documents.path
+            file_name = os.path.basename(file_path)
+            zip_file.write(file_path, arcname=file_name)
+
+    # Prepare the response
+    zip_buffer.seek(0)
+    response = HttpResponse(zip_buffer, content_type='application/zip')
+    response['Content-Disposition'] = f'attachment; filename=order_{order.user.first_name}_{order.user.last_name}__files.zip'
+    return response
+
+
 
       
 

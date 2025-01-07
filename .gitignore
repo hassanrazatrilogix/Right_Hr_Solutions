@@ -32,3 +32,4 @@ frontend/__pycache__/*
 # Ignore sensitive files
 .env
 rightsolutions/settings.py
+*.vscode
