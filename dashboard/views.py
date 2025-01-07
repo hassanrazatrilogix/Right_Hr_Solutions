@@ -4,15 +4,62 @@ from django.contrib.auth import get_user_model
 from django.http import HttpResponseForbidden
 from frontend.forms import ServiceForm , ServiceTypeForm
 from dashboard.models import   Service,ServiceType, Cart
-from frontend.models import Order
+from frontend.models import Order, User
 from django.shortcuts import  get_object_or_404
 from frontend.forms import UserEditForm
 from django.db.models import Q
 from django.core.paginator import Paginator
+from django.db.models import Count, Sum
+from django.utils.timezone import now
+from datetime import timedelta
+from django.db.models.functions import TruncDay
+import json
 
 
 @login_required(login_url='signin')
-def adminpanel(request):
+def dashboard_summary(request):
+    query = request.GET.get('q', '')
+    thirty_days_ago = now() - timedelta(days=30)
+
+    if request.user.is_superuser:
+        orders = Order.objects.filter(created_at__gte=thirty_days_ago)
+    else:
+        orders = Order.objects.filter(user=request.user, created_at__gte=thirty_days_ago)
+
+    # Statistics for cards
+    total_orders = orders.count()
+    total_users = User.objects.count()
+    latest_users = User.objects.order_by('-id')[:5]
+    total_revenue = orders.aggregate(total_revenue=Sum('price'))['total_revenue'] or 0
+
+    # Aggregate total price by day for the chart
+    orders_by_day = (
+        orders.annotate(day=TruncDay('created_at'))
+        .values('day')
+        .annotate(total_price=Sum('price'))
+        .order_by('day')
+    )
+
+    bar_chart_data = {
+        'labels': [entry['day'].strftime('%Y-%m-%d') for entry in orders_by_day],
+        'data': [float(entry['total_price']) if entry['total_price'] else 0 for entry in orders_by_day],
+    }
+
+    return render(
+        request,
+        'summary.html',
+        {
+            'orders': orders,
+            'total_orders': total_orders,
+            'latest_users': latest_users,
+            'total_users': total_users,
+            'total_revenue': total_revenue,
+            'bar_chart_json': json.dumps(bar_chart_data),
+        }
+    )
+
+@login_required(login_url='signin')
+def all_orders(request):
     query = request.GET.get('q', '')  
     if request.user.is_superuser:
         orders = Order.objects.prefetch_related('document_set').all()

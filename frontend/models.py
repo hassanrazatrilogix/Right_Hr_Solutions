@@ -4,6 +4,7 @@ from django.contrib.auth.models import (
     User,
     PermissionsMixin,
 )
+from django.utils.timezone import now
 from dashboard.models import Service
 from frontend.utils import UserManager
 
@@ -39,7 +40,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
     role = models.CharField(max_length=50, choices=[('Admin', 'Admin'), ('User', 'User')], default='User')
-
+    date_joined = models.DateTimeField(default=now)
+    
     objects = UserManager()
 
     
@@ -75,6 +77,8 @@ class Order(models.Model):
     pick_time = models.TimeField()
     comments_questions = models.TextField(blank=True, null=True)
     terms_accepted = models.BooleanField(default=False)
+
+    created_at = models.DateTimeField(default=now)
 
     def __str__(self):
         return f"{self.categoriesList}"

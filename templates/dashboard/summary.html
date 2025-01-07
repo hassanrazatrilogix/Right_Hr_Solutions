@@ -1,0 +1,410 @@
+{% extends 'dashboard-base.html' %}
+{% load static %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+
+<style>
+    /* General Styles */
+    .dashboard-container {
+        padding: 20px;
+        font-family: Arial, sans-serif;
+    }
+
+    .section-title {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+    /* Cards Section */
+    .cards {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 30px;
+        gap: 20px;
+    }
+
+    .card {
+        flex: 1;
+        background-color: #f5f5f5;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        padding: 20px;
+    }
+
+    .card h3 {
+        margin-bottom: 10px;
+        font-size: 18px;
+        color: #555;
+    }
+
+    .card p {
+        font-size: 24px;
+        font-weight: bold;
+        color: #333;
+    }
+
+    .card small {
+        font-size: 12px;
+        color: #888;
+    }
+
+    /* Chart Section */
+    .chart-container {
+    margin-bottom: 40px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    min-height: 350px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.chart-container canvas {
+    width: 100% !important;
+    height: 400px !important;
+}
+
+    /* Recent Users Section */
+    .recent-users,
+    .orders-table {
+        margin-bottom: 30px;
+        background-color: #fff;
+        border-radius: 8px;
+        padding: 20px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .recent-users ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    .recent-users li {
+        padding: 10px 0;
+        border-bottom: 1px solid #eee;
+    }
+
+    .recent-users li:last-child {
+        border-bottom: none;
+    }
+
+    .recent-users li strong {
+        color: #333;
+    }
+
+    .orders-table table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .orders-table th,
+    .orders-table td {
+        padding: 10px;
+        text-align: left;
+        border-bottom: 1px solid #eee;
+    }
+
+    .orders-table th {
+        background-color: #f9f9f9;
+        font-weight: bold;
+    }
+
+    .orders-table td a {
+        color: #007bff;
+        text-decoration: none;
+    }
+
+    .orders-table td a:hover {
+        text-decoration: underline;
+    }
+
+    /* Pagination */
+    .pagination {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+    }
+
+    .pagination a,
+    .pagination span {
+        margin: 0 5px;
+        padding: 8px 12px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        text-decoration: none;
+        color: #333;
+    }
+
+    .pagination a:hover {
+        background-color: #f0f0f0;
+    }
+
+    .pagination .active {
+        background-color: #007bff;
+        color: #fff;
+        border-color: #007bff;
+    }
+
+
+
+
+
+
+    /* Recent Users Section */
+.recent-users {
+    margin-bottom: 30px;
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    overflow-x: auto; /* For responsiveness */
+}
+
+.user-table-container {
+    overflow-x: auto;
+}
+
+.user-table-container table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.user-table-container th,
+.user-table-container td {
+    text-align: left;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.user-table-container th {
+    background-color: #f5f5f5;
+    font-weight: bold;
+}
+
+.user-table-container tr:nth-child(even) {
+    background-color: #fafafa;
+}
+
+.user-table-container tr:hover {
+    background-color: #f1f1f1;
+}
+
+.user-table-container td {
+    font-size: 14px;
+    color: #555;
+}
+
+.user-table-container .text-center {
+    text-align: center;
+    font-weight: bold;
+    color: #888;
+}
+</style>
+
+<div class="dashboard-container">
+
+    <!-- Summary Cards Section -->
+    <div class="section-title">Dashboard Overview</div>
+    <div class="cards">
+        <div class="card">
+            <h3>Total Orders</h3>
+            <p>{{ total_orders }}</p>
+            <small>All-time orders</small>
+        </div>
+        <div class="card">
+            <h3>Total Users</h3>
+            <p>{{ total_users }}</p>
+            <small>Registered users</small>
+        </div>
+        <div class="card">
+            <h3>Total Revenue</h3>
+            <p>${{ total_revenue|floatformat:2 }}</p>
+            <small>Total earnings</small>
+        </div>
+        <div class="card">
+            <h3>Other Metric</h3>
+            <p>N/A</p>
+            <small>Additional insight</small>
+        </div>
+    </div>
+
+    <!-- Chart Section -->
+    <div class="section-title">Orders Overview</div>
+    <pre>{{ bar_chart_data|safe }}</pre>
+    <div class="chart-container">
+        <canvas id="ordersChart"></canvas>
+    </div>
+
+    <!-- Recent Users Section -->
+    <div class="section-title">Recent Users</div>
+<div class="recent-users">
+    <div class="user-table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Full Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Company</th>
+                    <th>Role</th>
+                    <th>Joined On</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in latest_users %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ user.first_name }} {{ user.last_name }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.phone_number }}</td>
+                    <td>{{ user.company_name }}</td>
+                    <td>{{ user.role }}</td>
+                    <td>{{ user.date_joined|date:"Y-m-d" }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="7" class="text-center">No recent users available.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+    <!-- Orders Table Section -->
+    <div class="section-title">Recent Orders</div>
+    <div class="orders-table">
+        <table>
+            <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>User</th>
+                    <th>Price</th>
+                    <th>Status</th>
+                    <th>Documents</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orders %}
+                <tr>
+                    <td>{{ order.id }}</td>
+                    <td>{{ order.user.email }}</td>
+                    <td>${{ order.price }}</td>
+                    <td>Pending</td>
+                    <td>
+                        {% if order.document_set.exists %}
+                        <a href="{% url 'download_order_files' order.id %}">Download Files</a>
+                        {% else %}
+                        No files
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Pagination -->
+    <div class="pagination">
+        {% if orders.has_previous %}
+        <a href="?q={{ request.GET.q|urlencode }}&page={{ orders.previous_page_number }}">Previous</a>
+        {% endif %}
+        {% for page_num in orders.paginator.page_range %}
+        <a href="?q={{ request.GET.q|urlencode }}&page={{ page_num }}"
+           class="{% if orders.number == page_num %}active{% endif %}">
+            {{ page_num }}
+        </a>
+        {% endfor %}
+        {% if orders.has_next %}
+        <a href="?q={{ request.GET.q|urlencode }}&page={{ orders.next_page_number }}">Next</a>
+        {% endif %}
+    </div>
+
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        try {
+            const chartData = JSON.parse('{{ bar_chart_json|safe }}');
+            console.log('Chart Data:', chartData);
+
+            const ctx = document.getElementById('ordersChart').getContext('2d');
+
+            if (!chartData || chartData.labels.length === 0 || chartData.data.length === 0) {
+                ctx.font = '16px Arial';
+                ctx.fillText('No data available for the chart.', 100, 100);
+            } else {
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: chartData.labels,
+                        datasets: [{
+                            label: 'Total Order Price per Day',
+                            data: chartData.data,
+                            backgroundColor: '#a01e66', // Custom bar color
+                            borderColor: '#7d164d', // Darker border
+                            borderWidth: 1,
+                            barPercentage: 0.5, // Slimmer bars
+                            categoryPercentage: 0.8 // Space between categories
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                display: true,
+                                position: 'top'
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        return `$${context.raw}`;
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            x: {
+                                title: {
+                                    display: true,
+                                    text: 'Date'
+                                },
+                                ticks: {
+                                    maxRotation: 45,
+                                    minRotation: 0
+                                }
+                            },
+                            y: {
+                                title: {
+                                    display: true,
+                                    text: 'Total Price ($)'
+                                },
+                                beginAtZero: true,
+                                ticks: {
+                                    stepSize: 10
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+        } catch (error) {
+            console.error('Chart Data Parsing Error:', error);
+            const ctx = document.getElementById('ordersChart').getContext('2d');
+            ctx.font = '16px Arial';
+            ctx.fillText('Failed to load chart data.', 100, 100);
+        }
+    });
+</script>
+
+
+
+
+
+{% endblock %}

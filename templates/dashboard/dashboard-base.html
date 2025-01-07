@@ -21,7 +21,9 @@
 				</div>
 				<div class="bottom_menu_sec">
 					<ul>
-						<li><a href="/dashboard/" class="menu-item {% if request.path == '/dashboard/' %}active{% endif %}"><img src="{% static '' %}dashboard/images/home-page.png" alt="">Dashboard</a></li>
+						<li><a href="/dashboard/" class="menu-item {% if request.path == '/dashboard/' %}active{% endif %}"><img src="{% static '' %}dashboard/images/home-page.png" alt="">Summary</a></li>
+						
+						<li><a href="/dashboard/orders/" class="menu-item {% if request.path == '/dashboard/orders/' %}active{% endif %}"><img src="{% static '' %}dashboard/images/purchase-order.png" alt="">Orders</a></li>
 						<li><a href="/dashboard/user" class="menu-item {% if request.path == '/dashboard/user/' %}active{% endif %}"><img src="{% static '' %}dashboard/images/user.png" alt="">Users</a></li>
 					
 						<li class="menu-item-with-submenu">

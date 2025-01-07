@@ -3,8 +3,9 @@ from . import views
 from dashboard.views import  service_list, service_create, service_update, service_delete
 
 urlpatterns = [
- 
-    path('', views.adminpanel, name='home'),
+
+    path('', views.dashboard_summary, name='summary'),
+    path('orders/', views.all_orders, name='orders'),
     path('user/', views.user, name='user'),
     path('edit-user/<int:user_id>/', views.edit_user, name='edit-user'),
   
