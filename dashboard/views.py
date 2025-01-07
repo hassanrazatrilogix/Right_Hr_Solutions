@@ -14,6 +14,7 @@ from django.utils.timezone import now
 from datetime import timedelta
 from django.db.models.functions import TruncDay
 import json
+from django.contrib.auth.hashers import make_password
 
 
 @login_required(login_url='signin')
@@ -117,7 +118,6 @@ def user(request):
         return render(request, 'user.html', {'users': users_page})
 
 def edit_user(request, user_id):
-    User = get_user_model()
     user = get_object_or_404(User, id=user_id)
 
     if not request.user.is_superuser:
@@ -126,7 +126,14 @@ def edit_user(request, user_id):
     if request.method == 'POST':
         form = UserEditForm(request.POST, instance=user)
         if form.is_valid():
-            form.save()
+            user = form.save(commit=False)
+            
+            # Handle password change
+            password = form.cleaned_data.get('password')
+            if password:
+                user.password = make_password(password)  # Hash the new password
+
+            user.save()
             return redirect('user')  
     else:
         form = UserEditForm(instance=user)

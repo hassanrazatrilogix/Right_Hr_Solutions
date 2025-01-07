@@ -68,9 +68,25 @@ class UserRegistrationForm(forms.ModelForm):
             user.save()
         return user
 
+from django import forms
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
+
 class UserEditForm(forms.ModelForm):
+    password = forms.CharField(
+        required=False,
+        widget=forms.PasswordInput(attrs={'placeholder': 'New Password'}),
+        label='New Password'
+    )
+    confirm_password = forms.CharField(
+        required=False,
+        widget=forms.PasswordInput(attrs={'placeholder': 'Confirm New Password'}),
+        label='Confirm Password'
+    )
+
     class Meta:
-        model = get_user_model()
+        model = User
         fields = [
             'first_name', 
             'last_name', 
@@ -85,10 +101,20 @@ class UserEditForm(forms.ModelForm):
             'is_superuser'
         ]
         widgets = {
-            'email': forms.TextInput(attrs={'readonly': 'readonly'}),  # Make the email field read-only
+            'email': forms.TextInput(attrs={'readonly': 'readonly'}),
         }
 
+    def clean(self):
+        cleaned_data = super().clean()
+        password = cleaned_data.get('password')
+        confirm_password = cleaned_data.get('confirm_password')
 
+        if password and password != confirm_password:
+            raise forms.ValidationError('Passwords do not match.')
+
+        return cleaned_data
+    
+    
 class PasswordResetForm(forms.Form):
     email = forms.EmailField(label="Email", max_length=254)
 
