@@ -58,7 +58,7 @@
         <table class="user_table">
             <thead>
                 <tr>
-                    <th>Ref No</th>
+                    <th>ID No</th>
                     <th>Profile Image</th>
                     <th>First Name</th>
                     <th>Last Name</th>
@@ -73,16 +73,16 @@
             <tbody>
                 {% for user in users %}
                 <tr>
-                    <td>{{ forloop.counter }}</td>
+                    <td>{{x}}{{ forloop.counter }}</td>
                     <td>
-                        <img src="{% static 'dashboard/images/profile.png' %}" alt="Profile Image" class="profile_img">
+                        <img src="{{ user.image.url }}" alt="Profile Image" class="profile_img">
                     </td>
                     <td>{{ user.first_name }}</td>
                     <td>{{ user.last_name }}</td>
                     <td>{{ user.email }}</td>
                     <td>{{ user.phone_number }}</td>
                     <td style="color: {% if user.is_superuser %}#a82064{% else %}black{% endif %};">
-                        {{ user.is_superuser|yesno:"SuperUser,User" }}
+                        {{ user.is_superuser|yesno:"Administrator,User" }}
                     </td>
                     {% if request.user.is_superuser %}
                     <td>

@@ -4,6 +4,7 @@ from django.contrib.auth.models import (
     User,
     PermissionsMixin,
 )
+from django.db.models import Max
 from django.utils.timezone import now
 from dashboard.models import Service
 from frontend.utils import UserManager
@@ -16,6 +17,7 @@ Role_CHOICES = [
 ]
 
 class User(AbstractBaseUser, PermissionsMixin):
+    id = models.CharField(max_length=4, primary_key=True)
     username = models.CharField(max_length=255, unique=True, blank=True , null=True)
     first_name = models.CharField(max_length=255, blank=False)
     last_name = models.CharField(max_length=255, blank=False)
@@ -32,7 +34,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     country = models.CharField(max_length=255, blank=False)
     state = models.CharField(max_length=255, blank=False)
     zip_code = models.CharField(max_length=10, null=False, blank=False, default="00000")
-    
+    image = models.ImageField(upload_to='documents/', blank=True, null=True)
 
     accept_terms_conditions = models.BooleanField(default=False)
 
@@ -69,20 +71,62 @@ class Appointment(models.Model):
         return f"Appointment for {self.name} on {self.date} at {self.time}"
 
 
+Order_CHOICES = [
+    ("NOT_STARTED", "Not Started"),
+    ("IN_PROGRESS", "In Progress"),
+    ("COMPLETED", "Completed"),
+]
+
+
 class Order(models.Model):
+    id = models.CharField(max_length=4, primary_key=True, default='0001')
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     categoriesList = models.ForeignKey(Service, on_delete=models.CASCADE)   
     price = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)  
     pick_date = models.DateField()
     pick_time = models.TimeField()
-    comments_questions = models.TextField(blank=True, null=True)
+    order_status = models.CharField(max_length=50, choices=[('Not Started', 'Not Started'), ('In Progress', 'In Progress'), ('Completed', 'Completed')], default='In Progress')
     terms_accepted = models.BooleanField(default=False)
 
     created_at = models.DateTimeField(default=now)
 
     def __str__(self):
         return f"{self.categoriesList}"
-    
+
+    def save(self, *args, **kwargs):
+        if not self.id:
+            last_entry = Order.objects.aggregate(last_id=Max('id'))
+            last_id = last_entry.get('last_id', '0000')
+            new_id = str(int(last_id) + 1).zfill(4)
+            self.id = new_id
+
+        super(Order, self).save(*args, **kwargs)
+
+    @classmethod
+    def update(cls, id, usr=None, categorList=None, prce=None, pick_date=None, pick_time=None, order_stats=None, terms_accepted=None):
+        ls = Order.objects.get(id=id)
+
+        if ls:
+            if usr != None and usr != ls.user.email:
+                ls.user.email = usr
+            if categorList:
+                service_instance = Service.objects.get(name=categorList)
+                ls.categoriesList = service_instance
+            if prce != None and prce != ls.price:
+                ls.price = prce
+            if pick_date != None and pick_date != ls.pick_date:
+                ls.pick_date = pick_date
+            if pick_time != None and pick_time != ls.pick_time:
+                ls.pick_time = pick_time
+            if order_stats != None and order_stats != ls.order_status:
+                ls.order_status = order_stats
+            if terms_accepted != None and terms_accepted != ls.terms_accepted:
+                ls.terms_accepted = terms_accepted
+            ls.save()
+            print(ls)
+            return ls
+
+
 
 class Document(models.Model):
     unique_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)

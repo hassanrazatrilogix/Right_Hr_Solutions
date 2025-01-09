@@ -2,6 +2,8 @@ from django.shortcuts import render,redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
 from django.http import HttpResponseForbidden
+from django.utils.datetime_safe import datetime
+
 from frontend.forms import ServiceForm , ServiceTypeForm
 from dashboard.models import   Service,ServiceType, Cart
 from frontend.models import Order, User
@@ -61,6 +63,7 @@ def dashboard_summary(request):
 
 @login_required(login_url='signin')
 def all_orders(request):
+    x = '000'
     query = request.GET.get('q', '')  
     if request.user.is_superuser:
         orders = Order.objects.prefetch_related('document_set').all()
@@ -77,11 +80,47 @@ def all_orders(request):
     page_number = request.GET.get('page')
     orders_page = paginator.get_page(page_number)
         
-    return render(request, 'home.html', {'orders': orders_page})
+    return render(request, 'home.html', {'orders': orders_page, 'x': x})
+
+
+@login_required(login_url='signin')
+def edit_orders(request, order_id):
+    query = request.GET.get('q', '')
+    if request.user.is_superuser:
+        edit_orders = get_object_or_404(Order, id=order_id)
+        print(edit_orders)
+    else:
+        edit_orders = get_object_or_404(Order, id=order_id)
+        print(edit_orders)
+    if request.method == "POST":
+        pick_date_str = request.POST.get('pick_date')
+        pick_time_str = request.POST.get('pick_time')
+        pick_time_str = pick_time_str.replace('.', '').upper()
+        try:
+            pick_time = datetime.strptime(pick_time_str, "%I:%M %p").time()  # Format: '11:05 a.m.'
+        except ValueError:
+            raise ValueError("Invalid time format. Expected format is HH:MM AM/PM.")
+        try:
+            pick_date = datetime.strptime(pick_date_str, "%b. %d, %Y").date()  # Format: 'Jan. 7, 2025'
+        except ValueError:
+            raise ValueError("Invalid date format. Expected format is YYYY-MM-DD.")
+        res = Order.update(order_id,
+                           request.POST.get('name'),
+                           request.POST.get('service'),
+                           request.POST.get('price'),
+                           pick_date,
+                           pick_time,
+                           request.POST.get('order_status'),
+                           request.POST.get('term_acc'),
+                           )
+        print(res)
+        return redirect('orders')
+    return render(request, 'edit_orders.html', {'edit_orders': edit_orders})
 
 
 @login_required(login_url='signin')
 def user(request):
+        x = '000'
         User = get_user_model()
 
         if not request.user.is_superuser:
@@ -115,7 +154,8 @@ def user(request):
 
             return redirect('user')  
 
-        return render(request, 'user.html', {'users': users_page})
+        return render(request, 'user.html', {'users': users_page, 'x': x})
+
 
 def edit_user(request, user_id):
     user = get_object_or_404(User, id=user_id)
@@ -124,17 +164,23 @@ def edit_user(request, user_id):
         return redirect('user')  # Redirect if not a superuser
 
     if request.method == 'POST':
-        form = UserEditForm(request.POST, instance=user)
+        form = UserEditForm(request.POST, request.FILES, instance=user)
+        print(form)
         if form.is_valid():
             user = form.save(commit=False)
-            
+
             # Handle password change
             password = form.cleaned_data.get('password')
             if password:
                 user.password = make_password(password)  # Hash the new password
 
+            # Handle email change
+            new_email = form.cleaned_data.get('email')
+            if new_email:
+                user.email = new_email
+
             user.save()
-            return redirect('user')  
+            return redirect('user')  # Redirect after successful update
     else:
         form = UserEditForm(instance=user)
 

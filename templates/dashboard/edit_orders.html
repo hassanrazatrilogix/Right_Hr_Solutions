@@ -1,0 +1,95 @@
+{% extends 'dashboard-base.html' %}
+{% block title %}Edit Orders{% endblock %}
+{% block content %}
+<main>
+
+    <div class="user_details_sec edit_service" bis_skin_checked="1">
+
+        <div class="top_main_heading services_sec_top" bis_skin_checked="1">
+            <div class="heading_breadcrumbs" bis_skin_checked="1">
+                <h1>Edit Orders</h1>
+                <nav aria-label="Breadcrumb">
+                    <ul class="breadcrumb">
+                    <li><a href="/dashboard/">Dashboard</a></li>
+                    <li><a href="/current-page">Orders</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="top_add_services" bis_skin_checked="1">
+                <a class="cancel_edit_btn btn btn-secondary" href="/dashboard/pages">Back to List</a>
+            </div>
+        </div>
+
+
+        <form method="POST" action="{% url 'edit_orders' order_id=edit_orders.id %}" enctype="multipart/form-data">
+                {% csrf_token %}
+            <div class="form-group" bis_skin_checked="1">
+                <label for="id_name">User Name</label>
+                <input type="text" name="name" id="id_name" value="{{edit_orders.user.email}}" class="form-control">
+
+            </div>
+
+            <div class="form-group" bis_skin_checked="1">
+                <label for="id_name">Services</label>
+                <input type="text" name="service" id="id_name" value="{{edit_orders.categoriesList}}" class="form-control">
+
+            </div>
+
+           <div class="form-group description-custome" bis_skin_checked="1">
+                <label for="id_name">Price</label>
+                 <input type="text" name="price" id="id_name" value="{{edit_orders.price}}" class="form-control">
+
+            </div>
+            <div class="form-group description-custome" bis_skin_checked="1">
+                <label for="id_name">Date</label>
+                 <input type="text" name="pick_date" id="id_name" value="{{edit_orders.pick_date}}" class="form-control">
+
+            </div>
+
+            <div class="form-group description-custome" bis_skin_checked="1">
+                <label for="id_name">Time</label>
+                <input type="text" name="pick_time" id="id_name" value="{{edit_orders.pick_time}}" class="form-control">
+
+            </div>
+            <div class="form-group description-custome" bis_skin_checked="1">
+                <label for="id_name">Order Status</label>
+                <select name="order_status" id="id_name"  class="form-control">
+                    <option value="Not Started" {% if not edit_orders.order_status %}selected{% endif %}>
+                        Not Started
+                    </option>
+                      <option value="In Progress" {% if not edit_orders.order_status %}selected{% endif %}>
+                        In Progress
+                    </option>
+                      <option value="Completed" {% if not edit_orders.order_status %}selected{% endif %}>
+                        Completed
+                    </option>
+
+                </select>
+            </div>
+              <div class="form-group description-custome" bis_skin_checked="1">
+                <label for="id_name">Terms Accepted	</label>
+                <select name="term_acc" id="id_name" class="form-control">
+                <option value="False" {% if not edit_orders.terms_accepted %}selected{% endif %}>
+                    False
+                </option>
+                <option value="True" {% if edit_orders.terms_accepted %}selected{% endif %}>
+                    True
+                </option>
+                </select>
+            </div>
+
+
+<!--            <div class="form-group description-custome" bis_skin_checked="1">-->
+<!--                <label for="id_name">Document</label>-->
+<!--                <input type="file" id="myfile" name="myfile" value="{{edit_orders.terms_accepted}}">-->
+
+<!--            </div>-->
+
+
+            <button type="submit" class="btn btn-primary">Save</button>
+
+        </form>
+    </div>
+
+            </main>
+{% endblock %}

@@ -73,7 +73,9 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
+
 class UserEditForm(forms.ModelForm):
+
     password = forms.CharField(
         required=False,
         widget=forms.PasswordInput(attrs={'placeholder': 'New Password'}),
@@ -85,36 +87,58 @@ class UserEditForm(forms.ModelForm):
         label='Confirm Password'
     )
 
+    # Add confirm_email field
+    email = forms.EmailField(
+        required=False,
+        widget=forms.EmailInput(attrs={'placeholder': 'Email'}),
+        label='Email'
+    )
+
+    confirm_email = forms.EmailField(
+        required=False,
+        widget=forms.EmailInput(attrs={'placeholder': 'Confirm New Email'}),
+        label='Confirm Email'
+    )
+    image = forms.ImageField(
+        required=False,
+        widget=forms.ClearableFileInput(attrs={'class': 'form-control-file', 'placeholder': 'Choose an image'}),
+        label='Image'
+    )
     class Meta:
         model = User
         fields = [
-            'first_name', 
-            'last_name', 
-            'email', 
-            'phone_number', 
-            'company_name', 
-            'position', 
-            'address', 
-            'country', 
-            'state', 
-            'zip_code', 
-            'is_superuser'
+            'first_name',
+            'last_name',
+            'phone_number',
+            'company_name',
+            'position',
+            'address',
+            'country',
+            'state',
+            'zip_code',
+            'is_superuser',
+            'image'
         ]
-        widgets = {
-            'email': forms.TextInput(attrs={'readonly': 'readonly'}),
-        }
 
     def clean(self):
         cleaned_data = super().clean()
         password = cleaned_data.get('password')
         confirm_password = cleaned_data.get('confirm_password')
+        email = cleaned_data.get('email')
+        confirm_email = cleaned_data.get('confirm_email')
 
+        # Validate password match
         if password and password != confirm_password:
             raise forms.ValidationError('Passwords do not match.')
 
+        # Validate email match
+        if email and email != confirm_email:
+            raise forms.ValidationError('Emails do not match.')
+
         return cleaned_data
-    
-    
+
+
+
 class PasswordResetForm(forms.Form):
     email = forms.EmailField(label="Email", max_length=254)
 
@@ -161,7 +185,7 @@ class OrderForm(forms.ModelForm):
 
     class Meta:
         model = Order
-        fields = ['categoriesList', 'pick_date', 'pick_time', 'comments_questions', 'terms_accepted']
+        fields = ['categoriesList', 'pick_date', 'pick_time', 'order_status', 'terms_accepted']
         widgets = {
             'pick_date': forms.DateInput(attrs={'type': 'date'}),
             'pick_time': forms.TimeInput(attrs={'type': 'time'}),

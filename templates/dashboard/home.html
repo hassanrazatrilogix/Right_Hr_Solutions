@@ -67,24 +67,26 @@
                 <th>Price</th>
                 <th>Date</th>
                 <th>Time</th>
-                <th>Comments</th>
                 <th>Order Status</th>
                 <th>Terms Accepted</th>
+                <th>Edit</th>
                 <th>Documents</th>
             </tr>
         </thead>
         <tbody>
             {% for order in orders %}
             <tr>
-                <td>{{ order.id }}</td>
+                <td>{{x}}{{ order.id }}</td>
                 <td>{{ order.user.email }}</td>
                 <td>{{ order.categoriesList}}</td>
                 <td>{{ order.price }}</td>
                 <td>{{ order.pick_date }}</td>
                 <td>{{ order.pick_time }}</td>
-                <td>{{ order.comments_questions|default:"N/A" }}</td>
-                <td>Pending</td>
+                <td>{{order.order_status}}</td>
                 <td>{{ order.terms_accepted|yesno:"Yes,No" }}</td>
+                <td>
+                        <a href="{% url 'edit_orders' order.id %}" class="edit_btn">Edit</a>
+                    </td>
                 <td>
                     
                     {% if order.document_set.exists %}

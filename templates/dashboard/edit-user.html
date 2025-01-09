@@ -70,7 +70,7 @@
     </style>
         <div class="edit_user_form">
             <h3>Edit User: <span>{{ user.first_name }} {{ user.last_name }}</span></h3>
-    
+
             <!-- Display Form Validation Errors (Global Errors) -->
             {% if form.non_field_errors %}
             <div class="form-error-message">
@@ -82,13 +82,12 @@
                 </ul>
             </div>
             {% endif %}
-            
+
             <!-- Render the Form Without Field Errors -->
-            <form method="POST">
+            <form method="POST" action="{% url 'edit-user' user_id=user.id %}" enctype="multipart/form-data">
                 {% csrf_token %}
                 {{ form.as_p }}
                 <button type="submit">Save Changes</button>
             </form>
         </div>
     {% endblock %}
-    
