@@ -5,7 +5,7 @@ from django.http import HttpResponseForbidden
 from django.utils.datetime_safe import datetime
 
 from frontend.forms import ServiceForm , ServiceTypeForm
-from dashboard.models import   Service,ServiceType, Cart
+from dashboard.models import Service, ServiceType, Cart, Pages, Add_Section, Content
 from frontend.models import Order, User
 from django.shortcuts import  get_object_or_404
 from frontend.forms import UserEditForm
@@ -139,7 +139,7 @@ def user(request):
         page_number = request.GET.get('page')
         users_page = paginator.get_page(page_number)
 
-        if request.method                                                                                        == 'POST' and request.user.is_superuser:
+        if request.method == 'POST' and request.user.is_superuser:
             user_id = request.POST.get('user_id')
             action = request.POST.get('action')  
             try:
@@ -300,53 +300,160 @@ def remove_from_cart(request, service_id):
 #To Do
 
 def pages(request):
-    
-    return render(request, "dashboard/pages.html")
+    page_data = Pages.objects.all()
+    return render(request, "dashboard/pages.html", {"page_data": page_data})
 
 def section_list(request):
-    
-    return render(request, "dashboard/section-list.html")
+    section_list = Add_Section.objects.all()
+    return render(request, "dashboard/section-list.html", {'section_list': section_list})
 
 def section_add(request):
-    
-    return render(request, "dashboard/section-add.html")
+    page = Pages.objects.all()
+    if request.method == "POST":
+        res = Add_Section.add(
+            request.POST.get('select_section'),
+            request.POST.get('sec_name')
+        )
+        print("\n\n\nresult\n\n", res)
+    return render(request, "dashboard/section-add.html", {'page': page})
 
-def section_edit(request):
-    
-    return render(request, "dashboard/section-edit.html")
+
+def section_edit(request, section_id):
+    sec_Edit = get_object_or_404(Add_Section, id=section_id)
+
+    if request.method == "POST":
+        res = Add_Section.update(
+            section_id,
+            request.POST.get('sec_name'),
+        )
+        print("\n\n\nresult\n\n", res)
+    return render(request, "dashboard/section-edit.html", {'sec_Edit': sec_Edit})
+
+
+def delete_section(request, section_id):
+    sec_delete = get_object_or_404(Add_Section, id=section_id)
+
+    sec_delete.delete()
+
+    return redirect('/')
 
 
 def content_list(request):
-    
-    return render(request, "dashboard/content-list.html")
+    conten_list = Content.objects.all()
+
+    return render(request, "dashboard/content-list.html", {"conten_list": conten_list})
 
 
 def add_content(request):
-    
-    return render(request, "dashboard/add-content.html")
+    page = Pages.objects.all()
+    print(page)
+    sections = Add_Section.objects.all()
+    print(sections)
+    pages_list = list(page.values())
+    sections_list = list(sections.values())
 
-def edit_content(request):
-    
-    return render(request, "dashboard/edit-content.html")
+    data = {
+        'pages': pages_list,
+        'sections': sections_list
+    }
+
+    if request.method == "POST":
+        result = Content.add(
+            request.POST.get('Select_Page'),
+            request.POST.get('select_section'),
+            request.POST.get('content_heading'),
+            request.POST.get('content'),
+            request.FILES['myfile'],
+            request.POST.get('content_button')
+        )
+        print("\n\n\nresult\n\n", result)
+    jsonData = json.dumps(data, indent=4)
+    return render(request, "dashboard/add-content.html", {'page': page, 'sections': sections, 'jsonData': jsonData})
 
 
+def edit_content(request, content_id):
+    content = get_object_or_404(Content, id=content_id)
+    page = Pages.objects.all()
+    print(page)
+    sections = Add_Section.objects.all()
+    print(sections)
+    pages_list = list(page.values())
+    sections_list = list(sections.values())
 
+    data = {
+        'pages': pages_list,
+        'sections': sections_list
+    }
+    myfile = request.FILES.get('myfile', None)
+    if request.method == "POST":
+        result = Content.update(
+            content_id,
+            request.POST.get('Select_Page'),
+            request.POST.get('select_section'),
+            request.POST.get('content_heading'),
+            request.POST.get('description'),
+            myfile,
+            request.POST.get('content_button')
+        )
+        print("\n\n\nresult\n\n", result)
+    jsonData = json.dumps(data, indent=4)
+    return render(request, "dashboard/edit-content.html", {'content': content, 'jsonData': jsonData})
+
+
+def delete_content(request, content_id):
+    sec_delete = get_object_or_404(Content, id=content_id)
+
+    sec_delete.delete()
+
+    return redirect('/')
+
+
+@login_required
 def page_add(request):
-    
+    if request.method == "POST":
+        result = Pages.add(
+            request.POST.get('name'),
+            request.POST.get('heading'),
+            request.POST.get('content'),
+            request.FILES['myfile'],
+            request.POST.get('page_Title'),
+            request.POST.get('Page_meta_description'),
+            request.POST.get('Page_meta_keywords')
+        )
+        print("\n\n\nresult\n\n", result)
     return render(request, "dashboard/page-add.html")
 
 
-def page_edit(request):
-    
-    return render(request, "dashboard/page-edit.html")
+def page_edit(request, page_id):
+    page = get_object_or_404(Pages, pk=page_id)
+    myfile = request.FILES.get('myfile', None)
+    if request.method == "POST":
+        result = Pages.update(
+            page_id,
+            request.POST.get('name'),
+            request.POST.get('heading'),
+            request.POST.get('content'),
+            myfile,
+            request.POST.get('page_Title'),
+            request.POST.get('Page_meta_description'),
+            request.POST.get('Page_meta_keywords')
+        )
+        print("\n\n\nresult\n\n", result)
+    return render(request, "dashboard/page-edit.html", {'page': page})
+
+
+def delete_page(request, page_id):
+    sec_delete = get_object_or_404(Pages, id=page_id)
+
+    sec_delete.delete()
+
+    return redirect('/')
 
 
 
 def help(request):
     
     return render(request, "dashboard/help.html")
-
-
 
 
 

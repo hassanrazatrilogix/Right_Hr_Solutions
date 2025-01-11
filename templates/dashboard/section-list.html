@@ -66,26 +66,26 @@
                 </tr>
             </thead>
             <tbody>
-                
+                {% for i in section_list %}
                 <tr>
-                    <td>1</td>
+                    <td>{{forloop.counter}}</td>
                     <td>
-                        <img src="/static/dashboard/images/profile.png" alt="Profile Image" class="profile_img">
+                        <img src="{{ i.sectionImage.url }}" alt="Profile Image" class="profile_img">
                     </td>
-                    <td>demo</td>
-                    
+                    <td>{{i.sectionName}}</td>
+
                     <td>
-                        <a href="/dashboard/section-edit" class="edit_btn-2">
+                        <a href="{% url 'section_edit' section_id=i.id %}" class="edit_btn-2">
                             <i class="fa-solid fa-pen-to-square"></i>
                         </a>
-                        <a href="/dashboard/page-edit" class="edit_btn-2">
+                        <a href="{% url 'delete_section' section_id=i.id %}" class="edit_btn-2">
                             <i class="fa-solid fa-trash"></i>
                         </a>
                     </td>
-                    
+
                 </tr>
-        
-                
+                {% endfor %}
+
             </tbody>
         </table>
     </div>

@@ -71,27 +71,27 @@
                 </tr>
             </thead>
             <tbody>
-                
+                {% for i in conten_list %}
                 <tr>
-                    <td>1</td>
+                    <td>{{forloop.counter}}</td>
                     <td>
-                        <img src="/static/dashboard/images/profile.png" alt="Profile Image" class="profile_img">
+                        <img src="{{ i.contentImage.url }}" alt="Profile Image" class="profile_img">
                     </td>
-                    <td>demo</td>
-                    <td>demo</td>
-                    <td>demo</td>
-                    <td>demo</td>
-                    
+                    <td>{{i.selectSection}}</td>
+                    <td>{{i.selectPage}}</td>
+                    <td>{{i.contentHeading}}</td>
+                    <td>{{i.contentDescription|safe|truncatewords:10}}</td>
+
                     <td>
-                        <a href="/dashboard/edit-content" class="edit_btn-2"><i class="fa-solid fa-pen-to-square"></i>
+                        <a href="{% url 'edit-content' content_id=i.id %}" class="edit_btn-2"><i class="fa-solid fa-pen-to-square"></i>
                         </a>
-                        <a href="/dashboard/edit-content" class="edit_btn-2"><i class="fa-solid fa-trash"></i>
+                        <a href="{% url 'delete_content' content_id=i.id %}" class="edit_btn-2"><i class="fa-solid fa-trash"></i>
                         </a>
                     </td>
-                    
+
                 </tr>
-        
-                
+                {% endfor %}
+
             </tbody>
         </table>
     </div>

@@ -25,6 +25,7 @@ from django.core.mail import EmailMultiAlternatives
 from django.template.loader import get_template
 from django.http import JsonResponse
 from .models import NewsletterSubscriber, Order
+from dashboard.models import Content
 from django.template import Context
 import zipfile
 import os
@@ -33,6 +34,9 @@ from io import BytesIO
 
 
 def home(request):
+    content = Content.objects.filter(selectPage__pageName='Home')
+    for i in content:
+        print(i)
     return render(request, 'index.html')  
 
 def about(request):

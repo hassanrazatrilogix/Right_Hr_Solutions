@@ -73,10 +73,14 @@
             <tbody>
                 {% for user in users %}
                 <tr>
-                    <td>{{x}}{{ forloop.counter }}</td>
+                    <td>{{ forloop.counter }}</td>
                     <td>
-                        <img src="{{ user.image.url }}" alt="Profile Image" class="profile_img">
-                    </td>
+    {% if user.image %}
+        <img src="{{ user.image.url }}" alt="Profile Image" style="max-width: 100px; max-height: 100px;">
+    {% else %}
+        <p>No image uploaded.</p>
+    {% endif %}
+</td>
                     <td>{{ user.first_name }}</td>
                     <td>{{ user.last_name }}</td>
                     <td>{{ user.email }}</td>

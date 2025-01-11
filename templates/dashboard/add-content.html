@@ -21,33 +21,31 @@
         </div>
     
        
-        <form method="post" enctype="multipart/form-data">
-            <input type="hidden" name="csrfmiddlewaretoken" value="TpXlv3Ser1S0SY3g0hM5IR5nX4BwgMCHYufQtpo4r3eV8FoSs3bv51Qpu9YzvKfm">
-           
-            <div class="form-group" bis_skin_checked="1">
-                <label for="id_name">Select Page</label>
-                <select name="cars" id="cars" form="carform">
-                    <option value="volvo">Home</option>
-                    <option value="saab">About us</option>
-                    <option value="opel">Professional Services</option>
-                  </select>                
-            </div>
-            
-            <div class="form-group" bis_skin_checked="1">
-                <label for="id_name">Select Section </select></label>
-                <select name="cars" id="cars" form="carform">
-                    <option value="volvo">Header section</option>
-                    <option value="saab">Footer Section</option>
-                    <option value="opel">About us</option>
-                  </select>                    
-            </div>
+        <form method="POST" action="{% url 'add_content' %}" enctype="multipart/form-data">
+            {% csrf_token %}
+           <div class="form-group">
+    <label for="id_name">Select Page</label>
+    <select name="Select_Page" id="Select_Page_id">
+        <option value="">--Select a Page--</option>
+        <!-- Page options will be populated dynamically -->
+    </select>
+</div>
+
+<div class="form-group">
+    <label for="id_name">Select Section</label>
+    <select name="select_section" id="select_section_id">
+        <option value="">--Select a Section--</option>
+        <!-- Section options will be populated based on selected page -->
+    </select>
+</div>
+
             <div class="form-group description-custome" bis_skin_checked="1">
                 <label for="id_name">content heading</label>
-                <input type="text" name="name" id="id_name" value="" class="form-control">
-                
+                <input type="text" name="content_heading" id="id_content_heading" value="" class="form-control">
+
             </div>
             <div class="form-group description-custome" bis_skin_checked="1">
-                <label for="id_name"> description</label>
+                <label for="id_name">Content description</label>
                 <textarea name="content" id="editor">
                     &lt;p&gt;This is some sample content.&lt;/p&gt;
                 </textarea>
@@ -58,27 +56,69 @@
                             console.error( error );
                         } );
                 </script>
-                
             </div>
             <div class="form-group description-custome" bis_skin_checked="1">
                 <label for="id_name">content image</label>
                 <input type="file" id="myfile" name="myfile">
-                
+
             </div>
 
             <div class="form-group description-custome" bis_skin_checked="1">
                 <label for="id_name">content button</label>
-                <input type="text" name="name" id="id_name" value="" class="form-control">
-                
+                <input type="text" name="content_button" id="id_content_button" value="" class="form-control">
+
             </div>
-         
+
 
 
 
             <button type="submit" class="btn btn-primary">Save</button>
-          
+
         </form>
     </div>
-    
+
             </main>
+
+
+ <script>
+
+        const jsonData = {{ jsonData|safe }};
+
+
+        const pages = jsonData.pages;
+        const sections = jsonData.sections;
+
+
+        const selectPageElement = document.getElementById("Select_Page_id");
+        pages.forEach(page => {
+            let option = document.createElement("option");
+            option.value = page.id;
+            option.textContent = page.pageName;
+            selectPageElement.appendChild(option);
+        });
+
+
+        selectPageElement.addEventListener('change', function() {
+            const selectedPageId = parseInt(selectPageElement.value);
+            const selectSectionElement = document.getElementById("select_section_id");
+
+
+            selectSectionElement.innerHTML = '<option value="">--Select a Section--</option>';
+
+            if (selectedPageId) {
+
+                const filteredSections = sections.filter(section => section.pageName_id === selectedPageId);
+
+
+                filteredSections.forEach(section => {
+                    let option = document.createElement("option");
+                    option.value = section.id;
+                    option.textContent = section.sectionName;
+                    selectSectionElement.appendChild(option);
+                });
+            }
+        });
+    </script>
+
+
 {% endblock %}

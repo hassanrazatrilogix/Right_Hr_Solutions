@@ -58,42 +58,42 @@
         <table class="user_table">
             <thead>
                 <tr>
-                    <th>Ref No</th>
+                    <th>ID No</th>
                     <th>Profile Image</th>
                     <th>Pages Name</th>
                     <th>Pages Heading</th>
                     <th>Pages description</th>
                     <th>Actions</th>
-                   
-                    
+
+
                 </tr>
             </thead>
             <tbody>
-                
+                {% for i in page_data %}
                 <tr>
-                    <td>1</td>
+                    <td>{{ forloop.counter }}</td>
                     <td>
-                        <img src="/static/dashboard/images/profile.png" alt="Profile Image" class="profile_img">
+                        <img src="{{ i.pageBanner.url }}" alt="Profile Image" class="profile_img">
                     </td>
-                    <td>demo</td>
-                    <td>demo</td>
-                    <td>demo</td>
-                   
-                    
+                    <td>{{i.pageName}}</td>
+                    <td>{{i.pageHeading}}</td>
+                    <td>{{i.pageDescription|safe|truncatewords:10}}</td>
+
+
                     <td>
-                        <a href="/dashboard/page-edit" class="edit_btn-2">
+                        <a href="{% url 'page-edit' page_id=i.id %}" class="edit_btn-2">
                             <i class="fa-solid fa-pen-to-square"></i>
                         </a>
-                        <a href="/dashboard/page-edit" class="edit_btn-2">
+                        <a href="{% url 'delete_page' page_id=i.id %}" class="edit_btn-2">
                             <i class="fa-solid fa-trash"></i>
                         </a>
-                        
+
                     </td>
-                    
+
                 </tr>
-                
-            
-                
+                {% endfor %}
+
+
             </tbody>
         </table>
     </div>

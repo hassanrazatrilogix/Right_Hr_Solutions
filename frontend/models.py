@@ -4,7 +4,6 @@ from django.contrib.auth.models import (
     User,
     PermissionsMixin,
 )
-from django.db.models import Max
 from django.utils.timezone import now
 from dashboard.models import Service
 from frontend.utils import UserManager
@@ -17,7 +16,6 @@ Role_CHOICES = [
 ]
 
 class User(AbstractBaseUser, PermissionsMixin):
-    id = models.CharField(max_length=4, primary_key=True)
     username = models.CharField(max_length=255, unique=True, blank=True , null=True)
     first_name = models.CharField(max_length=255, blank=False)
     last_name = models.CharField(max_length=255, blank=False)
@@ -79,7 +77,7 @@ Order_CHOICES = [
 
 
 class Order(models.Model):
-    id = models.CharField(max_length=4, primary_key=True, default='0001')
+    order_id = models.CharField(max_length=50)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     categoriesList = models.ForeignKey(Service, on_delete=models.CASCADE)   
     price = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)  
@@ -92,15 +90,6 @@ class Order(models.Model):
 
     def __str__(self):
         return f"{self.categoriesList}"
-
-    def save(self, *args, **kwargs):
-        if not self.id:
-            last_entry = Order.objects.aggregate(last_id=Max('id'))
-            last_id = last_entry.get('last_id', '0000')
-            new_id = str(int(last_id) + 1).zfill(4)
-            self.id = new_id
-
-        super(Order, self).save(*args, **kwargs)
 
     @classmethod
     def update(cls, id, usr=None, categorList=None, prce=None, pick_date=None, pick_time=None, order_stats=None, terms_accepted=None):

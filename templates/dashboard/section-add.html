@@ -21,18 +21,25 @@
         </div>
     
        
-        <form method="post" enctype="multipart/form-data">
-            <input type="hidden" name="csrfmiddlewaretoken" value="TpXlv3Ser1S0SY3g0hM5IR5nX4BwgMCHYufQtpo4r3eV8FoSs3bv51Qpu9YzvKfm">
-           
-            <div class="form-group" bis_skin_checked="1">
+        <form method="POST" action="{% url 'section_add' %}" enctype="multipart/form-data">
+            {% csrf_token %}
+             <div class="form-group description-custome" bis_skin_checked="1">
+                <label for="id_name">Select Section </select></label>
+                <select name="select_section" id="select_section_id">
+                    {% for i in page %}
+                    <option value="{{i.id}}">{{i.pageName}}</option>
+                    {% endfor %}
+                  </select>
+            </div>
+            <div class="form-group description-custome" bis_skin_checked="1">
                 <label for="id_name">Section Name</label>
-                <input type="text" name="name" id="id_name" value="" class="form-control">
-                
+                <input type="text" name="sec_name" id="id_name" value="" class="form-control">
+
             </div>
             <button type="submit" class="btn btn-primary">Save</button>
-          
+
         </form>
     </div>
-    
+
             </main>
 {% endblock %}

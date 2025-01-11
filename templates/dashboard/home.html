@@ -76,7 +76,7 @@
         <tbody>
             {% for order in orders %}
             <tr>
-                <td>{{x}}{{ order.id }}</td>
+                <td>{{ order.order_id }}</td>
                 <td>{{ order.user.email }}</td>
                 <td>{{ order.categoriesList}}</td>
                 <td>{{ order.price }}</td>
@@ -85,12 +85,12 @@
                 <td>{{order.order_status}}</td>
                 <td>{{ order.terms_accepted|yesno:"Yes,No" }}</td>
                 <td>
-                        <a href="{% url 'edit_orders' order.id %}" class="edit_btn">Edit</a>
+                        <a href="{% url 'edit_orders' order.order_id %}" class="edit_btn">Edit</a>
                     </td>
                 <td>
                     
                     {% if order.document_set.exists %}
-                    <a href="{% url 'download_order_files' order.id %}" class="btn btn-primary">
+                    <a href="{% url 'download_order_files' order.order_id %}" class="btn btn-primary">
                         Download Files
                     </a>
                     {% else %}

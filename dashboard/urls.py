@@ -32,17 +32,20 @@ urlpatterns = [
 
     path('section-list', views.section_list, name='section_list'),
     path('section-add', views.section_add, name='section_add'),
-    path('section-edit', views.section_edit, name='section_edit'),
+    path('section-edit/<int:section_id>/', views.section_edit, name='section_edit'),
+    path('delete_section/<int:section_id>/', views.delete_section, name='delete_section'),
 
 
     path('content-list', views.content_list, name='content_list'),
     path('add-content', views.add_content, name='add_content'),
-    path('edit-content', views.edit_content, name='edit-content'),
+    path('edit-content/<int:content_id>/', views.edit_content, name='edit-content'),
+    path('delete-content/<int:content_id>/', views.delete_content, name='delete_content'),
 
 
 
     path('page-add', views.page_add, name='page-add'),
-     path('page-edit', views.page_edit, name='page-edit'),
+    path('page-edit/<int:page_id>/', views.page_edit, name='page-edit'),
+    path('delete/<int:page_id>/', views.delete_page, name='delete_page'),
 
     path('help', views.help, name='help'),
 

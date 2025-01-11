@@ -21,25 +21,25 @@
         </div>
     
        
-        <form method="post" enctype="multipart/form-data">
-            <input type="hidden" name="csrfmiddlewaretoken" value="TpXlv3Ser1S0SY3g0hM5IR5nX4BwgMCHYufQtpo4r3eV8FoSs3bv51Qpu9YzvKfm">
-           
+        <form method="POST" action="{% url 'page-edit' page_id=page.id %}" enctype="multipart/form-data">
+            {% csrf_token %}
+
             <div class="form-group" bis_skin_checked="1">
                 <label for="id_name">Page Name</label>
-                <input type="text" name="name" id="id_name" value="" class="form-control">
-                
+                <input type="text" name="name" id="id_name" value="{{ page.pageName}}" class="form-control">
+
             </div>
-            
+
             <div class="form-group" bis_skin_checked="1">
                 <label for="id_name">Page Heading</label>
-                <input type="text" name="name" id="id_name" value="" class="form-control">
-                
+                <input type="text" name="heading" id="id_heading" value="{{ page.pageHeading}}" class="form-control">
+
             </div>
 
             <div class="form-group description-custome" bis_skin_checked="1">
                 <label for="id_name">Page description</label>
                 <textarea name="content" id="editor">
-                    &lt;p&gt;This is some sample content.&lt;/p&gt;
+                    &lt;p&gt;{{ page.pageDescription }}.&lt;/p&gt;
                 </textarea>
                 <script>
                     ClassicEditor
@@ -48,36 +48,39 @@
                             console.error( error );
                         } );
                 </script>
-                
             </div>
             <div class="form-group description-custome" bis_skin_checked="1">
                 <label for="id_name">Page Banner</label>
-                <input type="file" id="myfile" name="myfile">
-                
+                {% if page.pageBanner %}
+                    <div class="current-image">
+                        <img src="{{ page.pageBanner.url }}" alt="Page Banner" style="max-width: 300px;">
+                    </div>
+                {% endif %}
+                <input type="file" id="id_pageBanner" name="pageBanner" class="form-control">
             </div>
 
             <div class="form-group description-custome" bis_skin_checked="1">
                 <label for="id_name">Page meta Title</label>
-                <input type="text" name="name" id="id_name" value="" class="form-control">
-                
+                <input type="text" name="page_Title" id="id_page_Title" value="{{ page.pageTitle}}" class="form-control">
+
             </div>
             <div class="form-group description-custome" bis_skin_checked="1">
                 <label for="id_name">Page meta description</label>
-                <input type="text" name="name" id="id_name" value="" class="form-control">
-                
+                <input type="text" name="Page_meta_description" id="id_Page_meta_description" value="{{ page.PageMetaDescription}}" class="form-control">
+
             </div>
             <div class="form-group description-custome" bis_skin_checked="1">
                 <label for="id_name">Page meta keywords</label>
-                <input type="text" name="name" id="id_name" value="" class="form-control">
-                
+                <input type="text" name="Page_meta_keywords" id="id_Page_meta_keywords" value="{{ page.PageMetaKeywords}}" class="form-control">
+
             </div>
 
 
 
             <button type="submit" class="btn btn-primary">Save</button>
-          
+
         </form>
     </div>
-    
+
             </main>
 {% endblock %}
