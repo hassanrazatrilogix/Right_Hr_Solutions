@@ -199,31 +199,39 @@ class Sub_Content(models.Model):
 
     @classmethod
     def add(cls, cntntheading, sb_heding, sbcntnt, sbcontntImg):
-        selecCntnt = Content.objects.get(id=cntntheading.id)
-        res = cls(contentHeading=selecCntnt, sub_contentHeading=sb_heding, subContent=sbcntnt, subContentImage=sbcontntImg)
-        res.save()
-
-        print(res)
-        return res
+        try:
+            res = cls(
+                contentHeading=cntntheading,
+                sub_contentHeading=sb_heding,
+                subContent=sbcntnt,
+                subContentImage=sbcontntImg
+            )
+            res.save()
+            return res
+        except Exception as e:
+            print(f"Error adding Sub_Content: {e}")
+            return None
 
     @classmethod
     def update(cls, id, cntntheading=None, sb_heding=None, sbcntnt=None, sbcontntImg=None):
         try:
-            res = Sub_Content.objects.get(id=id)
-            cntntheading = Content.objects.get(id=cntntheading.id)
-        except ObjectDoesNotExist:
+            res = cls.objects.get(id=id)
+
+            # Update fields only if non-empty values are provided
+            if cntntheading:
+                res.contentHeading = cntntheading
+            if sb_heding:
+                res.sub_contentHeading = sb_heding
+            if sbcntnt:
+                res.subContent = sbcntnt
+            if sbcontntImg:
+                res.subContentImage = sbcontntImg
+
+            res.save()
+            return res
+        except cls.DoesNotExist:
+            print(f"Error: Sub_Content with id {id} does not exist.")
             return None
-
-        if cntntheading is not None and cntntheading != res.contentHeading:
-            res.contentHeading = cntntheading
-        if sb_heding is not None and sb_heding != res.sub_contentHeading:
-            res.sub_contentHeading = sb_heding
-        if sbcntnt is not None and sbcntnt != res.subContent:
-            res.subContent = sbcntnt
-        if sbcontntImg is not None and sbcontntImg != res.subContentImage:
-            res.subContentImage = sbcontntImg
-
-        res.save()
-
-        print(res)
-        return res
+        except Exception as e:
+            print(f"Error updating Sub_Content: {e}")
+            return None

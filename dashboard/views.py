@@ -389,12 +389,14 @@ def edit_content(request, content_id):
     pages = Pages.objects.all()
     sections = Add_Section.objects.all()
 
+    # Get the content to update and its related sub-contents
     content_to_update = get_object_or_404(Content, id=content_id)
-    sub_contents = Sub_Content.objects.filter(contentHeading=content_to_update.id)
+    sub_contents = list(Sub_Content.objects.filter(contentHeading=content_to_update.id))  # Convert QuerySet to a list
 
+    # Prepare data for rendering
     pages_list = list(pages.values())
     sections_list = list(sections.values())
-    sub_content_list = list(sub_contents.values())
+    sub_content_list = list(Sub_Content.objects.filter(contentHeading=content_to_update.id).values())  # Serialize sub_contents
 
     data = {
         'pages': pages_list,
@@ -403,42 +405,72 @@ def edit_content(request, content_id):
     }
 
     if request.method == 'POST':
-        content_to_update.page = Pages.objects.get(id=request.POST.get('Select_Page'))
-        content_to_update.section = Add_Section.objects.get(id=request.POST.get('select_section'))
-        content_to_update.heading = request.POST.get('content_heading')
-        content_to_update.content = request.POST.get('content')
+        # Update main content fields
+        try:
+            content_to_update.selectPage = Pages.objects.get(id=request.POST.get('Select_Page'))
+            content_to_update.selectSection = Add_Section.objects.get(id=request.POST.get('select_section'))
+            content_to_update.contentHeading = request.POST.get('content_heading')
+            content_to_update.contentDescription = request.POST.get('content')
 
-        if 'myfile' in request.FILES:
-            content_to_update.file = request.FILES.get('myfile', None)
+            if 'myfile' in request.FILES:
+                content_to_update.contentImage = request.FILES.get('myfile', None)
 
-        content_to_update.button = request.POST.get('content_button')
-        content_to_update.save()
+            content_to_update.contentButton = request.POST.get('content_button')
+            content_to_update.save()
 
+        except Pages.DoesNotExist:
+            print("Error: Selected page does not exist.")
+        except Add_Section.DoesNotExist:
+            print("Error: Selected section does not exist.")
+
+        # Handle subcontents only if they exist in the POST data
         subheading_names = request.POST.getlist('subheading_name')
         subheading_descriptions = request.POST.getlist('subheading_description')
         subheading_images = request.FILES.getlist('subheading_image')
 
-        for i in range(len(subheading_names)):
-            sub_content = sub_contents[i] if i < len(sub_contents) else None
-            if sub_content:
-                sub_content.name = subheading_names[i]
-                sub_content.description = subheading_descriptions[i]
-                if i < len(subheading_images):
-                    sub_content.image = subheading_images[i]
-                sub_content.save()
-                print(sub_contents)
-            else:
-                Sub_Content.add(
-                    content_to_update,
-                    subheading_names[i],
-                    subheading_descriptions[i],
-                    subheading_images[i] if i < len(subheading_images) else None
+        # Filter out empty subcontent entries
+        filtered_subcontents = [
+            (name, desc, img) for name, desc, img in zip(subheading_names, subheading_descriptions, subheading_images)
+            if name.strip() or desc.strip() or img
+        ]
+
+        # Update existing sub-contents
+        for index, sub_content in enumerate(sub_contents):
+            if index < len(filtered_subcontents):
+                name, desc, img = filtered_subcontents[index]
+                Sub_Content.update(
+                    sub_content.id,
+                    cntntheading=content_to_update,
+                    sb_heding=name,
+                    sbcntnt=desc,
+                    sbcontntImg=img if img else None
                 )
+            else:
+                sub_content.delete()  # Delete extra sub-contents
+
+        # Add new sub-contents if needed
+        for index in range(len(sub_contents), len(filtered_subcontents)):
+            name, desc, img = filtered_subcontents[index]
+            Sub_Content.add(
+                content_to_update,
+                name,
+                desc,
+                img if img else None
+            )
 
         return redirect('content_list')
 
-    jsonData = json.dumps(data, indent=4)
-    return render(request, "dashboard/edit-content.html", {'sections': sections, 'pages': pages,'content_to_update': content_to_update, 'sub_contents': sub_contents, 'jsonData': jsonData})
+    jsonData = json.dumps(data, indent=4)  # Serialize data for debugging or front-end use
+    return render(request, "dashboard/edit-content.html", {
+        'sections': sections,
+        'pages': pages,
+        'content_to_update': content_to_update,
+        'sub_contents': sub_contents,
+        'jsonData': jsonData
+    })
+
+
+
 
 
 def delete_content(request, content_id):
