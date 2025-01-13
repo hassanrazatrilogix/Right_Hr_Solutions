@@ -478,7 +478,7 @@ def delete_content(request, content_id):
 
     sec_delete.delete()
 
-    return redirect('/')
+    return redirect('content_list')
 
 
 @login_required
