@@ -5,7 +5,7 @@ from django.http import HttpResponseForbidden
 from django.utils.datetime_safe import datetime
 
 from frontend.forms import ServiceForm , ServiceTypeForm
-from dashboard.models import Service, ServiceType, Cart, Pages, Add_Section, Content
+from dashboard.models import Service, ServiceType, Cart, Pages, Add_Section, Content, Sub_Content
 from frontend.models import Order, User
 from django.shortcuts import  get_object_or_404
 from frontend.forms import UserEditForm
@@ -351,7 +351,7 @@ def add_content(request):
     print(sections)
     pages_list = list(page.values())
     sections_list = list(sections.values())
-
+    content = Content.objects.all()
     data = {
         'pages': pages_list,
         'sections': sections_list
@@ -366,38 +366,78 @@ def add_content(request):
             request.FILES['myfile'],
             request.POST.get('content_button')
         )
+
         print("\n\n\nresult\n\n", result)
+        if result:
+            subheading_names = request.POST.getlist('subheading_name')
+            subheading_descriptions = request.POST.getlist('subheading_description')
+            subheading_images = request.FILES.getlist('subheading_image')
+            for i in range(len(subheading_names)):
+                res = Sub_Content.add(
+                    Content.objects.get(id=result.id),
+                    subheading_names[i],
+                    subheading_descriptions[i],
+                    subheading_images[i] if i < len(subheading_images) else None
+
+                )
+                print(res)
     jsonData = json.dumps(data, indent=4)
-    return render(request, "dashboard/add-content.html", {'page': page, 'sections': sections, 'jsonData': jsonData})
+    return render(request, "dashboard/add-content.html", {'page': page, 'sections': sections, 'jsonData': jsonData, 'content':content})
 
 
 def edit_content(request, content_id):
-    content = get_object_or_404(Content, id=content_id)
-    page = Pages.objects.all()
-    print(page)
+    pages = Pages.objects.all()
     sections = Add_Section.objects.all()
-    print(sections)
-    pages_list = list(page.values())
+
+    content_to_update = get_object_or_404(Content, id=content_id)
+    sub_contents = Sub_Content.objects.filter(id=content_to_update.id)
+
+    pages_list = list(pages.values())
     sections_list = list(sections.values())
+    sub_content_list = list(sub_contents.values())
 
     data = {
         'pages': pages_list,
-        'sections': sections_list
+        'sections': sections_list,
+        'sub_content': sub_content_list,
     }
-    myfile = request.FILES.get('myfile', None)
-    if request.method == "POST":
-        result = Content.update(
-            content_id,
-            request.POST.get('Select_Page'),
-            request.POST.get('select_section'),
-            request.POST.get('content_heading'),
-            request.POST.get('description'),
-            myfile,
-            request.POST.get('content_button')
-        )
-        print("\n\n\nresult\n\n", result)
+
+    if request.method == 'POST':
+        content_to_update.page = Pages.objects.get(id=request.POST.get('Select_Page'))
+        content_to_update.section = Add_Section.objects.get(id=request.POST.get('select_section'))
+        content_to_update.heading = request.POST.get('content_heading')
+        content_to_update.content = request.POST.get('content')
+
+        if 'myfile' in request.FILES:
+            content_to_update.file = request.FILES.get['myfile', None]
+
+        content_to_update.button = request.POST.get('content_button')
+        content_to_update.save()
+
+        subheading_names = request.POST.getlist('subheading_name')
+        subheading_descriptions = request.POST.getlist('subheading_description')
+        subheading_images = request.FILES.getlist('subheading_image')
+
+        for i in range(len(subheading_names)):
+            sub_content = sub_contents[i] if i < len(sub_contents) else None
+            if sub_content:
+                sub_content.name = subheading_names[i]
+                sub_content.description = subheading_descriptions[i]
+                if i < len(subheading_images):
+                    sub_content.image = subheading_images[i]
+                sub_content.save()
+            else:
+                Sub_Content.add(
+                    content_to_update,
+                    subheading_names[i],
+                    subheading_descriptions[i],
+                    subheading_images[i] if i < len(subheading_images) else None
+                )
+
+        return redirect('content_list')
+
     jsonData = json.dumps(data, indent=4)
-    return render(request, "dashboard/edit-content.html", {'content': content, 'jsonData': jsonData})
+    return render(request, "dashboard/edit-content.html", {'sections': sections, 'pages': pages,'content_to_update': content_to_update, 'sub_contents': sub_contents, 'jsonData': jsonData})
 
 
 def delete_content(request, content_id):

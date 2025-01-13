@@ -1,4 +1,5 @@
 from django.core.exceptions import ObjectDoesNotExist
+from django.core.validators import FileExtensionValidator
 from django.db import models
 from django.conf import settings
 Role_CHOICES = [
@@ -144,7 +145,7 @@ class Content(models.Model):
     contentButton = models.CharField(max_length=200, null=True, blank=True)
 
     def __str__(self):
-        return self.contentHeading
+        return str(self.selectPage)
 
     @classmethod
     def add(cls, selectpage, selectsec, contntheading, contntdes, contntImage, contntbut):
@@ -187,4 +188,42 @@ class Content(models.Model):
         print(res)
         return res
 
+class Sub_Content(models.Model):
+    contentHeading = models.ForeignKey(Content, on_delete=models.CASCADE, related_name='sub_contents',  null=True, blank=True)
+    sub_contentHeading = models.CharField(max_length=255, null=True, blank=True)
+    subContent = models.TextField()
+    subContentImage = models.FileField(upload_to='services/icons/', validators=[FileExtensionValidator(['pdf', 'doc', 'svg', 'png', 'jpeg', 'jpg'])])
 
+    def __str__(self):
+        return str(self.contentHeading)
+
+    @classmethod
+    def add(cls, cntntheading, sb_heding, sbcntnt, sbcontntImg):
+        selecCntnt = Content.objects.get(id=cntntheading.id)
+        res = cls(contentHeading=selecCntnt, sub_contentHeading=sb_heding, subContent=sbcntnt, subContentImage=sbcontntImg)
+        res.save()
+
+        print(res)
+        return res
+
+    @classmethod
+    def update(cls, id, cntntheading=None, sb_heding=None, sbcntnt=None, sbcontntImg=None):
+        try:
+            res = Sub_Content.objects.get(id=id)
+            cntntheading = Content.objects.get(id=cntntheading.id)
+        except ObjectDoesNotExist:
+            return None
+
+        if cntntheading is not None and cntntheading != res.contentHeading:
+            res.contentHeading = cntntheading
+        if sb_heding is not None and sb_heding != res.sub_contentHeading:
+            res.sub_contentHeading = sb_heding
+        if sbcntnt is not None and sbcntnt != res.subContent:
+            res.subContent = sbcntnt
+        if sbcontntImg is not None and sbcontntImg != res.subContentImage:
+            res.subContentImage = sbcontntImg
+
+        res.save()
+
+        print(res)
+        return res

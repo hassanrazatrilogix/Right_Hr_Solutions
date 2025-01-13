@@ -20,7 +20,7 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from .forms import AppointmentForm , BillingDetailsForm , OrderForm , UserRegistrationForm  , ContactUs
 from .models import Document , NewsletterSubscriber
-from dashboard.models import Service , Cart
+from dashboard.models import Service, Cart, Pages
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import get_template
 from django.http import JsonResponse
@@ -34,13 +34,18 @@ from io import BytesIO
 
 
 def home(request):
-    content = Content.objects.filter(selectPage__pageName='Home')
-    for i in content:
-        print(i)
-    return render(request, 'index.html')  
+    content = Content.objects.filter(selectPage__pageName='Home')[:2]
+    why_we_choose = Content.objects.filter(contentHeading='Why Choose Right HR Solutions?')
+    page = Pages.objects.filter(pageName='Home').first()
+
+    return render(request, 'index.html', {'content': content, 'page' :page, 'why_we_choose': why_we_choose})
 
 def about(request):
-    return render(request, 'about-us.html') 
+    content = Content.objects.filter(selectPage__pageName='About Us')
+    why_we_choose = Content.objects.filter(contentHeading='Why Choose Right HR Solutions?')
+    print(why_we_choose)
+    page = Pages.objects.filter(pageName='About Us').first()
+    return render(request, 'about-us.html', {'page': page, 'content': content, 'why_we_choose': why_we_choose})
 
 def apostilleservices(request):
     return render(request, 'apostille-services.html') 
@@ -207,13 +212,19 @@ def fingerprintingservice(request):
     return render(request, 'fingerprinting-service.html') 
 
 def government(request):
-    return render(request, 'government.html') 
+    content = Content.objects.filter(selectPage__pageName='Government')[:2]
+    why_we_choose = Content.objects.filter(contentHeading='Why Choose Right HR Solutions?')
+    page = Pages.objects.filter(pageName='Government').first()
+    return render(request, 'government.html', {'content': content, 'page': page, 'why_we_choose': why_we_choose})
 
 def header(request):
     return render(request, 'header.html') 
 
 def hrsolutions(request):
-    return render(request, 'hr-solutions.html') 
+    content = Content.objects.filter(selectPage__pageName='HR Solutions')[:5]
+    why_we_choose = Content.objects.filter(contentHeading='Why Choose Right HR Solutions?')
+    page = Pages.objects.filter(pageName='HR Solutions').first()
+    return render(request, 'hr-solutions.html', {'content': content, 'page': page, 'why_we_choose': why_we_choose})
 
 def notarypublicservice(request):
     return render(request, 'notary-public-service.html') 
@@ -222,7 +233,10 @@ def privacypolicy(request):
     return render(request, 'privacy-policy.html') 
 
 def professional_services(request):
-    return render(request, 'professional-services.html') 
+    content = Content.objects.filter(selectPage__pageName='Professional Services')
+    why_we_choose = Content.objects.filter(contentHeading='Why Choose Right HR Solutions?')
+    page = Pages.objects.filter(pageName='Professional Services').first()
+    return render(request, 'professional-services.html', {'content': content, 'page': page, 'why_we_choose': why_we_choose})
 
 @login_required(login_url='signin')
 def placeorder(request):
