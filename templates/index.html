@@ -80,7 +80,9 @@
                 {% for subcontent in item.sub_contents.all %}
                   <div class="hr-list-item">
                     <div class="icon">
+                      {% if subcontent.subContentImage %}
                       <img class="img-fluid" src="{{ subcontent.subContentImage.url }}" alt="{{ subcontent.sub_contentHeading }}">
+                      {% endif %}
                     </div>
                     <div class="content">
                       <h4 class="heading">{{ subcontent.sub_contentHeading }}</h4>

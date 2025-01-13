@@ -390,7 +390,7 @@ def edit_content(request, content_id):
     sections = Add_Section.objects.all()
 
     content_to_update = get_object_or_404(Content, id=content_id)
-    sub_contents = Sub_Content.objects.filter(id=content_to_update.id)
+    sub_contents = Sub_Content.objects.filter(contentHeading=content_to_update.id)
 
     pages_list = list(pages.values())
     sections_list = list(sections.values())
@@ -409,7 +409,7 @@ def edit_content(request, content_id):
         content_to_update.content = request.POST.get('content')
 
         if 'myfile' in request.FILES:
-            content_to_update.file = request.FILES.get['myfile', None]
+            content_to_update.file = request.FILES.get('myfile', None)
 
         content_to_update.button = request.POST.get('content_button')
         content_to_update.save()
@@ -426,6 +426,7 @@ def edit_content(request, content_id):
                 if i < len(subheading_images):
                     sub_content.image = subheading_images[i]
                 sub_content.save()
+                print(sub_contents)
             else:
                 Sub_Content.add(
                     content_to_update,
