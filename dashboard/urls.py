@@ -35,7 +35,12 @@ urlpatterns = [
     path('edit_government/<int:government_id>/', views.edit_government, name='edit_government'),
     path('about_us/<int:about_us_id>/', views.edit_about_us, name='edit_about_us'),
     path('home_list', views.home_list, name='home_list'),
-    path('help', views.help, name='help'),
+
+    
+    path('help/', views.help_list, name='help_list'),
+    path('help/add/', views.help_add, name='help_add'),  # Add View
+    path('help/<int:pk>/edit/', views.help_edit, name='help_edit'),  # Edit View
+    path('help/<int:pk>/delete/', views.help_delete, name='help_delete'),  # Delete View
 
 
 

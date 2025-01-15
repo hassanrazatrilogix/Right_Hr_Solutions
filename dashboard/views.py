@@ -5,8 +5,8 @@ from django.http import HttpResponseForbidden
 from datetime import datetime
 
 from frontend.forms import ServiceForm, ServiceTypeForm, HomeForm, ProfessionalServicesForm, HRSolutionsForm, \
-    GovernmentForm, AboutUsForm
-from dashboard.models import Service, ServiceType, Cart, Home, Professional_Services, Hr_Solutions, Government, About_Us
+    GovernmentForm, AboutUsForm, HelpForm
+from dashboard.models import Service, ServiceType, Cart, Home, Professional_Services, Hr_Solutions, Government, About_Us, Help
 from frontend.models import Order, User
 from django.shortcuts import  get_object_or_404
 from frontend.forms import UserEditForm
@@ -394,6 +394,42 @@ def edit_about_us(request, about_us_id):
 def help(request):
     
     return render(request, "dashboard/help.html")
+
+# List View
+def help_list(request):
+    items = Help.objects.all()
+    return render(request, 'dashboard/help.html', {'items': items})
+
+# Add View
+def help_add(request):
+    if request.method == 'POST':
+        form = HelpForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('help_list')
+    else:
+        form = HelpForm()
+    return render(request, 'add_help.html', {'form': form, 'action': 'Add'})
+
+# Edit View
+def help_edit(request, pk):
+    item = get_object_or_404(Help, pk=pk)
+    if request.method == 'POST':
+        form = HelpForm(request.POST, instance=item)
+        if form.is_valid():
+            form.save()
+            return redirect('help_list')
+    else:
+        form = HelpForm(instance=item)
+    return render(request, 'add_help.html', {'form': form, 'action': 'Edit'})
+
+# Delete View
+def help_delete(request, pk):
+    item = get_object_or_404(Help, pk=pk)
+    if request.method == 'GET':
+        item.delete()
+        return redirect('help_list')
+    return render(request, 'help_confirm_delete.html', {'item': item})
 
 
 

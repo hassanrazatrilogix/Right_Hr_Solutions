@@ -1,7 +1,7 @@
 import re
 from django import forms
 from .models import User, Appointment, Order, ContactUs, BillingDetails
-from dashboard.models import Service, ServiceType, Home, Professional_Services, Hr_Solutions, Government, About_Us
+from dashboard.models import Service, ServiceType, Home, Professional_Services, Hr_Solutions, Government, About_Us, Help
 from django.core.exceptions import ValidationError
 from django.contrib.auth import get_user_model
 
@@ -343,3 +343,13 @@ class AboutUsForm(forms.ModelForm):
     class Meta:
         model = About_Us
         fields = '__all__'
+
+
+class HelpForm(forms.ModelForm):
+    class Meta:
+        model = Help
+        fields = ['heading', 'description']
+        labels = {
+            'heading': 'Heading',
+            'description': 'Description',
+        }

@@ -16,37 +16,22 @@
                 </nav>
             </div>
             <div class="top_add_services" bis_skin_checked="1">
-                <a class="cancel_edit_btn btn btn-secondary" href="/dashboard/service/">Back to List</a>
+              <a class="add_new_service_btn" href="/dashboard/help/add/">Add New Help</a>
             </div>
         </div>
         <div class="faq-container">
+          {%for item in items %}
             <div class="faq-item">
               <div class="faq-question">
-                What is CodePen?
+                {{item.heading}}
                 <span class="arrow">▶</span>
               </div>
               <div class="faq-answer">
-                CodePen is an online code editor and learning environment for front-end development.
+                {{item.description}} 
+                <span><a class="add_new_service_btn" style="float: right;" href="/dashboard/help/{{item.id}}/delete/">delete Help</a></span>
               </div>
             </div>
-            <div class="faq-item">
-              <div class="faq-question">
-                How can I create a Pen?
-                <span class="arrow">▶</span>
-              </div>
-              <div class="faq-answer">
-                You can create a Pen by signing up on CodePen and clicking the "New Pen" button.
-              </div>
-            </div>
-            <div class="faq-item">
-              <div class="faq-question">
-                Is CodePen free to use?
-                <span class="arrow">▶</span>
-              </div>
-              <div class="faq-answer">
-                Yes, CodePen has a free tier with limited features. Pro accounts offer advanced features.
-              </div>
-            </div>
+          {% endfor %}
           </div>
     </div>
     

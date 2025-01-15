@@ -1,0 +1,35 @@
+{% extends 'dashboard-base.html' %}
+{% block title %}Add Help{% endblock %}
+{% block content %}
+<main>
+            
+    <div class="user_details_sec edit_service" bis_skin_checked="1">
+    
+        <div class="top_main_heading services_sec_top" bis_skin_checked="1">
+            <div class="heading_breadcrumbs" bis_skin_checked="1">
+                <h1>Add Help</h1>
+                <nav aria-label="Breadcrumb">
+                    <ul class="breadcrumb">
+                    <li><a href="/dashboard/">Dashboard</a></li>
+                    <li><a href="/current-page">Help</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="top_add_services" bis_skin_checked="1">
+                <a class="cancel_edit_btn btn btn-secondary" href="/dashboard/help/">Back to List</a>
+            </div>
+        </div>
+    
+       
+        <form method="POST" action="{% url 'help_add' %}" enctype="multipart/form-data">
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">{{ action }}</button>
+            </form>
+
+        </form>
+    </div>
+
+            </main>
+{% endblock %}

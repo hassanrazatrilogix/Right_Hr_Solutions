@@ -721,3 +721,10 @@ class About_Us(models.Model):
 
     def __str__(self):
         return f"Main Section Data"
+
+class Help(models.Model):
+    heading = models.CharField(max_length=255, help_text="Enter help title")
+    description = models.TextField(help_text="Enter help description")
+
+    def __str__(self):
+        return self.heading
