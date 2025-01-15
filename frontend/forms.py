@@ -241,6 +241,86 @@ class HomeForm(forms.ModelForm):
     class Meta:
         model = Home
         fields = '__all__'
+        exclude = ['pagename'] 
+        labels = {
+            # Hero Section
+            'pagename': 'Page Name',
+            'hero_title': 'Hero Title',
+            'hero_des': 'Hero Description',
+            'hero_buttonImage': 'Hero Image',
+            
+            # Video Section
+            'video_section_title': 'Video Section Title',
+            'video_section_des': 'Video Section Description',
+            'video_button_text': 'Video Button Text File',
+            'video_button_image': 'Video Button Image',
+            
+            # Service Section - HR Solutions
+            'service_section_title': 'Service Section Title',
+            'service_section_desc': 'Service Section Description',
+            
+            # HR Solutions List
+            'hr_solutions_title': 'HR Solutions Title',
+            'hr_solutions_desc': 'HR Solutions Description',
+            'hr_solutions_buttonImage': 'HR Solutions Button Image',
+            'benefits_management_title': 'Benefits Management Title',
+            'benefits_management_description': 'Benefits Management Description',
+            'benefits_management_buttonImage': 'Benefits Management Button Image',
+            'payroll_management_title': 'Payroll Management Title',
+            'payroll_management_description': 'Payroll Management Description',
+            'payroll_management_buttonImage': 'Payroll Management Button Image',
+            'special_projects_title': 'Special Projects Title',
+            'special_projects_description': 'Special Projects Description',
+            'special_projects_buttonImage': 'Special Projects Button Image',
+            'staffing_recruitment_title': 'Staffing & Recruitment Title',
+            'staffing_recruitment_description': 'Staffing & Recruitment Description',
+            'staffing_recruitment_buttonImage': 'Staffing & Recruitment Button Image',
+            'training_development_title': 'Training & Development Title',
+            'training_development_description': 'Training & Development Description',
+            'training_development_buttonImage': 'Training & Development Button Image',
+            
+            # Service Section - Professional Services
+            'professional_services_section_title': 'Professional Services Section Title',
+            'professional_services_section_subtitle': 'Professional Services Section Subtitle',
+            'professional_services_buttonImage': 'Professional Services Button Image',
+            
+            # Professional Services List
+            'apostille_services_title': 'Apostille Services Title',
+            'apostille_services_description': 'Apostille Services Description',
+            'apostille_services_buttonImage': 'Apostille Services Button Image',
+            'background_checks_title': 'Background Checks Title',
+            'background_checks_description': 'Background Checks Description',
+            'background_checks_buttonImage': 'Background Checks Button Image',
+            'document_notarization_title': 'Document Notarization Title',
+            'document_notarization_description': 'Document Notarization Description',
+            'document_notarization_buttonImage': 'Document Notarization Button Image',
+            'document_translation_title': 'Document Translation Title',
+            'document_translation_description': 'Document Translation Description',
+            'document_translation_buttonImage': 'Document Translation Button Image',
+            'fingerprinting_services_title': 'Fingerprinting Services Title',
+            'fingerprinting_services_description': 'Fingerprinting Services Description',
+            'fingerprinting_buttonImage': 'Fingerprinting Button Image',
+            
+            # Why Choose Section
+            'why_choose_section_title': 'Why Choose Section Title',
+            'why_choose_section_image': 'Why Choose Section Image',
+            'expert_hr_guidance_section_title': 'Expert HR Guidance Section Title',
+            'expert_hr_guidance_section_desc': 'Expert HR Guidance Section Description',
+            'expert_hr_guidance_section_images': 'Expert HR Guidance Section Images',
+            'efficiency_compliance_section_title': 'Efficiency & Compliance Section Title',
+            'efficiency_compliance_section_desc': 'Efficiency & Compliance Section Description',
+            'efficiency_compliance_section_image': 'Efficiency & Compliance Section Image',
+            'costomized_solution_section_title': 'Customized Solution Section Title',
+            'costomized_solution_section_desc': 'Customized Solution Section Description',
+            'costomized_solution_section_image': 'Customized Solution Section Image',
+            'customer_satisfaction_section_title': 'Customer Satisfaction Section Title',
+            'customer_satisfaction_section_desc': 'Customer Satisfaction Section Description',
+            'customer_satisfaction_section_image': 'Customer Satisfaction Section Image',
+            
+            # Get Started Section
+            'get_started_section_title': 'Get Started Section Title',
+            'get_started_section_desc': 'Get Started Section Description',
+        }
 
 
 class ProfessionalServicesForm(forms.ModelForm):

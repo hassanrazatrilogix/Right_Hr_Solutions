@@ -703,8 +703,8 @@ td.service_btns a.delete_btn {
 .edit_service form p {
     display: flex;
     flex-direction: column;
-    flex: 0 0 48%;
-    max-width: 48%;
+    flex: 0 0 98%;
+    max-width: 98%;
     margin: 0;
 }
 .edit_service form p select, .edit_service form p input {
