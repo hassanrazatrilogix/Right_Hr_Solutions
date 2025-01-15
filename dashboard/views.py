@@ -105,7 +105,7 @@ def edit_orders(request, id):
             pick_date = datetime.strptime(pick_date_str, "%b. %d, %Y").date()  # Format: 'Jan. 7, 2025'
         except ValueError:
             raise ValueError("Invalid date format. Expected format is YYYY-MM-DD.")
-        res = Order.update(order_id,
+        res = Order.update(id,
                            request.POST.get('name'),
                            request.POST.get('service'),
                            request.POST.get('price'),
