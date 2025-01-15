@@ -2,10 +2,11 @@ from django.shortcuts import render,redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
 from django.http import HttpResponseForbidden
-from datetime import datetime
+from django.utils.datetime_safe import datetime
 
-from frontend.forms import ServiceForm , ServiceTypeForm
-from dashboard.models import Service, ServiceType, Cart, Pages, Add_Section, Content, Sub_Content
+from frontend.forms import ServiceForm, ServiceTypeForm, HomeForm, ProfessionalServicesForm, HRSolutionsForm, \
+    GovernmentForm, AboutUsForm
+from dashboard.models import Service, ServiceType, Cart, Home, Professional_Services, Hr_Solutions, Government, About_Us
 from frontend.models import Order, User
 from django.shortcuts import  get_object_or_404
 from frontend.forms import UserEditForm
@@ -32,7 +33,7 @@ def dashboard_summary(request):
     # Statistics for cards
     total_orders = orders.count()
     total_users = User.objects.count()
-    latest_users = User.objects.order_by('-id')[:5]
+    latest_users = User.objects.order_by('-id')[:10]
     total_revenue = orders.aggregate(total_revenue=Sum('price'))['total_revenue'] or 0
 
     # Aggregate total price by day for the chart
@@ -52,7 +53,7 @@ def dashboard_summary(request):
         request,
         'summary.html',
         {
-            'orders': orders,
+            'orders': orders[:5],
             'total_orders': total_orders,
             'latest_users': latest_users,
             'total_users': total_users,
@@ -84,13 +85,13 @@ def all_orders(request):
 
 
 @login_required(login_url='signin')
-def edit_orders(request, order_id):
+def edit_orders(request, id):
     query = request.GET.get('q', '')
     if request.user.is_superuser:
-        edit_orders = get_object_or_404(Order, id=order_id)
+        edit_orders = get_object_or_404(Order, id=id)
         print(edit_orders)
     else:
-        edit_orders = get_object_or_404(Order, id=order_id)
+        edit_orders = get_object_or_404(Order, id=id)
         print(edit_orders)
     if request.method == "POST":
         pick_date_str = request.POST.get('pick_date')
@@ -173,11 +174,6 @@ def edit_user(request, user_id):
             password = form.cleaned_data.get('password')
             if password:
                 user.password = make_password(password)  # Hash the new password
-
-            # Handle email change
-            new_email = form.cleaned_data.get('email')
-            if new_email:
-                user.email = new_email
 
             user.save()
             return redirect('user')  # Redirect after successful update
@@ -295,233 +291,104 @@ def remove_from_cart(request, service_id):
     cart_item.delete()
     return redirect("view_cart")
 
-
-
 #To Do
+@login_required
+def home_list(request):
+    home_data = Home.objects.all()
+    hr_solutions = Hr_Solutions.objects.all()
+    professional_services = Professional_Services.objects.all()
+    government = Government.objects.all()
+    about_us = About_Us.objects.all()
+    all_pages = list(home_data) + list(hr_solutions) + list(professional_services) + list(government) + list(about_us)
 
-def pages(request):
-    page_data = Pages.objects.all()
-    return render(request, "dashboard/pages.html", {"page_data": page_data})
+    return render(request, 'pages.html', {'all_pages': all_pages})
 
-def section_list(request):
-    section_list = Add_Section.objects.all()
-    return render(request, "dashboard/section-list.html", {'section_list': section_list})
-
-def section_add(request):
-    page = Pages.objects.all()
-    if request.method == "POST":
-        res = Add_Section.add(
-            request.POST.get('select_section'),
-            request.POST.get('sec_name')
-        )
-        print("\n\n\nresult\n\n", res)
-    return render(request, "dashboard/section-add.html", {'page': page})
-
-
-def section_edit(request, section_id):
-    sec_Edit = get_object_or_404(Add_Section, id=section_id)
-
-    if request.method == "POST":
-        res = Add_Section.update(
-            section_id,
-            request.POST.get('sec_name'),
-        )
-        print("\n\n\nresult\n\n", res)
-    return render(request, "dashboard/section-edit.html", {'sec_Edit': sec_Edit})
-
-
-def delete_section(request, section_id):
-    sec_delete = get_object_or_404(Add_Section, id=section_id)
-
-    sec_delete.delete()
-
-    return redirect('/')
-
-
-def content_list(request):
-    conten_list = Content.objects.all()
-
-    return render(request, "dashboard/content-list.html", {"conten_list": conten_list})
-
-
-def add_content(request):
-    page = Pages.objects.all()
-    print(page)
-    sections = Add_Section.objects.all()
-    print(sections)
-    pages_list = list(page.values())
-    sections_list = list(sections.values())
-    content = Content.objects.all()
-    data = {
-        'pages': pages_list,
-        'sections': sections_list
-    }
-
-    if request.method == "POST":
-        result = Content.add(
-            request.POST.get('Select_Page'),
-            request.POST.get('select_section'),
-            request.POST.get('content_heading'),
-            request.POST.get('content'),
-            request.FILES['myfile'],
-            request.POST.get('content_button')
-        )
-
-        print("\n\n\nresult\n\n", result)
-        if result:
-            subheading_names = request.POST.getlist('subheading_name')
-            subheading_descriptions = request.POST.getlist('subheading_description')
-            subheading_images = request.FILES.getlist('subheading_image')
-            for i in range(len(subheading_names)):
-                res = Sub_Content.add(
-                    Content.objects.get(id=result.id),
-                    subheading_names[i],
-                    subheading_descriptions[i],
-                    subheading_images[i] if i < len(subheading_images) else None
-
-                )
-                print(res)
-    jsonData = json.dumps(data, indent=4)
-    return render(request, "dashboard/add-content.html", {'page': page, 'sections': sections, 'jsonData': jsonData, 'content':content})
-
-
-def edit_content(request, content_id):
-    pages = Pages.objects.all()
-    sections = Add_Section.objects.all()
-
-    # Get the content to update and its related sub-contents
-    content_to_update = get_object_or_404(Content, id=content_id)
-    sub_contents = list(Sub_Content.objects.filter(contentHeading=content_to_update.id))  # Convert QuerySet to a list
-
-    # Prepare data for rendering
-    pages_list = list(pages.values())
-    sections_list = list(sections.values())
-    sub_content_list = list(Sub_Content.objects.filter(contentHeading=content_to_update.id).values())  # Serialize sub_contents
-
-    data = {
-        'pages': pages_list,
-        'sections': sections_list,
-        'sub_content': sub_content_list,
-    }
+@login_required
+def home_edit(request, home_id):
+    home_instance = get_object_or_404(Home, pk=home_id)
 
     if request.method == 'POST':
-        # Update main content fields
-        try:
-            content_to_update.selectPage = Pages.objects.get(id=request.POST.get('Select_Page'))
-            content_to_update.selectSection = Add_Section.objects.get(id=request.POST.get('select_section'))
-            content_to_update.contentHeading = request.POST.get('content_heading')
-            content_to_update.contentDescription = request.POST.get('content')
+        form = HomeForm(request.POST, request.FILES, instance=home_instance)
 
-            if 'myfile' in request.FILES:
-                content_to_update.contentImage = request.FILES.get('myfile', None)
+        if form.is_valid():
+            form.save()
+            return redirect('home_list')
+        else:
+            return render(request, "dashboard/page-edit.html", {'home_instance': home_instance, 'form': form})
 
-            content_to_update.contentButton = request.POST.get('content_button')
-            content_to_update.save()
+    else:
+        form = HomeForm(instance=home_instance)
 
-        except Pages.DoesNotExist:
-            print("Error: Selected page does not exist.")
-        except Add_Section.DoesNotExist:
-            print("Error: Selected section does not exist.")
+    return render(request, "dashboard/page-edit.html", {'home_instance': home_instance, 'form': form})
 
-        # Handle subcontents only if they exist in the POST data
-        subheading_names = request.POST.getlist('subheading_name')
-        subheading_descriptions = request.POST.getlist('subheading_description')
-        subheading_images = request.FILES.getlist('subheading_image')
+@login_required
+def edit_professional_services(request, professional_id):
+    professional_service = get_object_or_404(Professional_Services, id=professional_id)
 
-        # Filter out empty subcontent entries
-        filtered_subcontents = [
-            (name, desc, img) for name, desc, img in zip(subheading_names, subheading_descriptions, subheading_images)
-            if name.strip() or desc.strip() or img
-        ]
+    if request.method == 'POST':
+        form = ProfessionalServicesForm(request.POST, request.FILES, instance=professional_service)
+        if form.is_valid():
+            form.save()
+            return redirect('success_url')
+    else:
+        form = ProfessionalServicesForm(instance=professional_service)
 
-        # Update existing sub-contents
-        for index, sub_content in enumerate(sub_contents):
-            if index < len(filtered_subcontents):
-                name, desc, img = filtered_subcontents[index]
-                Sub_Content.update(
-                    sub_content.id,
-                    cntntheading=content_to_update,
-                    sb_heding=name,
-                    sbcntnt=desc,
-                    sbcontntImg=img if img else None
-                )
-            else:
-                sub_content.delete()  # Delete extra sub-contents
+    return render(request, 'edit_professional_services.html', {'form': form, 'professional_service': professional_service})
 
-        # Add new sub-contents if needed
-        for index in range(len(sub_contents), len(filtered_subcontents)):
-            name, desc, img = filtered_subcontents[index]
-            Sub_Content.add(
-                content_to_update,
-                name,
-                desc,
-                img if img else None
-            )
+@login_required
+def edit_hr_solutions(request, hr_solution_id):
+    # Fetch the existing Hr_Solutions instance by primary key (pk)
+    hr_solution = get_object_or_404(Hr_Solutions, pk=hr_solution_id)
 
-        return redirect('content_list')
+    if request.method == 'POST':
+        # Create a form instance with POST data and any files (e.g., images)
+        form = HRSolutionsForm(request.POST, request.FILES, instance=hr_solution)
 
-    jsonData = json.dumps(data, indent=4)  # Serialize data for debugging or front-end use
-    return render(request, "dashboard/edit-content.html", {
-        'sections': sections,
-        'pages': pages,
-        'content_to_update': content_to_update,
-        'sub_contents': sub_contents,
-        'jsonData': jsonData
-    })
+        if form.is_valid():
+            form.save()  # Save the updated instance to the database
+            return redirect('success_url')  # Redirect to a success page or another page after saving
+    else:
+        # Initialize the form with the existing data
+        form = HRSolutionsForm(instance=hr_solution)
 
+    return render(request, 'edit_hr_solutions.html', {'form': form, 'hr_solution': hr_solution})
 
+@login_required
+def edit_government(request, government_id):
+    # Fetch the existing Government instance by primary key (pk)
+    government = get_object_or_404(Government, pk=government_id)
 
+    if request.method == 'POST':
+        # Initialize the form with POST data and any files (images, etc.)
+        form = GovernmentForm(request.POST, request.FILES, instance=government)
 
+        if form.is_valid():
+            form.save()  # Save the updated instance to the database
+            return redirect('government_success')  # Redirect to a success page or another URL
+    else:
+        # Initialize the form with the current data of the Government instance
+        form = GovernmentForm(instance=government)
 
-def delete_content(request, content_id):
-    sec_delete = get_object_or_404(Content, id=content_id)
-
-    sec_delete.delete()
-
-    return redirect('content_list')
+    return render(request, 'edit_government.html', {'form': form, 'government': government})
 
 
 @login_required
-def page_add(request):
-    if request.method == "POST":
-        result = Pages.add(
-            request.POST.get('name'),
-            request.POST.get('heading'),
-            request.POST.get('content'),
-            request.FILES['myfile'],
-            request.POST.get('page_Title'),
-            request.POST.get('Page_meta_description'),
-            request.POST.get('Page_meta_keywords')
-        )
-        print("\n\n\nresult\n\n", result)
-    return render(request, "dashboard/page-add.html")
+def edit_about_us(request, about_us_id):
+    # Fetch the existing About_Us instance by primary key (pk)
+    about_us = get_object_or_404(About_Us, pk=about_us_id)
 
+    if request.method == 'POST':
+        # Initialize the form with POST data and any files (for image/file uploads)
+        form = AboutUsForm(request.POST, request.FILES, instance=about_us)
 
-def page_edit(request, page_id):
-    page = get_object_or_404(Pages, pk=page_id)
-    myfile = request.FILES.get('myfile', None)
-    if request.method == "POST":
-        result = Pages.update(
-            page_id,
-            request.POST.get('name'),
-            request.POST.get('heading'),
-            request.POST.get('content'),
-            myfile,
-            request.POST.get('page_Title'),
-            request.POST.get('Page_meta_description'),
-            request.POST.get('Page_meta_keywords')
-        )
-        print("\n\n\nresult\n\n", result)
-    return render(request, "dashboard/page-edit.html", {'page': page})
+        if form.is_valid():
+            form.save()  # Save the updated instance to the database
+            return redirect('about_us_success')  # Redirect to a success page (replace with the correct URL)
+    else:
+        # Initialize the form with the current data of the About_Us instance
+        form = AboutUsForm(instance=about_us)
 
-
-def delete_page(request, page_id):
-    sec_delete = get_object_or_404(Pages, id=page_id)
-
-    sec_delete.delete()
-
-    return redirect('/')
-
+    return render(request, 'edit_about_us.html', {'form': form, 'about_us': about_us})
 
 
 def help(request):

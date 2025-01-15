@@ -1,7 +1,7 @@
 import re
 from django import forms
 from .models import User, Appointment, Order, ContactUs, BillingDetails
-from dashboard.models import Service , ServiceType
+from dashboard.models import Service, ServiceType, Home, Professional_Services, Hr_Solutions, Government, About_Us
 from django.core.exceptions import ValidationError
 from django.contrib.auth import get_user_model
 
@@ -88,17 +88,7 @@ class UserEditForm(forms.ModelForm):
     )
 
     # Add confirm_email field
-    email = forms.EmailField(
-        required=False,
-        widget=forms.EmailInput(attrs={'placeholder': 'Email'}),
-        label='Email'
-    )
 
-    confirm_email = forms.EmailField(
-        required=False,
-        widget=forms.EmailInput(attrs={'placeholder': 'Confirm New Email'}),
-        label='Confirm Email'
-    )
     image = forms.ImageField(
         required=False,
         widget=forms.ClearableFileInput(attrs={'class': 'form-control-file', 'placeholder': 'Choose an image'}),
@@ -124,16 +114,10 @@ class UserEditForm(forms.ModelForm):
         cleaned_data = super().clean()
         password = cleaned_data.get('password')
         confirm_password = cleaned_data.get('confirm_password')
-        email = cleaned_data.get('email')
-        confirm_email = cleaned_data.get('confirm_email')
 
         # Validate password match
         if password and password != confirm_password:
             raise forms.ValidationError('Passwords do not match.')
-
-        # Validate email match
-        if email and email != confirm_email:
-            raise forms.ValidationError('Emails do not match.')
 
         return cleaned_data
 
@@ -250,4 +234,32 @@ class ServiceForm(forms.ModelForm):
 class ServiceTypeForm(forms.ModelForm):
     class Meta:
         model = ServiceType
-        fields = ['name']       
+        fields = ['name']
+
+
+class HomeForm(forms.ModelForm):
+    class Meta:
+        model = Home
+        fields = '__all__'
+
+
+class ProfessionalServicesForm(forms.ModelForm):
+    class Meta:
+        model = Professional_Services
+        fields = '__all__'
+
+
+class HRSolutionsForm(forms.ModelForm):
+    class Meta:
+        model = Hr_Solutions
+        fields = '__all__'
+
+class GovernmentForm(forms.ModelForm):
+    class Meta:
+        model = Government
+        fields = '__all__'
+
+class AboutUsForm(forms.ModelForm):
+    class Meta:
+        model = About_Us
+        fields = '__all__'

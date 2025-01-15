@@ -1,6 +1,8 @@
-{% extends 'dashboard-base.html' %}
-{% block title %}Edit Home Page{% endblock %}
-{% block content %}
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Right HR Solutions – HR Solutions & Professional Services{% endblock title %}
+
+ {% block content %}
 <main>
 
     <div class="user_details_sec edit_service" bis_skin_checked="1">
@@ -20,14 +22,11 @@
             </div>
         </div>
 
-
-        <form method="POST" action="{% url 'home_edit' home_id=home_instance.id %}" enctype="multipart/form-data">
-            {% csrf_token %}
-                    {{ form.as_p }}
-
-            <button type="submit" class="btn btn-primary">Save</button>
-
-        </form>
+  <form method="POST" action="{% url 'edit_hr_solutions' hr_solution_id=hr_solution.id %}" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}  <!-- Render the form fields -->
+    <button type="submit">Save Changes</button>
+  </form>
     </div>
 
             </main>

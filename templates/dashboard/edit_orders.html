@@ -21,7 +21,7 @@
         </div>
 
 
-        <form method="POST" action="{% url 'edit_orders' order_id=edit_orders.id %}" enctype="multipart/form-data">
+        <form method="POST" action="{% url 'edit_orders' id=edit_orders.id %}" enctype="multipart/form-data">
                 {% csrf_token %}
             <div class="form-group" bis_skin_checked="1">
                 <label for="id_name">User Name</label>

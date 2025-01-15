@@ -20,12 +20,11 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from .forms import AppointmentForm , BillingDetailsForm , OrderForm , UserRegistrationForm  , ContactUs
 from .models import Document , NewsletterSubscriber
-from dashboard.models import Service, Cart, Pages
+from dashboard.models import Service, Cart, Home, Professional_Services, Hr_Solutions, Government, About_Us
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import get_template
 from django.http import JsonResponse
 from .models import NewsletterSubscriber, Order
-from dashboard.models import Content
 from django.template import Context
 import zipfile
 import os
@@ -34,18 +33,13 @@ from io import BytesIO
 
 
 def home(request):
-    content = Content.objects.filter(selectPage__pageName='Home')[:2]
-    why_we_choose = Content.objects.filter(contentHeading='Why Choose Right HR Solutions?')
-    page = Pages.objects.filter(pageName='Home').first()
 
-    return render(request, 'index.html', {'content': content, 'page' :page, 'why_we_choose': why_we_choose})
+    home_list = Home.objects.all()
+    return render(request, 'index.html', {'home_list': home_list})
 
 def about(request):
-    content = Content.objects.filter(selectPage__pageName='About Us')
-    why_we_choose = Content.objects.filter(contentHeading='Why Choose Right HR Solutions?')
-    print(why_we_choose)
-    page = Pages.objects.filter(pageName='About Us').first()
-    return render(request, 'about-us.html', {'page': page, 'content': content, 'why_we_choose': why_we_choose})
+    about_us = About_Us.objects.all()
+    return render(request, 'about-us.html', {'about_us': about_us})
 
 def apostilleservices(request):
     return render(request, 'apostille-services.html') 
@@ -212,19 +206,15 @@ def fingerprintingservice(request):
     return render(request, 'fingerprinting-service.html') 
 
 def government(request):
-    content = Content.objects.filter(selectPage__pageName='Government')[:2]
-    why_we_choose = Content.objects.filter(contentHeading='Why Choose Right HR Solutions?')
-    page = Pages.objects.filter(pageName='Government').first()
-    return render(request, 'government.html', {'content': content, 'page': page, 'why_we_choose': why_we_choose})
+    government = Government.objects.all()
+    return render(request, 'government.html', {'government': government})
 
 def header(request):
     return render(request, 'header.html') 
 
 def hrsolutions(request):
-    content = Content.objects.filter(selectPage__pageName='HR Solutions')[:5]
-    why_we_choose = Content.objects.filter(contentHeading='Why Choose Right HR Solutions?')
-    page = Pages.objects.filter(pageName='HR Solutions').first()
-    return render(request, 'hr-solutions.html', {'content': content, 'page': page, 'why_we_choose': why_we_choose})
+    hr_solution = Hr_Solutions.objects.all()
+    return render(request, 'hr-solutions.html', {'hr_solution': hr_solution})
 
 def notarypublicservice(request):
     return render(request, 'notary-public-service.html') 
@@ -233,10 +223,8 @@ def privacypolicy(request):
     return render(request, 'privacy-policy.html') 
 
 def professional_services(request):
-    content = Content.objects.filter(selectPage__pageName='Professional Services')
-    why_we_choose = Content.objects.filter(contentHeading='Why Choose Right HR Solutions?')
-    page = Pages.objects.filter(pageName='Professional Services').first()
-    return render(request, 'professional-services.html', {'content': content, 'page': page, 'why_we_choose': why_we_choose})
+    professional_services = Professional_Services.objects.all()
+    return render(request, 'professional-services.html', {'professional_services': professional_services})
 
 @login_required(login_url='signin')
 def placeorder(request):
@@ -468,9 +456,9 @@ def welcome(request):
     return render(request, 'welcome.html') 
 
 
-def download_order_files(request, order_id):
+def download_order_files(request, id):
     # Get the order and associated files
-    order = Order.objects.get(id=order_id)
+    order = Order.objects.get(id=id)
     files = order.document_set.all()
 
     # Create a zip file in memory

@@ -33,3 +33,4 @@ frontend/__pycache__/*
 .env
 rightsolutions/settings.py
 *.vscode
+*.idea/

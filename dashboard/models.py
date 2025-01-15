@@ -55,183 +55,669 @@ class Cart(models.Model):
         return self.quantity * self.service_price
 
 
-class Pages(models.Model):
-    pageName = models.CharField(max_length=50, null=True, blank=True)
-    pageHeading = models.CharField(max_length=50, null=True, blank=True)
-    pageDescription = models.TextField(null=True, blank=True)
-    pageBanner = models.FileField(upload_to='services/icons/')
-    pageTitle = models.CharField(max_length=50, null=True, blank=True)
-    PageMetaDescription= models.CharField(max_length=50, null=True, blank=True)
-    PageMetaKeywords = models.CharField(max_length=50, null=True, blank=True)
+# class Pages(models.Model):
+#     pageName = models.CharField(max_length=50, null=True, blank=True)
+#     pageHeading = models.CharField(max_length=50, null=True, blank=True)
+#     pageDescription = models.TextField(null=True, blank=True)
+#     pageBanner = models.FileField(upload_to='services/icons/')
+#     pageTitle = models.CharField(max_length=50, null=True, blank=True)
+#     PageMetaDescription= models.CharField(max_length=50, null=True, blank=True)
+#     PageMetaKeywords = models.CharField(max_length=50, null=True, blank=True)
+#
+#     def __str__(self):
+#         return self.pageName
+#
+#     @classmethod
+#     def add(cls, pagename, pageheading, pagedescptn, pagebaner, pagetitl, pagemetades, pagemetakey):
+#         res = cls(pageName=pagename, pageHeading=pageheading, pageDescription=pagedescptn, pageBanner=pagebaner, pageTitle=pagetitl,
+#                   PageMetaDescription=pagemetades, PageMetaKeywords=pagemetakey)
+#
+#         res.save()
+#         print(res)
+#         return res
+#
+#     @classmethod
+#     def update(cls, id,  pagename=None, pageheading=None, pagedescptn=None, pagebaner=None, pagetitl=None, pagemetades=None, pagemetakey=None):
+#         try:
+#             res = Pages.objects.get(id=id)
+#         except ObjectDoesNotExist:
+#             return None
+#
+#         if pagename is not None and pagename != res.pageName:
+#             res.pageName = pagename
+#         if pageheading is not None and pageheading != res.pageHeading:
+#             res.pageHeading = pageheading
+#         if pagedescptn is not None and pagedescptn != res.pageDescription:
+#             res.pageDescription = pagedescptn
+#         if pagebaner is not None and pagebaner != res.pageBanner:
+#             res.pageBanner = pagebaner
+#         if pagetitl is not None and pagetitl != res.pageTitle:
+#             res.pageTitle = pagetitl
+#         if pagemetades is not None and pagemetades != res.PageMetaDescription:
+#             res.PageMetaDescription = pagemetades
+#         if pagemetakey is not None and pagemetakey != res.PageMetaKeywords:
+#             res.PageMetaKeywords = pagemetakey
+#
+#         res.save()
+#
+#         print(res)
+#         return res
+#
+#
+# class Add_Section(models.Model):
+#     pageName = models.ForeignKey(Pages, on_delete=models.CASCADE, null=True, blank=True)
+#     sectionName = models.CharField(max_length=60, null=True, blank=True)
+#     sectionDescription = models.TextField(null=True, blank=True)
+#
+#     def __str__(self):
+#         return str(self.pageName)
+#
+#     @classmethod
+#     def add(cls, pgeName, secName, secDesp):
+#         page_instance = Pages.objects.get(id=pgeName)
+#         res = cls(pageName=page_instance, sectionName=secName, sectionDescription=secDesp)
+#
+#         res.save()
+#         print(res)
+#         return res
+#
+#     @classmethod
+#     def update(cls, id, pgeName=None, secName=None, secDesp=None):
+#         try:
+#             res = Add_Section.objects.get(id=id)
+#         except ObjectDoesNotExist:
+#             return None
+#         if pgeName is not None and pgeName != res.pageName:
+#             res.pageName = pgeName
+#         if secName is not None and secName != res.sectionName:
+#             res.sectionName = secName
+#         if secDesp is not None and secDesp != res.sectionDescription:
+#             res.sectionDescription = secDesp
+#
+#         res.save()
+#         print(res)
+#         return res
+#
+#
+# class Content(models.Model):
+#     selectPage = models.ForeignKey(Pages, on_delete=models.CASCADE,  null=True, blank=True)
+#     selectSection = models.ForeignKey(Add_Section, on_delete=models.CASCADE,  null=True, blank=True)
+#     contentHeading = models.CharField(max_length=80, null=True, blank=True)
+#     contentDescription = models.TextField()
+#     contentImage = models.ImageField(upload_to='services/icons/')
+#     contentButton = models.CharField(max_length=200, null=True, blank=True)
+#
+#     def __str__(self):
+#         return str(self.selectPage)
+#
+#     @classmethod
+#     def add(cls, selectpage, selectsec, contntheading, contntdes, contntImage, contntbut):
+#         selecPage = Pages.objects.get(id=selectpage)
+#         selecSec = Add_Section.objects.get(id=selectsec)
+#         res = cls(selectPage=selecPage, selectSection=selecSec, contentHeading=contntheading, contentDescription=contntdes,
+#                   contentImage=contntImage,
+#                   contentButton=contntbut)
+#
+#         res.save()
+#         print(res)
+#         return res
+#
+#     @classmethod
+#     def update(cls, id, selectpage=None, selectsec=None, contntheading=None, contntdes=None, contntImage=None,
+#                contntbut=None):
+#
+#         try:
+#             res = Content.objects.get(id=id)
+#             selecPage = Pages.objects.get(id=selectpage)
+#             selecSec = Add_Section.objects.get(id=selectsec)
+#         except ObjectDoesNotExist:
+#             return None
+#
+#         if selecPage is not None and selecPage != res.selectPage:
+#             res.selectPage = selecPage
+#         if selecSec is not None and selecSec != res.selectSection:
+#             res.selectSection = selecSec
+#         if contntheading is not None and contntheading != res.contentHeading:
+#             res.contentHeading = contntheading
+#         if contntdes is not None and contntdes != res.contentDescription:
+#             res.contentDescription = contntdes
+#         if contntImage is not None and contntImage != res.contentImage:
+#             res.contentImage = contntImage
+#         if contntbut is not None and contntbut != res.contentButton:
+#             res.contentButton = contntbut
+#
+#         res.save()
+#
+#         print(res)
+#         return res
+#
+# class Sub_Content(models.Model):
+#     contentHeading = models.ForeignKey(Content, on_delete=models.CASCADE, related_name='sub_contents',  null=True, blank=True)
+#     sub_contentHeading = models.CharField(max_length=255, null=True, blank=True)
+#     subContent = models.TextField()
+#     subContentImage = models.FileField(upload_to='services/icons/', validators=[FileExtensionValidator(['pdf', 'doc', 'svg', 'png', 'jpeg', 'jpg'])])
+#
+#     def __str__(self):
+#         return str(self.contentHeading)
+#
+#     @classmethod
+#     def add(cls, cntntheading, sb_heding, sbcntnt, sbcontntImg):
+#         selecCntnt = Content.objects.get(id=cntntheading.id)
+#         res = cls(contentHeading=selecCntnt, sub_contentHeading=sb_heding, subContent=sbcntnt, subContentImage=sbcontntImg)
+#         res.save()
+#
+#         print(res)
+#         return res
+#
+#     @classmethod
+#     def update(cls, id, cntntheading=None, sb_heding=None, sbcntnt=None, sbcontntImg=None):
+#         try:
+#             res = Sub_Content.objects.get(id=id)
+#             cntntheading = Content.objects.get(id=cntntheading.id)
+#         except ObjectDoesNotExist:
+#             return None
+#
+#         if cntntheading is not None and cntntheading != res.contentHeading:
+#             res.contentHeading = cntntheading
+#         if sb_heding is not None and sb_heding != res.sub_contentHeading:
+#             res.sub_contentHeading = sb_heding
+#         if sbcntnt is not None and sbcntnt != res.subContent:
+#             res.subContent = sbcntnt
+#         if sbcontntImg is not None and sbcontntImg != res.subContentImage:
+#             res.subContentImage = sbcontntImg
+#
+#         res.save()
+#
+#         print(res)
+#         return res
+
+
+class Home(models.Model):
+    # Hero Section
+    pagename = models.CharField(max_length=255, null=True, blank=True, default="Home")
+    hero_title = models.CharField(max_length=255)
+    hero_des = models.TextField()
+    hero_buttonImage = models.ImageField(upload_to='services/icons/', validators=[FileExtensionValidator(['pdf', 'doc', 'svg', 'png', 'jpeg', 'jpg'])])
+
+    # Video Section
+    video_section_title = models.CharField(max_length=255)
+    video_section_des = models.TextField()
+    video_button_text = models.FileField(upload_to='videos/')
+    video_button_image = models.ImageField(upload_to='services/icons/',
+                                           validators=[FileExtensionValidator(
+                                               ['pdf', 'doc', 'svg', 'png', 'jpeg', 'jpg'])], null=True, blank=True, default='')
+
+    # Service Section - HR Solutions
+    service_section_title = models.CharField(max_length=255)
+    service_section_desc = models.TextField()
+
+    # HR Solutions List
+    hr_solutions_title = models.CharField(max_length=255)
+    hr_solutions_desc = models.TextField()
+    hr_solutions_buttonImage = models.ImageField(upload_to='services/icons/', validators=[FileExtensionValidator(['pdf', 'doc', 'svg', 'png', 'jpeg', 'jpg'])])
+    benefits_management_title = models.CharField(max_length=255)
+    benefits_management_description = models.TextField()
+    benefits_management_buttonImage = models.FileField(upload_to='services/icons/', validators=[FileExtensionValidator(['pdf', 'doc', 'svg', 'png', 'jpeg', 'jpg'])])
+    payroll_management_title = models.CharField(max_length=255)
+    payroll_management_description = models.TextField()
+    payroll_management_buttonImage = models.FileField(upload_to='services/icons/', validators=[FileExtensionValidator(['pdf', 'doc', 'svg', 'png', 'jpeg', 'jpg'])])
+    special_projects_title = models.CharField(max_length=255)
+    special_projects_description = models.TextField()
+    special_projects_buttonImage = models.FileField(upload_to='services/icons/', validators=[FileExtensionValidator(['pdf', 'doc', 'svg', 'png', 'jpeg', 'jpg'])])
+    staffing_recruitment_title = models.CharField(max_length=255)
+    staffing_recruitment_description = models.TextField()
+    staffing_recruitment_buttonImage = models.FileField(upload_to='services/icons/', validators=[FileExtensionValidator(['pdf', 'doc', 'svg', 'png', 'jpeg', 'jpg'])])
+    training_development_title = models.CharField(max_length=255)
+    training_development_description = models.TextField()
+    training_development_buttonImage = models.FileField(upload_to='services/icons/', validators=[FileExtensionValidator(['pdf', 'doc', 'svg', 'png', 'jpeg', 'jpg'])])
+
+    # Service Section - Professional Services
+    professional_services_section_title = models.CharField(max_length=255)
+    professional_services_section_subtitle = models.TextField()
+    professional_services_buttonImage = models.ImageField(upload_to='services/icons/', validators=[FileExtensionValidator(['pdf', 'doc', 'svg', 'png', 'jpeg', 'jpg'])])
+
+    # Professional Services List
+    apostille_services_title = models.CharField(max_length=255)
+    apostille_services_description = models.TextField()
+    apostille_services_buttonImage = models.FileField(upload_to='services/icons/', validators=[FileExtensionValidator(['pdf', 'doc', 'svg', 'png', 'jpeg', 'jpg'])])
+    background_checks_title = models.CharField(max_length=255)
+    background_checks_description = models.TextField()
+    background_checks_buttonImage = models.FileField(upload_to='services/icons/', validators=[FileExtensionValidator(['pdf', 'doc', 'svg', 'png', 'jpeg', 'jpg'])])
+
+    document_notarization_title = models.CharField(max_length=255)
+    document_notarization_description = models.TextField()
+    document_notarization_buttonImage = models.FileField(upload_to='services/icons/', validators=[FileExtensionValidator(['pdf', 'doc', 'svg', 'png', 'jpeg', 'jpg'])])
+
+    document_translation_title = models.CharField(max_length=255)
+    document_translation_description = models.TextField()
+    document_translation_buttonImage = models.FileField(upload_to='services/icons/', validators=[FileExtensionValidator(['pdf', 'doc', 'svg', 'png', 'jpeg', 'jpg'])])
+
+    fingerprinting_services_title = models.CharField(max_length=255)
+    fingerprinting_services_description = models.TextField()
+    fingerprinting_buttonImage = models.FileField(upload_to='services/icons/', validators=[FileExtensionValidator(['pdf', 'doc', 'svg', 'png', 'jpeg', 'jpg'])])
+
+
+    # Why Choose Section
+    why_choose_section_title = models.CharField(max_length=255)
+    why_choose_section_image = models.FileField(upload_to='services/icons/', validators=[FileExtensionValidator(['pdf', 'doc', 'svg', 'png', 'jpeg', 'jpg'])])
+    expert_hr_guidance_section_title = models.CharField(max_length=255)
+    expert_hr_guidance_section_desc = models.TextField()
+    expert_hr_guidance_section_images = models.FileField(upload_to='services/icons/', validators=[FileExtensionValidator(['pdf', 'doc', 'svg', 'png', 'jpeg', 'jpg'])])
+    efficiency_compliance_section_title = models.CharField(max_length=255)
+    efficiency_compliance_section_desc = models.TextField()
+    efficiency_compliance_section_image = models.FileField(upload_to='services/icons/', validators=[FileExtensionValidator(['pdf', 'doc', 'svg', 'png', 'jpeg', 'jpg'])])
+    costomized_solution_section_title = models.CharField(max_length=255)
+    costomized_solution_section_desc = models.TextField()
+    costomized_solution_section_image = models.FileField(upload_to='services/icons/', validators=[FileExtensionValidator(['pdf', 'doc', 'svg', 'png', 'jpeg', 'jpg'])])
+    customer_satisfaction_section_title = models.CharField(max_length=255)
+    customer_satisfaction_section_desc = models.TextField()
+    customer_satisfaction_section_image = models.FileField(upload_to='services/icons/', validators=[FileExtensionValidator(['pdf', 'doc', 'svg', 'png', 'jpeg', 'jpg'])])
+
+    # Get Started Section
+    get_started_section_title = models.CharField(max_length=255)
+    get_started_section_desc = models.TextField()
 
     def __str__(self):
-        return self.pageName
-
-    @classmethod
-    def add(cls, pagename, pageheading, pagedescptn, pagebaner, pagetitl, pagemetades, pagemetakey):
-        res = cls(pageName=pagename, pageHeading=pageheading, pageDescription=pagedescptn, pageBanner=pagebaner, pageTitle=pagetitl,
-                  PageMetaDescription=pagemetades, PageMetaKeywords=pagemetakey)
-
-        res.save()
-        print(res)
-        return res
-
-    @classmethod
-    def update(cls, id,  pagename=None, pageheading=None, pagedescptn=None, pagebaner=None, pagetitl=None, pagemetades=None, pagemetakey=None):
-        try:
-            res = Pages.objects.get(id=id)
-        except ObjectDoesNotExist:
-            return None
-
-        if pagename is not None and pagename != res.pageName:
-            res.pageName = pagename
-        if pageheading is not None and pageheading != res.pageHeading:
-            res.pageHeading = pageheading
-        if pagedescptn is not None and pagedescptn != res.pageDescription:
-            res.pageDescription = pagedescptn
-        if pagebaner is not None and pagebaner != res.pageBanner:
-            res.pageBanner = pagebaner
-        if pagetitl is not None and pagetitl != res.pageTitle:
-            res.pageTitle = pagetitl
-        if pagemetades is not None and pagemetades != res.PageMetaDescription:
-            res.PageMetaDescription = pagemetades
-        if pagemetakey is not None and pagemetakey != res.PageMetaKeywords:
-            res.PageMetaKeywords = pagemetakey
-
-        res.save()
-
-        print(res)
-        return res
+        return f"Main Section Data"
 
 
-class Add_Section(models.Model):
-    pageName = models.ForeignKey(Pages, on_delete=models.CASCADE, null=True, blank=True)
-    sectionName = models.CharField(max_length=60, null=True, blank=True)
 
-    def __str__(self):
-        return self.sectionName
+class Professional_Services(models.Model):
+    # Hero Section
+    pagename = models.CharField(max_length=255, null=True, blank=True)
+    hero_title = models.CharField(max_length=255)
+    hero_text = models.TextField()
+    hero_button_image = models.ImageField(upload_to='services/icons/', validators=[FileExtensionValidator(['pdf', 'doc', 'svg', 'png', 'jpeg', 'jpg'])])
 
-    @classmethod
-    def add(cls, pgeName, secName):
-        page_instance = Pages.objects.get(id=pgeName)
-        res = cls(pageName=page_instance, sectionName=secName)
+    # Video Section
+    comprehensive_professional_services_title = models.CharField(max_length=255)
+    comprehensive_professional_services_desc = models.TextField()
 
-        res.save()
-        print(res)
-        return res
+    # Service Section - HR Solutions
+    apostille_services_title = models.CharField(max_length=255)
+    apostille_services_desc = models.TextField()
+    apostille_services_image = models.ImageField(upload_to='services/icons/', validators=[FileExtensionValidator(['pdf', 'doc', 'svg', 'png', 'jpeg', 'jpg'])])
+    apostille_services_cover = models.CharField(max_length=255)
+    legalization_of_business = models.CharField(max_length=255)
+    apostille_for_employment = models.CharField(max_length=255)
+    support_with_multi_lingual = models.CharField(max_length=255)
 
-    @classmethod
-    def update(cls, id, pgeName=None, secName=None):
-        try:
-            res = Add_Section.objects.get(id=id)
-        except ObjectDoesNotExist:
-            return None
-        if pgeName is not None and pgeName != res.pageName:
-            res.pageName = pgeName
-        if secName is not None and secName != res.sectionName:
-            res.sectionName = secName
+    # HR Solutions List
+    background_checks_title = models.CharField(max_length=255)
+    background_checks_desc = models.TextField()
+    background_checks_image = models.ImageField(upload_to='services/icons/', validators=[
+        FileExtensionValidator(['pdf', 'doc', 'svg', 'png', 'jpeg', 'jpg'])])
+    background_checks_include = models.CharField(max_length=255)
+    criminal_history_checks = models.CharField(max_length=255)
+    tax_compliance_and_reporting = models.CharField(max_length=255)
+    employment_verification = models.CharField(max_length=255)
 
-        res.save()
-        print(res)
-        return res
+    # Service Section - Professional Services
+    document_notarization_title = models.CharField(max_length=255)
+    document_notarization_desc = models.TextField()
+    document_notarization_image = models.ImageField(upload_to='services/icons/', validators=[
+        FileExtensionValidator(['pdf', 'doc', 'svg', 'png', 'jpeg', 'jpg'])])
+    our_notary_services_include = models.CharField(max_length=255)
+    contract_notarization = models.CharField(max_length=255)
+    legal_document_verification = models.CharField(max_length=255)
+    business_agreement_notarization = models.CharField(max_length=255)
 
+    # Professional Services List
+    document_translation_services_title = models.CharField(max_length=255)
+    document_translation_services_des = models.TextField()
+    document_translation_services_image = models.ImageField(upload_to='services/icons/', validators=[
+        FileExtensionValidator(['pdf', 'doc', 'svg', 'png', 'jpeg', 'jpg'])])
+    translation_services_include = models.CharField(max_length=255)
+    business_and_legal  = models.CharField(max_length=255)
+    employment_contracts = models.CharField(max_length=255)
+    multi_lingual_support_for = models.CharField(max_length=255)
 
-class Content(models.Model):
-    selectPage = models.ForeignKey(Pages, on_delete=models.CASCADE,  null=True, blank=True)
-    selectSection = models.ForeignKey(Add_Section, on_delete=models.CASCADE,  null=True, blank=True)
-    contentHeading = models.CharField(max_length=80, null=True, blank=True)
-    contentDescription = models.TextField()
-    contentImage = models.ImageField(upload_to='services/icons/')
-    contentButton = models.CharField(max_length=200, null=True, blank=True)
+    # Why Choose Section
+    fingerprinting_service_title = models.CharField(max_length=255)
+    fingerprinting_service_desc = models.TextField()
+    fingerprinting_service_image = models.ImageField(upload_to='services/icons/', validators=[
+        FileExtensionValidator(['pdf', 'doc', 'svg', 'png', 'jpeg', 'jpg'])])
+    fingerprinting_services_include = models.CharField(max_length=255)
+    live_scan  = models.CharField(max_length=255)
+    FBI_FDLE_and_FINRA  = models.CharField(max_length=255)
+    fingerprint_archiving = models.CharField(max_length=255)
 
-    def __str__(self):
-        return str(self.selectPage)
+    # Why Choose List
+    hr_ervices_tailored_title = models.CharField(max_length=255)
+    hr_ervices_tailored_title_description = models.TextField()
+    benifits_management_section_title = models.CharField(max_length=255, null=True, blank=True)
+    benifits_management_section_image = models.ImageField(upload_to='services/icons/', validators=[
+        FileExtensionValidator(['pdf', 'doc', 'svg', 'png', 'jpeg', 'jpg'])], null=True, blank=True)
+    payroll_management_section_title = models.CharField(max_length=255, null=True, blank=True)
+    payroll_management_section_images = models.ImageField(upload_to='services/icons/', validators=[
+        FileExtensionValidator(['pdf', 'doc', 'svg', 'png', 'jpeg', 'jpg'])], null=True, blank=True)
+    special_project_section_title = models.CharField(max_length=255, null=True, blank=True)
+    special_project_section_image = models.ImageField(upload_to='services/icons/', validators=[
+        FileExtensionValidator(['pdf', 'doc', 'svg', 'png', 'jpeg', 'jpg'])], null=True, blank=True)
+    staffing_recruiting_section_title = models.CharField(max_length=255, null=True, blank=True)
+    staffing_recruiting_section_image = models.ImageField(upload_to='services/icons/', validators=[
+        FileExtensionValidator(['pdf', 'doc', 'svg', 'png', 'jpeg', 'jpg'])], null=True, blank=True)
+    training_and_develop_section_title = models.CharField(max_length=255, null=True, blank=True)
+    training_and_develop_section_image = models.ImageField(upload_to='services/icons/', validators=[
+        FileExtensionValidator(['pdf', 'doc', 'svg', 'png', 'jpeg', 'jpg'])], null=True, blank=True)
 
-    @classmethod
-    def add(cls, selectpage, selectsec, contntheading, contntdes, contntImage, contntbut):
-        selecPage = Pages.objects.get(id=selectpage)
-        selecSec = Add_Section.objects.get(id=selectsec)
-        res = cls(selectPage=selecPage, selectSection=selecSec, contentHeading=contntheading, contentDescription=contntdes,
-                  contentImage=contntImage,
-                  contentButton=contntbut)
+    # Why Choose Section
 
-        res.save()
-        print(res)
-        return res
+    why_choose_section_title = models.CharField(max_length=255)
+    why_choose_section_image = models.FileField(upload_to='services/icons/', validators=[
+        FileExtensionValidator(['pdf', 'doc', 'svg', 'png', 'jpeg', 'jpg'])])
+    expert_hr_guidance_section_title = models.CharField(max_length=255)
+    expert_hr_guidance_section_desc = models.TextField()
+    expert_hr_guidance_section_images = models.FileField(upload_to='services/icons/', validators=[
+        FileExtensionValidator(['pdf', 'doc', 'svg', 'png', 'jpeg', 'jpg'])])
+    efficiency_compliance_section_title = models.CharField(max_length=255)
+    efficiency_compliance_section_desc = models.TextField()
+    efficiency_compliance_section_image = models.FileField(upload_to='services/icons/', validators=[
+        FileExtensionValidator(['pdf', 'doc', 'svg', 'png', 'jpeg', 'jpg'])])
+    costomized_solution_section_title = models.CharField(max_length=255)
+    costomized_solution_section_desc = models.TextField()
+    costomized_solution_section_image = models.FileField(upload_to='services/icons/', validators=[
+        FileExtensionValidator(['pdf', 'doc', 'svg', 'png', 'jpeg', 'jpg'])])
+    customer_satisfaction_section_title = models.CharField(max_length=255)
+    customer_satisfaction_section_desc = models.TextField()
+    customer_satisfaction_section_image = models.FileField(upload_to='services/icons/', validators=[
+        FileExtensionValidator(['pdf', 'doc', 'svg', 'png', 'jpeg', 'jpg'])])
 
-    @classmethod
-    def update(cls, id, selectpage=None, selectsec=None, contntheading=None, contntdes=None, contntImage=None,
-               contntbut=None):
-
-        try:
-            res = Content.objects.get(id=id)
-            selecPage = Pages.objects.get(id=selectpage)
-            selecSec = Add_Section.objects.get(id=selectsec)
-        except ObjectDoesNotExist:
-            return None
-
-        if selecPage is not None and selecPage != res.selectPage:
-            res.selectPage = selecPage
-        if selecSec is not None and selecSec != res.selectSection:
-            res.selectSection = selecSec
-        if contntheading is not None and contntheading != res.contentHeading:
-            res.contentHeading = contntheading
-        if contntdes is not None and contntdes != res.contentDescription:
-            res.contentDescription = contntdes
-        if contntImage is not None and contntImage != res.contentImage:
-            res.contentImage = contntImage
-        if contntbut is not None and contntbut != res.contentButton:
-            res.contentButton = contntbut
-
-        res.save()
-
-        print(res)
-        return res
-
-class Sub_Content(models.Model):
-    contentHeading = models.ForeignKey(Content, on_delete=models.CASCADE, related_name='sub_contents',  null=True, blank=True)
-    sub_contentHeading = models.CharField(max_length=255, null=True, blank=True)
-    subContent = models.TextField()
-    subContentImage = models.FileField(upload_to='services/icons/', validators=[FileExtensionValidator(['pdf', 'doc', 'svg', 'png', 'jpeg', 'jpg'])])
+    # Get Started Section
+    start_simplifying_your_business_title = models.CharField(max_length=255)
+    start_simplifying_your_business_desc = models.TextField()
 
     def __str__(self):
-        return str(self.contentHeading)
+        return f"Main Section Data"
 
-    @classmethod
-    def add(cls, cntntheading, sb_heding, sbcntnt, sbcontntImg):
-        try:
-            res = cls(
-                contentHeading=cntntheading,
-                sub_contentHeading=sb_heding,
-                subContent=sbcntnt,
-                subContentImage=sbcontntImg
-            )
-            res.save()
-            return res
-        except Exception as e:
-            print(f"Error adding Sub_Content: {e}")
-            return None
 
-    @classmethod
-    def update(cls, id, cntntheading=None, sb_heding=None, sbcntnt=None, sbcontntImg=None):
-        try:
-            res = cls.objects.get(id=id)
+class Hr_Solutions(models.Model):
+    # Hero Section
+    pagename = models.CharField(max_length=255, null=True, blank=True)
+    hero_title = models.CharField(max_length=255)
+    hero_text = models.TextField()
+    hero_button_image = models.ImageField(upload_to='services/icons/', validators=[
+        FileExtensionValidator(['pdf', 'doc', 'svg', 'png', 'jpeg', 'jpg'])])
 
-            # Update fields only if non-empty values are provided
-            if cntntheading:
-                res.contentHeading = cntntheading
-            if sb_heding:
-                res.sub_contentHeading = sb_heding
-            if sbcntnt:
-                res.subContent = sbcntnt
-            if sbcontntImg:
-                res.subContentImage = sbcontntImg
+    # Video Section
+    comprehensive_professional_services_title = models.CharField(max_length=255)
+    comprehensive_professional_services_desc = models.TextField()
 
-            res.save()
-            return res
-        except cls.DoesNotExist:
-            print(f"Error: Sub_Content with id {id} does not exist.")
-            return None
-        except Exception as e:
-            print(f"Error updating Sub_Content: {e}")
-            return None
+    # Service Section - HR Solutions
+    employee_benefits_management_title = models.CharField(max_length=255)
+    employee_benefits_management_desc = models.TextField()
+    employee_benefits_management_image = models.ImageField(upload_to='services/icons/', validators=[
+        FileExtensionValidator(['pdf', 'doc', 'svg', 'png', 'jpeg', 'jpg'])])
+    benefits_management_cover = models.CharField(max_length=255)
+    health_insurance = models.CharField(max_length=255)
+    paid_time_off  = models.CharField(max_length=255)
+    employee_wellness = models.CharField(max_length=255)
+
+    # HR Solutions List
+    payroll_management_title = models.CharField(max_length=255)
+    payroll_management_desc = models.TextField()
+    payroll_management_image = models.ImageField(upload_to='services/icons/', validators=[
+        FileExtensionValidator(['pdf', 'doc', 'svg', 'png', 'jpeg', 'jpg'])])
+    payroll_services = models.CharField(max_length=255)
+    accurate_payroll = models.CharField(max_length=255)
+    tax_compliance_and_reporting = models.CharField(max_length=255)
+    employment_compensation = models.CharField(max_length=255)
+
+    # Service Section - Professional Services
+    special_HR_project_title = models.CharField(max_length=255)
+    special_HR_project_desc = models.TextField()
+    special_HR_project_image = models.ImageField(upload_to='services/icons/', validators=[
+        FileExtensionValidator(['pdf', 'doc', 'svg', 'png', 'jpeg', 'jpg'])])
+    what_we_offer = models.CharField(max_length=255)
+    employee_handbook = models.CharField(max_length=255)
+    hR_policy_development = models.CharField(max_length=255)
+    employee_engagement = models.CharField(max_length=255)
+
+    # Professional Services List
+    staffing_recruitment_title = models.CharField(max_length=255)
+    staffing_recruitment_desc = models.TextField()
+    staffing_recruitment_image = models.ImageField(upload_to='services/icons/', validators=[
+        FileExtensionValidator(['pdf', 'doc', 'svg', 'png', 'jpeg', 'jpg'])])
+    what_we_offer_staffing = models.CharField(max_length=255)
+    comprehensive_candidate = models.CharField(max_length=255)
+    talent_matching_based  = models.CharField(max_length=255)
+    recruitment_for_both  = models.CharField(max_length=255)
+
+    # Why Choose Section
+    training_development_title = models.CharField(max_length=255)
+    training_development_desc = models.TextField()
+    training_development_image = models.ImageField(upload_to='services/icons/', validators=[
+        FileExtensionValidator(['pdf', 'doc', 'svg', 'png', 'jpeg', 'jpg'])])
+    our_training_programs_include = models.CharField(max_length=255)
+    Leadership = models.CharField(max_length=255)
+    compliance_and_regulatory = models.CharField(max_length=255)
+    skills_training_for_it = models.CharField(max_length=255)
+
+    # Why Choose List
+    comprehensive_professional_title = models.CharField(max_length=255)
+    comprehensive_professional_desc = models.TextField()
+    apsotille_section_title = models.CharField(max_length=255, null=True, blank=True)
+    apsotille_section_section_image = models.ImageField(upload_to='services/icons/', validators=[
+        FileExtensionValidator(['pdf', 'doc', 'svg', 'png', 'jpeg', 'jpg'])], null=True, blank=True)
+    background_check_section_title = models.CharField(max_length=255, null=True, blank=True)
+    background_check_section_images = models.ImageField(upload_to='services/icons/', validators=[
+        FileExtensionValidator(['pdf', 'doc', 'svg', 'png', 'jpeg', 'jpg'])], null=True, blank=True)
+    document_notarization_section_title = models.CharField(max_length=255, null=True, blank=True)
+    document_notarization_section_image = models.ImageField(upload_to='services/icons/', validators=[
+        FileExtensionValidator(['pdf', 'doc', 'svg', 'png', 'jpeg', 'jpg'])], null=True, blank=True)
+    document_translations_section_title = models.CharField(max_length=255, null=True, blank=True)
+    document_translations_section_image = models.ImageField(upload_to='services/icons/', validators=[
+        FileExtensionValidator(['pdf', 'doc', 'svg', 'png', 'jpeg', 'jpg'])], null=True, blank=True)
+    fingerprint_services_section_title = models.CharField(max_length=255, null=True, blank=True)
+    fingerprint_services_section_image = models.ImageField(upload_to='services/icons/', validators=[
+        FileExtensionValidator(['pdf', 'doc', 'svg', 'png', 'jpeg', 'jpg'])], null=True, blank=True)
+    # Why Choose Section
+
+    why_choose_section_title = models.CharField(max_length=255)
+    why_choose_section_image = models.ImageField(upload_to='services/icons/', validators=[
+        FileExtensionValidator(['pdf', 'doc', 'svg', 'png', 'jpeg', 'jpg'])])
+    expert_hr_guidance_section_title = models.CharField(max_length=255)
+    expert_hr_guidance_section_desc = models.TextField()
+    expert_hr_guidance_section_images = models.FileField(upload_to='services/icons/', validators=[
+        FileExtensionValidator(['pdf', 'doc', 'svg', 'png', 'jpeg', 'jpg'])])
+    efficiency_compliance_section_title = models.CharField(max_length=255)
+    efficiency_compliance_section_desc = models.TextField()
+    efficiency_compliance_section_image = models.FileField(upload_to='services/icons/', validators=[
+        FileExtensionValidator(['pdf', 'doc', 'svg', 'png', 'jpeg', 'jpg'])])
+    costomized_solution_section_title = models.CharField(max_length=255)
+    costomized_solution_section_desc = models.TextField()
+    costomized_solution_section_image = models.FileField(upload_to='services/icons/', validators=[
+        FileExtensionValidator(['pdf', 'doc', 'svg', 'png', 'jpeg', 'jpg'])])
+    customer_satisfaction_section_title = models.CharField(max_length=255)
+    customer_satisfaction_section_desc = models.TextField()
+    customer_satisfaction_section_image = models.FileField(upload_to='services/icons/', validators=[
+        FileExtensionValidator(['pdf', 'doc', 'svg', 'png', 'jpeg', 'jpg'])])
+
+    # Get Started Section
+    get_started_with_right_title  = models.CharField(max_length=255)
+    get_started_with_right_desc = models.TextField()
+
+    def __str__(self):
+        return f"Main Section Data"
+
+
+class Government(models.Model):
+    # Hero Section
+    pagename = models.CharField(max_length=255, null=True, blank=True)
+    hero_title = models.CharField(max_length=255)
+    hero_text = models.TextField()
+    hero_button_image = models.ImageField(upload_to='services/icons/', validators=[
+        FileExtensionValidator(['pdf', 'doc', 'svg', 'png', 'jpeg', 'jpg'])])
+
+    # Video Section
+    government_partnerships_title = models.CharField(max_length=255)
+    government_partnerships_desc = models.TextField()
+
+    # Service Section - HR Solutions
+    our_commitment_to_government_title = models.CharField(max_length=255)
+    our_commitment_to_government_desc = models.TextField()
+    our_commitment_to_government_image = models.ImageField(upload_to='services/icons/', validators=[
+        FileExtensionValidator(['pdf', 'doc', 'svg', 'png', 'jpeg', 'jpg'])])
+    # HR Solutions List
+    our_services_for_government_agencies_title = models.CharField(max_length=255)
+    our_services_for_government_agencies_description = models.TextField()
+
+    hr_solutions_title = models.CharField(max_length=255)
+    hr_solutions_desc = models.TextField()
+    hr_solutions_buttonImage = models.ImageField(upload_to='services/icons/', validators=[
+        FileExtensionValidator(['pdf', 'doc', 'svg', 'png', 'jpeg', 'jpg'])])
+    benefits_management_title = models.CharField(max_length=255)
+    benefits_management_description = models.TextField()
+    benefits_management_buttonImage = models.FileField(upload_to='services/icons/', validators=[
+        FileExtensionValidator(['pdf', 'doc', 'svg', 'png', 'jpeg', 'jpg'])])
+    payroll_management_title = models.CharField(max_length=255)
+    payroll_management_description = models.TextField()
+    payroll_management_buttonImage = models.FileField(upload_to='services/icons/', validators=[
+        FileExtensionValidator(['pdf', 'doc', 'svg', 'png', 'jpeg', 'jpg'])])
+    special_projects_title = models.CharField(max_length=255)
+    special_projects_description = models.TextField()
+    special_projects_buttonImage = models.FileField(upload_to='services/icons/', validators=[
+        FileExtensionValidator(['pdf', 'doc', 'svg', 'png', 'jpeg', 'jpg'])])
+    staffing_recruitment_title = models.CharField(max_length=255)
+    staffing_recruitment_description = models.TextField()
+    staffing_recruitment_buttonImage = models.FileField(upload_to='services/icons/', validators=[
+        FileExtensionValidator(['pdf', 'doc', 'svg', 'png', 'jpeg', 'jpg'])])
+    training_development_title = models.CharField(max_length=255)
+    training_development_description = models.TextField()
+    training_development_buttonImage = models.FileField(upload_to='services/icons/', validators=[
+        FileExtensionValidator(['pdf', 'doc', 'svg', 'png', 'jpeg', 'jpg'])])
+
+    # Service Section - Professional Services
+    professional_services_section_title = models.CharField(max_length=255)
+    professional_services_section_subtitle = models.TextField()
+    professional_services_buttonImage = models.ImageField(upload_to='services/icons/', validators=[
+        FileExtensionValidator(['pdf', 'doc', 'svg', 'png', 'jpeg', 'jpg'])])
+
+    # Professional Services List
+    apostille_services_title = models.CharField(max_length=255)
+    apostille_services_description = models.TextField()
+    apostille_services_buttonImage = models.FileField(upload_to='services/icons/', validators=[
+        FileExtensionValidator(['pdf', 'doc', 'svg', 'png', 'jpeg', 'jpg'])])
+    background_checks_title = models.CharField(max_length=255)
+    background_checks_description = models.TextField()
+    background_checks_buttonImage = models.FileField(upload_to='services/icons/', validators=[
+        FileExtensionValidator(['pdf', 'doc', 'svg', 'png', 'jpeg', 'jpg'])])
+
+    document_notarization_title = models.CharField(max_length=255)
+    document_notarization_description = models.TextField()
+    document_notarization_buttonImage = models.FileField(upload_to='services/icons/', validators=[
+        FileExtensionValidator(['pdf', 'doc', 'svg', 'png', 'jpeg', 'jpg'])])
+
+    document_translation_title = models.CharField(max_length=255)
+    document_translation_description = models.TextField()
+    document_translation_buttonImage = models.FileField(upload_to='services/icons/', validators=[
+        FileExtensionValidator(['pdf', 'doc', 'svg', 'png', 'jpeg', 'jpg'])])
+
+    fingerprinting_services_title = models.CharField(max_length=255)
+    fingerprinting_services_description = models.TextField()
+    fingerprinting_buttonImage = models.FileField(upload_to='services/icons/', validators=[
+        FileExtensionValidator(['pdf', 'doc', 'svg', 'png', 'jpeg', 'jpg'])])
+
+    # Why Choose Section
+    why_choose_section_title = models.CharField(max_length=255)
+    why_choose_section_image = models.ImageField(upload_to='services/icons/', validators=[
+        FileExtensionValidator(['pdf', 'doc', 'svg', 'png', 'jpeg', 'jpg'])])
+    expert_hr_guidance_section_title = models.CharField(max_length=255)
+    expert_hr_guidance_section_desc = models.TextField()
+    expert_hr_guidance_section_images = models.FileField(upload_to='services/icons/', validators=[
+        FileExtensionValidator(['pdf', 'doc', 'svg', 'png', 'jpeg', 'jpg'])])
+    efficiency_compliance_section_title = models.CharField(max_length=255)
+    efficiency_compliance_section_desc = models.TextField()
+    efficiency_compliance_section_image = models.FileField(upload_to='services/icons/', validators=[
+        FileExtensionValidator(['pdf', 'doc', 'svg', 'png', 'jpeg', 'jpg'])])
+    costomized_solution_section_title = models.CharField(max_length=255)
+    costomized_solution_section_desc = models.TextField()
+    costomized_solution_section_image = models.FileField(upload_to='services/icons/', validators=[
+        FileExtensionValidator(['pdf', 'doc', 'svg', 'png', 'jpeg', 'jpg'])])
+    customer_satisfaction_section_title = models.CharField(max_length=255)
+    customer_satisfaction_section_desc = models.TextField()
+    customer_satisfaction_section_image = models.FileField(upload_to='services/icons/', validators=[
+        FileExtensionValidator(['pdf', 'doc', 'svg', 'png', 'jpeg', 'jpg'])])
+
+    # Get Started Section
+    government_partnerships_tit = models.CharField(max_length=255)
+    government_partnerships_des = models.TextField()
+
+    def __str__(self):
+        return f"Main Section Data"
+
+
+class About_Us(models.Model):
+    # Hero Section
+
+    hero_title = models.CharField(max_length=255)
+    pagename = models.CharField(max_length=255)
+    hero_text = models.TextField()
+    hero_button_image = models.ImageField(upload_to='services/icons/', validators=[
+        FileExtensionValidator(['pdf', 'doc', 'svg', 'png', 'jpeg', 'jpg'])])
+
+    # Video Section
+    about_right_HR_title = models.CharField(max_length=255)
+    about_right_HR_desc = models.TextField()
+
+    # Service Section - HR Solutions
+    our_story_title = models.CharField(max_length=255)
+    our_story_desc = models.TextField()
+    our_story_image = models.ImageField(upload_to='services/icons/', validators=[
+        FileExtensionValidator(['pdf', 'doc', 'svg', 'png', 'jpeg', 'jpg'])])
+    disadvantaged_business_enterprises = models.CharField(max_length=255)
+    certified_women_owned_business = models.CharField(max_length=255)
+    office_of_supplier = models.CharField(max_length=255)
+    broward_health = models.CharField(max_length=255)
+    minority_women_business = models.CharField(max_length=255)
+    the_school_board_of = models.CharField(max_length=255)
+    the_school_board  = models.CharField(max_length=255)
+    broward_college = models.CharField(max_length=255)
+
+    # HR Solutions List
+    our_mission_title = models.CharField(max_length=255)
+    our_mission_desc = models.TextField()
+    our_mission_image = models.ImageField(upload_to='services/icons/', validators=[
+        FileExtensionValidator(['pdf', 'doc', 'svg', 'png', 'jpeg', 'jpg'])])
+    providing_personalized_hr_services = models.CharField(max_length=255)
+    promoting_diversity_inclusion_and_equal = models.CharField(max_length=255)
+    building_strong_long_lasting_relationships = models.CharField(max_length=255)
+
+    # our vision
+
+    our_vision_title = models.CharField(max_length=255, null=True, blank=True)
+    our_vision_desc = models.TextField(null=True, blank=True)
+    our_vision_image = models.ImageField(upload_to='services/icons/', validators=[
+        FileExtensionValidator(['pdf', 'doc', 'svg', 'png', 'jpeg', 'jpg'])], null=True, blank=True)
+    help_businesses_build_high_performing = models.CharField(max_length=255, null=True, blank=True)
+    support_employees_professional_development = models.CharField(max_length=255, null=True, blank=True)
+    simplify_hr_management_for_businesses = models.CharField(max_length=255, null=True, blank=True)
+
+    # Why Choose Section
+
+    why_choose_section_title = models.CharField(max_length=255)
+    why_choose_section_image = models.ImageField(upload_to='services/icons/', validators=[
+        FileExtensionValidator(['pdf', 'doc', 'svg', 'png', 'jpeg', 'jpg'])])
+    expert_hr_guidance_section_title = models.CharField(max_length=255)
+    expert_hr_guidance_section_desc = models.TextField()
+    expert_hr_guidance_section_images = models.FileField(upload_to='services/icons/', validators=[
+        FileExtensionValidator(['pdf', 'doc', 'svg', 'png', 'jpeg', 'jpg'])])
+    efficiency_compliance_section_title = models.CharField(max_length=255)
+    efficiency_compliance_section_desc = models.TextField()
+    efficiency_compliance_section_image = models.FileField(upload_to='services/icons/', validators=[
+        FileExtensionValidator(['pdf', 'doc', 'svg', 'png', 'jpeg', 'jpg'])])
+    costomized_solution_section_title = models.CharField(max_length=255)
+    costomized_solution_section_desc = models.TextField()
+    costomized_solution_section_image = models.FileField(upload_to='services/icons/', validators=[
+        FileExtensionValidator(['pdf', 'doc', 'svg', 'png', 'jpeg', 'jpg'])])
+    customer_satisfaction_section_title = models.CharField(max_length=255)
+    customer_satisfaction_section_desc = models.TextField()
+    customer_satisfaction_section_image = models.FileField(upload_to='services/icons/', validators=[
+        FileExtensionValidator(['pdf', 'doc', 'svg', 'png', 'jpeg', 'jpg'])])
+
+    # Get Started Section
+    lets_build_success_title = models.CharField(max_length=255)
+    lets_build_success_desc = models.TextField()
+
+    def __str__(self):
+        return f"Main Section Data"

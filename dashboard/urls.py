@@ -1,4 +1,6 @@
 from django.urls import path
+from setuptools.extern import names
+
 from . import views
 from dashboard.views import  service_list, service_create, service_update, service_delete
 
@@ -6,7 +8,7 @@ urlpatterns = [
 
     path('', views.dashboard_summary, name='summary'),
     path('orders/', views.all_orders, name='orders'),
-    path('orders_id/<int:order_id>/', views.edit_orders, name='edit_orders'),
+    path('orders_id/<int:id>/', views.edit_orders, name='edit_orders'),
     path('user/', views.user, name='user'),
     path('edit-user/<int:user_id>/', views.edit_user, name='edit-user'),
   
@@ -28,25 +30,12 @@ urlpatterns = [
 
 
     #To Do
-    path('pages', views.pages, name='pages'),
-
-    path('section-list', views.section_list, name='section_list'),
-    path('section-add', views.section_add, name='section_add'),
-    path('section-edit/<int:section_id>/', views.section_edit, name='section_edit'),
-    path('delete_section/<int:section_id>/', views.delete_section, name='delete_section'),
-
-
-    path('content-list', views.content_list, name='content_list'),
-    path('add-content', views.add_content, name='add_content'),
-    path('edit-content/<int:content_id>/', views.edit_content, name='edit-content'),
-    path('delete-content/<int:content_id>/', views.delete_content, name='delete_content'),
-
-
-
-    path('page-add', views.page_add, name='page-add'),
-    path('page-edit/<int:page_id>/', views.page_edit, name='page-edit'),
-    path('delete/<int:page_id>/', views.delete_page, name='delete_page'),
-
+    path('edit_professional_services/<int:professional_id>', views.edit_professional_services, name='edit_professional_services'),
+    path('edit_hr_solutions/<int:hr_solution_id>', views.edit_hr_solutions, name='edit_hr_solutions'),
+    path('home_edit/<int:home_id>/', views.home_edit, name='home_edit'),
+    path('edit_government/<int:government_id>/', views.edit_government, name='edit_government'),
+    path('about_us/<int:about_us_id>/', views.edit_about_us, name='edit_about_us'),
+    path('home_list', views.home_list, name='home_list'),
     path('help', views.help, name='help'),
 
 

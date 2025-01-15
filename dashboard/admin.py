@@ -1,11 +1,12 @@
 from django.contrib import admin
-from dashboard.models import Service , Cart, ServiceType, Pages, Add_Section, Content, Sub_Content
+from dashboard.models import Service , Cart, ServiceType, Home, Hr_Solutions, Professional_Services, Government, About_Us
 
 admin.site.register(ServiceType)
 admin.site.register(Service)
 admin.site.register(Cart)
-admin.site.register(Pages)
-admin.site.register(Add_Section)
-admin.site.register(Content)
-admin.site.register(Sub_Content)
+admin.site.register(Home)
+admin.site.register(Hr_Solutions)
+admin.site.register(Professional_Services)
+admin.site.register(Government)
+admin.site.register(About_Us)
 

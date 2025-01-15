@@ -3,16 +3,19 @@
 {% block title %}Right HR Solutions – HR Solutions & Professional Services{% endblock title %}
 
  {% block content %}
+     {% for x in home_list %}
+      <main class="main">
+      <!-- Hero -->
       <section id="hero" class="hero-banner d-flex align-items-center justify-center">
         <div class="container">
           <div class="row g-5 d-flex align-items-center justify-center">
             <div class="col-md-5 banner-content">
-              <h1 class="hero-title">{{ page.pageHeading }}</h1>
-              <h4 class="hero-text">{{ page.pageDescription|safe }}</h4>
-              <a href="/appoinment" class="btn btn-big hero-btn">Book Appointments</a>
+              <h1 class="hero-title">{{x.hero_title}}</h1>
+              <h4 class="hero-text">{{ x.hero_des }}</h4>
+              <a href="/appoinment.html" class="btn btn-big hero-btn">Book Appointments</a>
             </div>
             <div class="col-md-7 banner-img">
-              <img class="img-fluid" src="{{ page.pageBanner.url }}"  alt="HR Solutions & Professional Services">
+              <img class="img-fluid" src="{{x.hero_buttonImage.url}}" alt="HR Solutions & Professional Services">
             </div>
           </div>
           <!-- End row -->
@@ -25,15 +28,13 @@
           <div class="row">
             <div class="col-md-7 m-auto text-center">
               <div class="section-heading">
-                <h2 class="title">How Does Right HR Solutions Work?</h2>
-                <h5 class="sub-title">We make it easy for businesses and individuals to access our wide range of HR and
-                  legal services. Our streamlined approach ensures that you get the support you need quickly and
-                  efficiently.</h5>
+                <h2 class="title">{{x.video_section_title}}</h2>
+                <h5 class="sub-title">{{x.video_section_des}}</h5>
               </div>
               <div class="section-content text-center">
                 <div class="video-content">
-                  <div id="videoThumb" class="vido-thumb"> 
-                    <img class="video-background"  src="{% static 'assets/img/image/video-bg.png' %}" 
+                  <div id="videoThumb" class="vido-thumb">
+                    <img class="video-background" src="{{ x.hero_buttonImage.url }}"
                       alt="How Does Right HR Solutions Work" id="videoImage">
                     <div class="video-play">
                       <button class="btn-play" id="playButton">
@@ -41,14 +42,14 @@
                       </button>
                     </div>
                   </div>
-                  <div id="videoPlayer" class="video-player">  
+                  <div id="videoPlayer" class="video-player">
                     <video id="videoControl" controls loop>
-                      <source src="{% static 'assets/video/about-right-hr-solutions-video.mp4' %}"  type="video/mp4">
+                      <source src="{{ x.video_button_text.url }}" type="video/mp4">
                     </video>
                     <button id="videoCloseBtn" class="btn close-btn" type="submit">&times;</button>
                   </div>
                 </div>
-                <a href="/about" class="btn btn-big mt-5">Learn More</a>
+                <a href="/about-us.html" class="btn btn-big mt-5">Learn More</a>
               </div>
             </div>
           </div>
@@ -61,191 +62,213 @@
           <div class="row">
             <div class="col-md-12 m-auto">
               <div class="section-heading text-center">
-                <h2 class="title">Empowering Your Business with Tailored HR Solutions</h2>
-                <h5 class="sub-title">At Right HR Solutions, we are dedicated to helping your business thrive by
-                  offering customized and comprehensive HR services designed to meet your specific needs.</h5>
+                <h2 class="title">{{x.service_section_title}}</h2>
+                <h5 class="sub-title">{{x.service_section_desc}}</h5>
               </div>
-              {% for item in content %}
-            <div class="row mb-5 g-4 g-md-5 align-items-center justify-center
-              {% if forloop.counter|divisibleby:2 %}flex-md-row-reverse{% else %}flex-md-row{% endif %}">
-
-          <!-- Content Section (Left or Right depending on the loop) -->
-          <div class="col-md-7">
-            <div class="hr-list">
-              <div class="hr-list-heading">
-                <h3 class="title">{{ item.contentHeading }}</h3>
-                <p class="sub-title">{{ item.contentDescription|safe }}</p>
-              </div>
-              <div class="hr-list-items">
-                {% for subcontent in item.sub_contents.all %}
-                  <div class="hr-list-item">
-                    <div class="icon">
-                      {% if subcontent.subContentImage %}
-                      <img class="img-fluid" src="{{ subcontent.subContentImage.url }}" alt="{{ subcontent.sub_contentHeading }}">
-                      {% endif %}
-                    </div>
-                    <div class="content">
-                      <h4 class="heading">{{ subcontent.sub_contentHeading }}</h4>
-                      <p class="text">{{ subcontent.subContent }}</p>
-                    </div>
-                  </div>
-                {% endfor %}
-              </div>
-            </div>
-          </div>
-
-    <!-- Image Section (Right or Left depending on the loop) -->
-    <div class="col-md-5">
-      <img class="img-fluid img-shadow ratio-v" src="{{ item.contentImage.url }}" alt="{{ item.title }}">
-    </div>
-
-  </div>
-{% endfor %}
-
-            </div>
-
-<!--          <div class="row mb-5 g-4 g-md-5 align-items-center justify-center flex-md-row flex-column-reverse">-->
-<!--                  <div class="col-md-7">-->
-<!--                    <div class="hr-list">-->
-<!--                      <div class="hr-list-heading">-->
-<!--                        <h3 class="title">HR Solutions</h3>-->
-<!--                        <p class="sub-title">In addition to our HR expertise, we offer a range of legal services to-->
-<!--                          streamline your operations and ensure compliance:</p>-->
-<!--                      </div>-->
-<!--                      <div class="hr-list-items">-->
-<!--                        <div class="hr-list-item">-->
-<!--                          <div class="icon">-->
-<!--                            <img class="img-fluid" src="{% static 'assets/img/icons/hr-icon-benefits-managemnet.svg' %}"-->
-<!--                              alt="Benefits Management">-->
-<!--                          </div>-->
-<!--                          <div class="content">-->
-<!--                            <h4 class="heading">Benefits Management</h4>-->
-<!--                            <p class="text">Attract and retain top talent by offering competitive benefits packages. We-->
-<!--                              help you design and manage a benefits program that keeps your employees satisfied and-->
-<!--                              engaged.</p>-->
-<!--                          </div>-->
-<!--                        </div>-->
-<!--                        <div class="hr-list-item">-->
-<!--                          <div class="icon">-->
-<!--                            <img class="img-fluid" src="{% static 'assets/img/icons/hr-icon-payroll-management.svg' %}"-->
-<!--                              alt="Payroll Management">-->
-<!--                          </div>-->
-<!--                          <div class="content">-->
-<!--                            <h4 class="heading">Payroll Management</h4>-->
-<!--                            <p class="text">Our accurate and efficient payroll processing ensures full compliance with-->
-<!--                              tax regulations, so you can focus on running your business without worry.</p>-->
-<!--                          </div>-->
-<!--                        </div>-->
-<!--                        <div class="hr-list-item">-->
-<!--                          <div class="icon">-->
-<!--                            <img class="img-fluid" src="{% static 'assets/img/icons/hr-icon-special-project.svg' %}"-->
-<!--                              alt="Special Projects">-->
-<!--                          </div>-->
-<!--                          <div class="content">-->
-<!--                            <h4 class="heading">Special Projects</h4>-->
-<!--                            <p class="text">Facing unique HR challenges? We provide expert guidance on one-time or-->
-<!--                              recurring special projects, tailored to your organization’s needs.</p>-->
-<!--                          </div>-->
-<!--                        </div>-->
-<!--                        <div class="hr-list-item">-->
-<!--                          <div class="icon">-->
-<!--                            <img class="img-fluid"  src="{% static 'assets/img/icons/hr-icon-staffing-recruitment.svg' %}"-->
-<!--                              alt="Staffing & Recruitment">-->
-<!--                          </div>-->
-<!--                          <div class="content">-->
-<!--                            <h4 class="heading">Staffing & Recruitment</h4>-->
-<!--                            <p class="text">Find and recruit the perfect talent to drive your business forward. We focus-->
-<!--                              on matching skilled professionals to your needs, ensuring a seamless hiring process.</p>-->
-<!--                          </div>-->
-<!--                        </div>-->
-<!--                        <div class="hr-list-item">-->
-<!--                          <div class="icon">-->
-<!--                            <img class="img-fluid"  src="{% static 'assets/img/icons/hr-icon-trainning-development.svg' %}"-->
-<!--                              alt="Training & Development">-->
-<!--                          </div>-->
-<!--                          <div class="content">-->
-<!--                            <h4 class="heading">Training & Development</h4>-->
-<!--                            <p class="text">Help your employees grow with tailored training programs designed to boost-->
-<!--                              skills and productivity. Empower your team to succeed with professional development-->
-<!--                              opportunities.</p>-->
-<!--                          </div>-->
-<!--                        </div>-->
-<!--                      </div>-->
-<!--                    </div>-->
-<!--                  </div>-->
-<!--                  <div class="col-md-5">-->
-<!--                    <img class="img-fluid img-shadow ratio-v"  src="{% static 'assets/img/image/hr-solutions.png' %}"-->
-<!--                      alt="HR Solutions">-->
-<!--                  </div>-->
-<!--                </div>-->
-      </section>
-      <section id="why_choose">
-          <div class="container">
-            <div class="row g-5 align-items-center justify-center">
-              {% for item in why_we_choose %}
-            <div class="row mb-5 g-4 g-md-5 align-items-center justify-center
-              {% if forloop.counter|divisibleby:2 %}flex-md-row-reverse{% else %}flex-md-row{% endif %}">
-
-              <div class="col-md-5">
-                <img class="img-fluid img-shadow ratio-v" src="{{ item.contentImage.url }}" alt="Why Choose Right HR Solutions">
-
-              </div>
-              <div class="col-md-7">
-                <div class="section-heading">
-                  <h2 class="title">{{ item.contentHeading }}</h2>
-                </div>
-                <div class="section-content">
-                  <div class="hr-list">
-                    <div class="hr-list-items">
-                      {% for subcontent in item.sub_contents.all %}
-                      <div class="hr-list-item">
-                        <div class="icon">
-                          <img class="img-fluid"src="{{ subcontent.subContentImage.url }}" alt="{{ subcontent.sub_contentHeading }}">
+              <div class="section-content">
+                <div class="row mb-5 g-4 g-md-5 align-items-center justify-center flex-md-row flex-column-reverse">
+                  <div class="col-md-7">
+                    <div class="hr-list">
+                      <div class="hr-list-heading">
+                        <h3 class="title">{{x.hr_solutions_title}}</h3>
+                        <p class="sub-title">{{x.hr_solutions_desc}}</p>
+                      </div>
+                      <div class="hr-list-items">
+                        <div class="hr-list-item">
+                          <div class="icon">
+                            <img class="img-fluid" src="{{x.benefits_management_buttonImage.url}}"
+                              alt="Benefits Management">
+                          </div>
+                          <div class="content">
+                            <h4 class="heading">{{x.benefits_management_title}}</h4>
+                            <p class="text">{{x.benefits_management_description}}</p>
+                          </div>
                         </div>
-                        <div class="content">
-                          <h4 class="heading">{{ subcontent.sub_contentHeading }}</h4>
-                          <p class="text">{{ subcontent.subContent }}</p>
+                        <div class="hr-list-item">
+                          <div class="icon">
+                            <img class="img-fluid" src="{{x.payroll_management_buttonImage.url}}"
+                              alt="Payroll Management">
+                          </div>
+                          <div class="content">
+                            <h4 class="heading">{{x.payroll_management_title}}</h4>
+                            <p class="text">{{x.payroll_management_description}}</p>
+                          </div>
+                        </div>
+                        <div class="hr-list-item">
+                          <div class="icon">
+                            <img class="img-fluid" src="{{x.special_projects_buttonImage.url}}"
+                              alt="Special Projects">
+                          </div>
+                          <div class="content">
+                            <h4 class="heading">{{x.special_projects_title}}</h4>
+                            <p class="text">{{x.special_projects_description}}.</p>
+                          </div>
+                        </div>
+                        <div class="hr-list-item">
+                          <div class="icon">
+                            <img class="img-fluid" src="{{x.staffing_recruitment_buttonImage.url}}"
+                              alt="Staffing & Recruitment">
+                          </div>
+                          <div class="content">
+                            <h4 class="heading">{{x.staffing_recruitment_title}}</h4>
+                            <p class="text">{{x.staffing_recruitment_description}}</p>
+                          </div>
+                        </div>
+                        <div class="hr-list-item">
+                          <div class="icon">
+                            <img class="img-fluid" src="{{x.training_development_buttonImage.url}}"
+                              alt="Training & Development">
+                          </div>
+                          <div class="content">
+                            <h4 class="heading">{{x.training_development_title}}</h4>
+                            <p class="text">{{ x.training_development_description }}.</p>
+                          </div>
                         </div>
                       </div>
-<!--                      <div class="hr-list-item">-->
-<!--                        <div class="icon">-->
-<!--                          <img class="img-fluid"  src="{% static 'assets/img/icons/why-choose-icon-efficiency.svg' %}" alt="Efficiency & Compliance">-->
-<!--                        </div>-->
-<!--                        <div class="content">-->
-<!--                          <h4 class="heading">Efficiency & Compliance</h4>-->
-<!--                          <p class="text">Whether it's HR, fingerprinting, or notary services, we ensure everything is handled quickly and in full compliance with regulations.</p>-->
-<!--                        </div>-->
-<!--                      </div>-->
-<!--                      <div class="hr-list-item">-->
-<!--                        <div class="icon">-->
-<!--                          <img class="img-fluid"  src="{% static 'assets/img/icons/why-choose-icon-customized.svg' %}" alt="Customized Solutions">-->
-<!--                        </div>-->
-<!--                        <div class="content">-->
-<!--                          <h4 class="heading">Customized Solutions</h4>-->
-<!--                          <p class="text">Every business is unique. We offer tailored solutions that align with your business needs, ensuring that you receive the highest level of service.</p>-->
-<!--                        </div>-->
-<!--                      </div>-->
-<!--                      <div class="hr-list-item">-->
-<!--                        <div class="icon">-->
-<!--                          <img class="img-fluid"  src="{% static 'assets/img/icons/why-choose-icon-satisfaction.svg' %}" alt="Customer Satisfaction">-->
-<!--                        </div>-->
-<!--                        <div class="content">-->
-<!--                          <h4 class="heading">Customer Satisfaction</h4>-->
-<!--                          <p class="text">We pride ourselves on delivering high-quality service and maintaining long-term relationships with our clients. Our goal is to make your HR and legal processes stress-free.</p>-->
-<!--                        </div>-->
-<!--                      </div>-->
-                      {% endfor %}
+                    </div>
+                  </div>
+                  <div class="col-md-5">
+                    <img class="img-fluid img-shadow ratio-v" src="{{x.hr_solutions_buttonImage.url}}"
+                      alt="HR Solutions">
+                  </div>
+                </div>
+                <div class="row  g-4 g-md-5 align-items-center justify-center">
+                  <div class="col-md-5">
+                    <img class="img-fluid img-shadow ratio-v" src="{{x.professional_services_buttonImage.url}}"
+                      alt="Professional Services">
+                  </div>
+                  <div class="col-md-7">
+                    <div class="hr-list">
+                      <div class="hr-list-heading">
+                        <h3 class="title">{{x.professional_services_section_title}}</h3>
+                        <p class="sub-title">{{x.professional_services_section_subtitle}}.</p>
+                      </div>
+                      <div class="hr-list-items">
+                        <div class="hr-list-item">
+                          <div class="icon">
+                            <img class="img-fluid" src="{{x.apostille_services_buttonImage.url}}"
+                              alt="Apostille Services">
+                          </div>
+                          <div class="content">
+                            <h4 class="heading">{{x.apostille_services_title}}</h4>
+                            <p class="text">{{x.apostille_services_description}}</p>
+                          </div>
+                        </div>
+                        <div class="hr-list-item">
+                          <div class="icon">
+                            <img class="img-fluid" src="{{x.background_checks_buttonImage.url}}"
+                              alt="Background Checks">
+                          </div>
+                          <div class="content">
+                            <h4 class="heading">{{x.background_checks_title}}</h4>
+                            <p class="text">{{x.background_checks_description}}</p>
+                          </div>
+                        </div>
+                        <div class="hr-list-item">
+                          <div class="icon">
+                            <img class="img-fluid" src="{{x.document_notarization_buttonImage.url}}"
+                              alt="Document Notarization">
+                          </div>
+                          <div class="content">
+                            <h4 class="heading">{{x.document_notarization_title}}</h4>
+                            <p class="text">{{x.document_notarization_description}} </p>
+                          </div>
+                        </div>
+                        <div class="hr-list-item">
+                          <div class="icon">
+                            <img class="img-fluid" src="{{x.document_translation_buttonImage.url}}"
+                              alt="Document Translation">
+                          </div>
+                          <div class="content">
+                            <h4 class="heading">{{x.document_translation_title}}</h4>
+                            <p class="text">{{x.document_translation_description}}.</p>
+                          </div>
+                        </div>
+                        <div class="hr-list-item">
+                          <div class="icon">
+                            <img class="img-fluid" src="{{x.fingerprinting_buttonImage.url}}"
+                              alt="fingerprinting Services">
+                          </div>
+                          <div class="content">
+                            <h4 class="heading">{{x.fingerprinting_services_title}}</h4>
+                            <p class="text">{{x.fingerprinting_services_description}}.</p>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-              {% endfor %}
           </div>
-        </section>
+        </div>
+      </section>
+      <!-- End Service Section  -->
+      <!-- Why Choose Section  -->
+      <section id="why_choose">
+        <div class="container">
+          <div class="row g-4 g-md-5 align-items-center justify-center">
+            <div class="col-md-5">
+              <img class="img-fluid img-shadow ratio-v" src="{{x.why_choose_section_image.url}}"
+                alt="Why Choose Right HR Solutions">
+            </div>
+            <div class="col-md-7">
+              <div class="section-heading">
+                <h2 class="title">{{x.why_choose_section_title}}</h2>
+              </div>
+              <div class="section-content">
+                <div class="hr-list">
+                  <div class="hr-list-items">
+                    <div class="hr-list-item">
+                      <div class="icon">
+                        <img class="img-fluid" src="{{x.expert_hr_guidance_section_images.url}}"
+                          alt="Expert HR Guidance">
+                      </div>
+                      <div class="content">
+                        <h4 class="heading">{{x.expert_hr_guidance_section_title}}</h4>
+                        <p class="text">{{x.expert_hr_guidance_section_desc}}</p>
+                      </div>
+                    </div>
+                    <div class="hr-list-item">
+                      <div class="icon">
+                        <img class="img-fluid" src="{{x.efficiency_compliance_section_image.url}}"
+                          alt="Efficiency & Compliance">
+                      </div>
+                      <div class="content">
+                        <h4 class="heading">{{x.efficiency_compliance_section_title}}</h4>
+                        <p class="text">{{x.efficiency_compliance_section_desc}}</p>
+                      </div>
+                    </div>
+                    <div class="hr-list-item">
+                      <div class="icon">
+                        <img class="img-fluid" src="{{x.costomized_solution_section_image.url}}"
+                          alt="Customized Solutions">
+                      </div>
+                      <div class="content">
+                        <h4 class="heading">{{x.costomized_solution_section_title}}</h4>
+                        <p class="text">{{x.costomized_solution_section_desc}}</p>
+                      </div>
+                    </div>
+                    <div class="hr-list-item">
+                      <div class="icon">
+                        <img class="img-fluid" src="{{x.customer_satisfaction_section_image.url}}"
+                          alt="Customer Satisfaction">
+                      </div>
+                      <div class="content">
+                        <h4 class="heading">{{x.get_started_section_title}}</h4>
+                        <p class="text">{{x.get_started_section_desc}}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
       <!-- End Why Choose Section  -->
       <!-- Get Started Section  -->
-        <div>
       <section id="get_started">
         <div class="container">
           <div class="row">
@@ -256,18 +279,14 @@
                   <h5 class="sub-title">Whether you’re a business looking for staffing solutions, an individual in need
                     of legal services, or an organization seeking background checks, we’ve got you covered.</h5>
                 </div>
-                <a href="/appoinment" class="btn btn-big">Book Appointments</a>
+                <a href="/appoinment.html" class="btn btn-big">Book Appointments</a>
               </div>
             </div>
           </div>
         </div>
       </section>
-        </div>
-        <!-- End Get Started Section  -->
+      <!-- End Get Started Section  -->
     </main>
-    <!-- End Main Body -->
-    <!-- Footer Section -->
-
+{% endfor %}
     {% endblock content %}
     <!-- Footer Bottom Section -->
-   
