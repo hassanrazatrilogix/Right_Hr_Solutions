@@ -1,0 +1,61 @@
+{% extends 'dashboard-base.html' %}
+{% load static %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<div class="user_details_sec edit_service">
+
+    <div class="top_main_heading services_sec_top">
+        <div class="heading_breadcrumbs">
+            <h1>{% if form.instance.pk %}Edit{% else %}Add{% endif %} FAQ</h1>
+            <nav aria-label="Breadcrumb">
+                <ul class="breadcrumb">
+                    <li><a href="/dashboard/">Dashboard</a></li>
+                    <li><a href="/current-page">FAQs</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="top_add_services">
+            <a class="cancel_edit_btn btn btn-secondary" href="{% url 'faq_list' %}">Back to List</a>
+        </div>
+    </div>
+
+    <form method="post">
+        {% csrf_token %}
+        
+        <!-- FAQ Section -->
+        <div class="form-group">
+            <label for="id_section">FAQ Section</label>
+            <select name="section" id="id_section" class="form-control">
+                {% for section in form.section.field.queryset %}
+                    <option value="{{ section.id }}" {% if section.id == form.section.value %}selected{% endif %}>
+                        {{ section.title }}
+                    </option>
+                {% endfor %}
+            </select>
+            {% if form.section.errors %}
+                <span class="error">{{ form.section.errors.0 }}</span>
+            {% endif %}
+        </div>
+
+        <!-- FAQ Heading -->
+        <div class="form-group">
+            <label for="id_heading">FAQ Heading</label>
+            <input type="text" name="heading" id="id_heading" value="{{ form.heading.value|default_if_none:'' }}" class="form-control">
+            {% if form.heading.errors %}
+                <span class="error">{{ form.heading.errors.0 }}</span>
+            {% endif %}
+        </div>
+
+        <!-- FAQ Description -->
+        <div class="form-group">
+            <label for="id_description">FAQ Description</label>
+            <textarea name="description" id="id_description" rows="5" class="form-control">{{ form.description.value|default_if_none:'' }}</textarea>
+            {% if form.description.errors %}
+                <span class="error">{{ form.description.errors.0 }}</span>
+            {% endif %}
+        </div>
+
+        <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+</div>
+{% endblock %}

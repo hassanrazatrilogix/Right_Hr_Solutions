@@ -728,3 +728,20 @@ class Help(models.Model):
 
     def __str__(self):
         return self.heading
+    
+
+
+class FAQSection(models.Model):
+    title = models.CharField(max_length=255, help_text="Enter the section title (e.g., General Questions)")
+
+    def __str__(self):
+        return self.title
+
+
+class FAQ(models.Model):
+    section = models.ForeignKey(FAQSection, on_delete=models.CASCADE, related_name="faqs")
+    heading = models.CharField(max_length=255, help_text="Enter the FAQ heading")
+    description = models.TextField(help_text="Enter the FAQ description")
+
+    def __str__(self):
+        return f"{self.section.title} - {self.heading}"

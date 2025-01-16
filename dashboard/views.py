@@ -5,8 +5,8 @@ from django.http import HttpResponseForbidden
 from datetime import datetime
 
 from frontend.forms import ServiceForm, ServiceTypeForm, HomeForm, ProfessionalServicesForm, HRSolutionsForm, \
-    GovernmentForm, AboutUsForm, HelpForm
-from dashboard.models import Service, ServiceType, Cart, Home, Professional_Services, Hr_Solutions, Government, About_Us, Help
+    GovernmentForm, AboutUsForm, HelpForm, FAQForm, FAQSectionForm
+from dashboard.models import Service, ServiceType, Cart, Home, Professional_Services, Hr_Solutions, Government, About_Us, Help, FAQ, FAQSection
 from frontend.models import Order, User
 from django.shortcuts import  get_object_or_404
 from frontend.forms import UserEditForm
@@ -430,6 +430,105 @@ def help_delete(request, pk):
         item.delete()
         return redirect('help_list')
     return render(request, 'help_confirm_delete.html', {'item': item})
+
+
+
+
+@login_required(login_url='signin')
+def faq_section_list(request):
+    if not (request.user.is_staff or request.user.is_superuser):
+        return HttpResponseForbidden("You do not have permission to access this page.")
+    sections = FAQSection.objects.all()
+    return render(request, 'faq-section-list.html', {'faq_sections': sections})
+
+
+@login_required(login_url='signin')
+def faq_section_create(request):
+    if not (request.user.is_staff or request.user.is_superuser):
+        return HttpResponseForbidden("You do not have permission to access this page.")
+    if request.method == 'POST':
+        form = FAQSectionForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('faq_section_list')
+    else:
+        form = FAQSectionForm()
+    return render(request, 'faq-section-form.html', {'form': form})
+
+
+@login_required(login_url='signin')
+def faq_section_update(request, pk):
+    if not (request.user.is_staff or request.user.is_superuser):
+        return HttpResponseForbidden("You do not have permission to access this page.")
+    section = get_object_or_404(FAQSection, pk=pk)
+    if request.method == 'POST':
+        form = FAQSectionForm(request.POST, instance=section)
+        if form.is_valid():
+            form.save()
+            return redirect('faq_section_list')
+    else:
+        form = FAQSectionForm(instance=section)
+    return render(request, 'faq-section-form.html', {'form': form})
+
+
+@login_required(login_url='signin')
+def faq_section_delete(request, pk):
+    if not (request.user.is_staff or request.user.is_superuser):
+        return HttpResponseForbidden("You do not have permission to access this page.")
+    section = get_object_or_404(FAQSection, pk=pk)
+    if request.method == 'GET':
+        section.delete()
+        return redirect('faq_section_list')
+    return render(request, 'faq-section-confirm-delete.html', {'section': section})
+
+
+# FAQ - CRUD
+@login_required(login_url='signin')
+def faq_list(request):
+    if not (request.user.is_staff or request.user.is_superuser):
+        return HttpResponseForbidden("You do not have permission to access this page.")
+    faqs = FAQ.objects.select_related('section').all()
+    return render(request, 'faq-list.html', {'faqs': faqs})
+
+
+@login_required(login_url='signin')
+def faq_create(request):
+    if not (request.user.is_staff or request.user.is_superuser):
+        return HttpResponseForbidden("You do not have permission to access this page.")
+    if request.method == 'POST':
+        form = FAQForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('faq_list')
+    else:
+        form = FAQForm()
+    return render(request, 'faq-form.html', {'form': form})
+
+
+@login_required(login_url='signin')
+def faq_update(request, pk):
+    if not (request.user.is_staff or request.user.is_superuser):
+        return HttpResponseForbidden("You do not have permission to access this page.")
+    faq = get_object_or_404(FAQ, pk=pk)
+    if request.method == 'POST':
+        form = FAQForm(request.POST, instance=faq)
+        if form.is_valid():
+            form.save()
+            return redirect('faq_list')
+    else:
+        form = FAQForm(instance=faq)
+    return render(request, 'faq-form.html', {'form': form})
+
+
+@login_required(login_url='signin')
+def faq_delete(request, pk):
+    if not (request.user.is_staff or request.user.is_superuser):
+        return HttpResponseForbidden("You do not have permission to access this page.")
+    faq = get_object_or_404(FAQ, pk=pk)
+    if request.method == 'GET':
+        faq.delete()
+        return redirect('faq_list')
+    return render(request, 'faq-confirm-delete.html', {'faq': faq})
 
 
 

@@ -1,7 +1,7 @@
 import re
 from django import forms
 from .models import User, Appointment, Order, ContactUs, BillingDetails
-from dashboard.models import Service, ServiceType, Home, Professional_Services, Hr_Solutions, Government, About_Us, Help
+from dashboard.models import Service, ServiceType, Home, Professional_Services, Hr_Solutions, Government, About_Us, Help, FAQ, FAQSection
 from django.core.exceptions import ValidationError
 from django.contrib.auth import get_user_model
 
@@ -352,4 +352,25 @@ class HelpForm(forms.ModelForm):
         labels = {
             'heading': 'Heading',
             'description': 'Description',
+        }
+
+
+
+class FAQForm(forms.ModelForm):
+    class Meta:
+        model = FAQ
+        fields = ['section', 'heading', 'description']
+        labels = {
+            'section': 'Section',
+            'heading': 'FAQ Heading',
+            'description': 'FAQ Description',
+        }
+
+
+class FAQSectionForm(forms.ModelForm):
+    class Meta:
+        model = FAQSection
+        fields = ['title']
+        labels = {
+            'title': 'Section Title',
         }

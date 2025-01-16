@@ -43,6 +43,17 @@ urlpatterns = [
     path('help/<int:pk>/delete/', views.help_delete, name='help_delete'),  # Delete View
 
 
+    # FAQ Section URLs
+    path('faq-sections/', views.faq_section_list, name='faq_section_list'),  # List FAQ Sections
+    path('faq-sections/add/', views.faq_section_create, name='faq_section_create'),  # Add FAQ Section
+    path('faq-sections/<int:pk>/edit/', views.faq_section_update, name='faq_section_update'),  # Edit FAQ Section
+    path('faq-sections/<int:pk>/delete/', views.faq_section_delete, name='faq_section_delete'),  # Delete FAQ Section
+
+    # FAQ URLs
+    path('faqs/', views.faq_list, name='faq_list'),  # List FAQs
+    path('faqs/add/', views.faq_create, name='faq_create'),  # Add FAQ
+    path('faqs/<int:pk>/edit/', views.faq_update, name='faq_update'),  # Edit FAQ
+    path('faqs/<int:pk>/delete/', views.faq_delete, name='faq_delete'),  # Delete FAQ
 
     
 ]

@@ -1,0 +1,37 @@
+{% extends 'dashboard-base.html' %}
+{% load static %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<div class="user_details_sec">
+    <div class="top_main_heading services_sec_top">
+        <div class="heading_breadcrumbs">
+            <h1>{% if form.instance.pk %}Edit FAQ Section{% else %}Add FAQ Section{% endif %}</h1>
+            <nav aria-label="Breadcrumb">
+                <ul class="breadcrumb">
+                    <li><a href="/dashboard/">Dashboard</a></li>
+                    <li><a href="{% url 'faq_section_list' %}">FAQ Sections</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="top_add_services">
+            <a href="{% url 'faq_section_list' %}" class="btn back_to_list">Back to List</a>
+        </div>
+    </div>
+    
+    <div class="edit_service">
+        <form method="post" class="edit_services_type">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label for="id_title">Section Title</label>
+                <input type="text" name="title" id="id_title" value="{{ form.title.value|default_if_none:'' }}" class="form-control">
+                {% if form.title.errors %}
+                    <span class="error">{{ form.title.errors.0 }}</span>
+                {% endif %}
+            </div>
+            
+            <button type="submit" class="btn btn-primary">Save</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -20,7 +20,7 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from .forms import AppointmentForm , BillingDetailsForm , OrderForm , UserRegistrationForm  , ContactUs
 from .models import Document , NewsletterSubscriber
-from dashboard.models import Service, Cart, Home, Professional_Services, Hr_Solutions, Government, About_Us
+from dashboard.models import Service, Cart, Home, Professional_Services, Hr_Solutions, Government, About_Us, FAQSection
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import get_template
 from django.http import JsonResponse
@@ -197,9 +197,12 @@ def cart(request, order_id):
 
 
 def documenttranslationservice(request):
+    
     return render(request, 'document-translation-service.html') 
 
 def faqs(request):
+    sections = FAQSection.objects.prefetch_related('faqs')
+    return render(request, 'faqs.html', {'sections': sections})
     return render(request, 'faqs.html') 
 
 def fingerprintingservice(request):
