@@ -12,7 +12,7 @@
             <div class="col-md-5 banner-content">
               <h1 class="hero-title">{{x.hero_title}}</h1>
               <h4 class="hero-text">{{ x.hero_des }}</h4>
-              <a href="/appoinment.html" class="btn btn-big hero-btn">Book Appointments</a>
+              <a href="{% url 'appoinment' %}" class="btn btn-big hero-btn">Book Appointments</a>
             </div>
             <div class="col-md-7 banner-img">
               <img class="img-fluid" src="{{x.hero_buttonImage.url}}" alt="HR Solutions & Professional Services">
@@ -49,7 +49,7 @@
                     <button id="videoCloseBtn" class="btn close-btn" type="submit">&times;</button>
                   </div>
                 </div>
-                <a href="/about-us.html" class="btn btn-big mt-5">Learn More</a>
+                <a href="{% url 'about' %}" class="btn btn-big mt-5">Learn More</a>
               </div>
             </div>
           </div>
@@ -279,7 +279,7 @@
                   <h5 class="sub-title">Whether you’re a business looking for staffing solutions, an individual in need
                     of legal services, or an organization seeking background checks, we’ve got you covered.</h5>
                 </div>
-                <a href="/appoinment.html" class="btn btn-big">Book Appointments</a>
+                <a href="{% url 'appoinment' %}" class="btn btn-big">Book Appointments</a>
               </div>
             </div>
           </div>

@@ -106,8 +106,8 @@ class UserEditForm(forms.ModelForm):
             'country',
             'state',
             'zip_code',
-            'is_superuser',
-            'image'
+            'image',
+            'is_superuser'
         ]
 
     def clean(self):

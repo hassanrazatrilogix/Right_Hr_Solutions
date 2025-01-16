@@ -4,6 +4,8 @@ from django.contrib.auth import get_user_model
 from django.http import HttpResponseForbidden
 from datetime import datetime
 
+from django.utils import timezone
+
 from frontend.forms import ServiceForm, ServiceTypeForm, HomeForm, ProfessionalServicesForm, HRSolutionsForm, \
     GovernmentForm, AboutUsForm, HelpForm, FAQForm, FAQSectionForm
 from dashboard.models import Service, ServiceType, Cart, Home, Professional_Services, Hr_Solutions, Government, About_Us, Help, FAQ, FAQSection
@@ -15,7 +17,7 @@ from django.core.paginator import Paginator
 from django.db.models import Count, Sum
 from django.utils.timezone import now
 from datetime import timedelta
-from django.db.models.functions import TruncDay
+from django.db.models.functions import TruncDay, TruncYear, TruncMonth
 import json
 from django.contrib.auth.hashers import make_password
 
@@ -24,7 +26,7 @@ from django.contrib.auth.hashers import make_password
 def dashboard_summary(request):
     query = request.GET.get('q', '')
     thirty_days_ago = now() - timedelta(days=30)
-
+    current_year = timezone.now().year
     if request.user.is_superuser:
         orders = Order.objects.filter(created_at__gte=thirty_days_ago)
     else:
@@ -35,18 +37,20 @@ def dashboard_summary(request):
     total_users = User.objects.count()
     latest_users = User.objects.order_by('-id')[:10]
     total_revenue = orders.aggregate(total_revenue=Sum('price'))['total_revenue'] or 0
+    yearly_revenue = orders.filter(created_at__year=current_year).aggregate(total_revenue=Sum('price'))[
+                        'total_revenue'] or 0
 
     # Aggregate total price by day for the chart
-    orders_by_day = (
-        orders.annotate(day=TruncDay('created_at'))
-        .values('day')
+    orders_by_month = (
+        orders.annotate(month=TruncMonth('created_at'))  # Grouping by year instead of day
+        .values('month')
         .annotate(total_price=Sum('price'))
-        .order_by('day')
+        .order_by('month')
     )
 
     bar_chart_data = {
-        'labels': [entry['day'].strftime('%Y-%m-%d') for entry in orders_by_day],
-        'data': [float(entry['total_price']) if entry['total_price'] else 0 for entry in orders_by_day],
+        'labels': [entry['month'].strftime('%Y') for entry in orders_by_month],  # Show year in the label
+        'data': [float(entry['total_price']) if entry['total_price'] else 0 for entry in orders_by_month],
     }
 
     return render(
@@ -58,6 +62,7 @@ def dashboard_summary(request):
             'latest_users': latest_users,
             'total_users': total_users,
             'total_revenue': total_revenue,
+            'yearly_revenue': yearly_revenue,
             'bar_chart_json': json.dumps(bar_chart_data),
         }
     )
@@ -77,7 +82,7 @@ def all_orders(request):
             Q(id__icontains=query)          
         )
 
-    paginator = Paginator(orders, 5) 
+    paginator = Paginator(orders, 10)
     page_number = request.GET.get('page')
     orders_page = paginator.get_page(page_number)
         
@@ -329,7 +334,7 @@ def edit_professional_services(request, professional_id):
         form = ProfessionalServicesForm(request.POST, request.FILES, instance=professional_service)
         if form.is_valid():
             form.save()
-            return redirect('success_url')
+            return redirect('home_list')
     else:
         form = ProfessionalServicesForm(instance=professional_service)
 
@@ -346,7 +351,7 @@ def edit_hr_solutions(request, hr_solution_id):
 
         if form.is_valid():
             form.save()  # Save the updated instance to the database
-            return redirect('success_url')  # Redirect to a success page or another page after saving
+            return redirect('home_list')  # Redirect to a success page or another page after saving
     else:
         # Initialize the form with the existing data
         form = HRSolutionsForm(instance=hr_solution)
@@ -364,7 +369,7 @@ def edit_government(request, government_id):
 
         if form.is_valid():
             form.save()  # Save the updated instance to the database
-            return redirect('government_success')  # Redirect to a success page or another URL
+            return redirect('home_list')  # Redirect to a success page or another URL
     else:
         # Initialize the form with the current data of the Government instance
         form = GovernmentForm(instance=government)
@@ -383,7 +388,7 @@ def edit_about_us(request, about_us_id):
 
         if form.is_valid():
             form.save()  # Save the updated instance to the database
-            return redirect('about_us_success')  # Redirect to a success page (replace with the correct URL)
+            return redirect('home_list')  # Redirect to a success page (replace with the correct URL)
     else:
         # Initialize the form with the current data of the About_Us instance
         form = AboutUsForm(instance=about_us)

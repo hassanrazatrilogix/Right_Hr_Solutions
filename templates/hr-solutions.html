@@ -44,7 +44,7 @@
                             <li class="list-item">{{x.paid_time_off}}</li>
                             <li class="list-item">{{x.employee_wellness}}</li>
                           </ul>
-                          <a href="/place-order.html?category=Benefits_Management" class="btn">Inquire Now <i class="bi bi-arrow-right"></i>
+                          <a href="{% url 'placeorder' %}?category=Benefits_Management" class="btn">Inquire Now <i class="bi bi-arrow-right"></i>
                           </a>
                         </div>
                       </div>
@@ -70,7 +70,7 @@
                             <li class="list-item">{{x.tax_compliance_and_reporting}}</li>
                             <li class="list-item">{{x.employment_compensation}}</li>
                           </ul>
-                          <a href="/place-order.html?category=Payroll_Management" class="btn">Inquire Now <i class="bi bi-arrow-right"></i>
+                          <a href="{% url 'placeorder' %}?category=Payroll_Management" class="btn">Inquire Now <i class="bi bi-arrow-right"></i>
                           </a>
                         </div>
                       </div>
@@ -90,7 +90,7 @@
                             <li class="list-item">{{x.hR_policy_development}}</li>
                             <li class="list-item">{{x.employee_engagement}}</li>
                           </ul>
-                          <a href="/place-order.html?category=Special_HR_Project" class="btn">Inquire Now <i class="bi bi-arrow-right"></i>
+                          <a href="{% url 'placeorder' %}?category=Special_HR_Project" class="btn">Inquire Now <i class="bi bi-arrow-right"></i>
                           </a>
                         </div>
                       </div>
@@ -116,7 +116,7 @@
                             <li class="list-item">{{x.talent_matching_based}}</li>
                             <li class="list-item">{{x.recruitment_for_both}}</li>
                           </ul>
-                          <a href="/place-order.html?category=Staffing_Recruitment" class="btn">Inquire Now <i class="bi bi-arrow-right"></i>
+                          <a href="{% url 'placeorder' %}?category=Staffing_Recruitment" class="btn">Inquire Now <i class="bi bi-arrow-right"></i>
                           </a>
                         </div>
                       </div>
@@ -136,7 +136,7 @@
                             <li class="list-item">{{x.compliance_and_regulatory}}</li>
                             <li class="list-item">{{x.skills_training_for_it}}</li>
                           </ul>
-                          <a href="/place-order.html?category=Training_Development" class="btn">Inquire Now <i class="bi bi-arrow-right"></i>
+                          <a href="{% url 'placeorder' %}#Training_Development" class="btn">Inquire Now <i class="bi bi-arrow-right"></i>
                           </a>
                         </div>
                       </div>
@@ -163,32 +163,32 @@
                 <div class="section-content">
                   <div class="quick-service-grid text-center">
                     <div class="grid-item">
-                      <a class="grid-item-link" href="/professional-services.html#Apostille_Service">
+                      <a class="grid-item-link" href="{% url 'professional-services' %}#Apostille_Service">
                         <img class="img-fluid img-shadow ratio-h" src="{{x.apsotille_section_section_image.url}}" alt="Apostille Services">
                         <h4 class="heading">{{x.apsotille_section_title}}</h4>
                       </a>
                     </div>
                     <div class="grid-item">
-                      <a class="grid-item-link" href="/professional-services.html#Background_Check">
+                      <a class="grid-item-link" href="{% url 'professional-services' %}#Background_Check">
                         <img class="img-fluid img-shadow ratio-h" src="{{x.background_check_section_images.url}}" alt="Background Checks">
                         <h4 class="heading">{{x.background_check_section_title}}</h4>
                       </a>
                     </div>
                     <div class="grid-item">
-                      <a class="grid-item-link" href="/professional-services.html#Document_Notarization">
+                      <a class="grid-item-link" href="{% url 'professional-services' %}#Document_Notarization">
                         <img class="img-fluid img-shadow ratio-h" src="{{x.document_notarization_section_image.url}}" alt="
                                                 Document Notarization">
                         <h4 class="heading"> {{x.document_notarization_section_title}}</h4>
                       </a>
                     </div>
                     <div class="grid-item">
-                      <a class="grid-item-link" href="/professional-services.html#Document_Translation">
+                      <a class="grid-item-link" href="{% url 'professional-services' %}#Document_Translation">
                         <img class="img-fluid img-shadow ratio-h" src="{{x.document_translations_section_image.url}}" alt="Document Translation">
                         <h4 class="heading">{{x.document_translations_section_title}}</h4>
                       </a>
                     </div>
                     <div class="grid-item">
-                      <a class="grid-item-link" href="/professional-services.html#Fingerprinting_Service">
+                      <a class="grid-item-link" href="{% url 'professional-services' %}#Fingerprinting_Service">
                         <img class="img-fluid img-shadow ratio-h" src="{{x.fingerprint_services_section_image.url}}" alt="Fingerprinting Services">
                         <h4 class="heading">{{x.fingerprint_services_section_title}}</h4>
                       </a>
@@ -268,7 +268,7 @@
                     <h3 class="title">{{x.get_started_with_right_title}}</h3>
                     <h5 class="sub-title">{{ x.get_started_with_right_desc }}.</h5>
                   </div>
-                  <a href="/appoinment.html" class="btn btn-big">Schedule a Free Consultation</a>
+                  <a href="{% url 'appoinment' %}" class="btn btn-big">Schedule a Free Consultation</a>
                 </div>
               </div>
             </div>

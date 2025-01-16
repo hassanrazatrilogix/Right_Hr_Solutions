@@ -58,7 +58,7 @@
                 <tr>
                     <th>ID No</th>
                     <th>Profile Image</th>
-                    <th>Pages Name</th>
+                    <th style="text-align: left;">Pages Name</th>
                     <th>Pages Heading</th>
                     <th>Pages Description</th>
                     <th>Actions</th>
@@ -74,7 +74,7 @@
                                 <img src="{{ page.hr_solutions_buttonImage.url }}" alt="Profile Image" class="profile_img">
                             {% endif %}
                         </td>
-                        <td>{{ page.pagename }}</td> <!-- Page name -->
+                        <td style="text-align: left;">{{ page.pagename }}</td> <!-- Page name -->
                         <td>{{ page.service_section_title }}</td> <!-- Page heading -->
                         <td>{{ page.hr_solutions_desc|truncatewords:10 }}</td> <!-- Page description -->
                         <td>
