@@ -24,6 +24,7 @@
 						<li><a href="/dashboard/" class="menu-item {% if request.path == '/dashboard/' %}active{% endif %}"><img src="{% static '' %}dashboard/images/home-page.png" alt="">Summary</a></li>
 						
 						<li><a href="/dashboard/orders/" class="menu-item {% if request.path == '/dashboard/orders/' %}active{% endif %}"><img src="{% static '' %}dashboard/images/purchase-order.png" alt="">Orders</a></li>
+						<li><a href="/dashboard/appointment_list/" class="menu-item {% if request.path == '/dashboard/appointment_list/' %}active{% endif %}"><img src="{% static '' %}dashboard/images/telephone.png" alt="">Appointment</a></li>
 						<li><a href="/dashboard/user" class="menu-item {% if request.path == '/dashboard/user/' %}active{% endif %}"><img src="{% static '' %}dashboard/images/user.png" alt="">Users</a></li>
 					
 						<li class="menu-item-with-submenu">
@@ -58,7 +59,6 @@
 							</ul>
 						
 						</li>
-						<li><a href="/dashboard/help" class="menu-item {% if request.path == '/dashboard/help/' %}active{% endif %}"><img src="{% static '' %}dashboard/images/help-web-button.png" alt="">Help</a></li>
 						<li class="menu-item-with-submenu">
 							<a href="#" 
 							   class="menu-item {% if request.path == '/dashboard/service/' %}active{% endif %}" 
@@ -74,6 +74,7 @@
 								<li><a href="/dashboard/faq-sections/"><i class="fa-solid fa-list"></i>FAQ Section</a></li>
 							</ul>
 						</li>
+						<li><a href="/dashboard/help" class="menu-item {% if request.path == '/dashboard/help/' %}active{% endif %}"><img src="{% static '' %}dashboard/images/help-web-button.png" alt="">Help</a></li>
 					</ul>										
 				</div>
 				

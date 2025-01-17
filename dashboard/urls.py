@@ -1,4 +1,5 @@
 from django.urls import path
+from setuptools.extern import names
 
 from . import views
 from dashboard.views import  service_list, service_create, service_update, service_delete
@@ -8,6 +9,8 @@ urlpatterns = [
     path('', views.dashboard_summary, name='summary'),
     path('orders/', views.all_orders, name='orders'),
     path('orders_id/<int:id>/', views.edit_orders, name='edit_orders'),
+    path('appointment_list/', views.appointment_list, name='appointment_list'),
+    path('edit_appointment_list/<int:pk>/', views.edit_appointment_list, name='edit_appointment_list'),
     path('user/', views.user, name='user'),
     path('edit-user/<int:user_id>/', views.edit_user, name='edit-user'),
   

@@ -7,9 +7,9 @@ from datetime import datetime
 from django.utils import timezone
 
 from frontend.forms import ServiceForm, ServiceTypeForm, HomeForm, ProfessionalServicesForm, HRSolutionsForm, \
-    GovernmentForm, AboutUsForm, HelpForm, FAQForm, FAQSectionForm
+    GovernmentForm, AboutUsForm, HelpForm, FAQForm, FAQSectionForm, AppointmentForm
 from dashboard.models import Service, ServiceType, Cart, Home, Professional_Services, Hr_Solutions, Government, About_Us, Help, FAQ, FAQSection
-from frontend.models import Order, User
+from frontend.models import Order, User, Appointment
 from django.shortcuts import  get_object_or_404
 from frontend.forms import UserEditForm
 from django.db.models import Q
@@ -537,6 +537,25 @@ def faq_delete(request, pk):
 
 
 
+@login_required(login_url='signin')
+def appointment_list(request):
+    appointment_list = Appointment.objects.all()
+    return render(request ,'dashboard/appointment_list.html', {'appointment_list': appointment_list})
+
+
+@login_required(login_url='signin')
+def edit_appointment_list(request, pk):
+    appointment = get_object_or_404(Appointment, id=pk)
+
+    if request.method == 'POST':
+        form = AppointmentForm(request.POST, instance=appointment)
+        if form.is_valid():
+            form.save()
+            return redirect('appointment_list')
+    else:
+        form = AppointmentForm(instance=appointment)
+
+    return render(request, 'edit_appointment.html', {'form': form, 'appointment': appointment})
 
 
 

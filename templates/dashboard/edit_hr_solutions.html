@@ -9,16 +9,16 @@
 
         <div class="top_main_heading services_sec_top" bis_skin_checked="1">
             <div class="heading_breadcrumbs" bis_skin_checked="1">
-                <h1>Edit Home Page</h1>
+                <h1>Edit HR Solutions</h1>
                 <nav aria-label="Breadcrumb">
                     <ul class="breadcrumb">
                     <li><a href="/dashboard/">Dashboard</a></li>
-                    <li><a href="/current-page">Edit Home Page</a></li>
+                    <li><a href="/current-page">Edit HR Solutions</a></li>
                     </ul>
                 </nav>
             </div>
             <div class="top_add_services" bis_skin_checked="1">
-                <a class="cancel_edit_btn btn btn-secondary" href="/dashboard/pages">Back to List</a>
+                <a class="cancel_edit_btn btn btn-secondary" href="/dashboard/home_list">Back to List</a>
             </div>
         </div>
 
@@ -26,6 +26,7 @@
     {% csrf_token %}
     {{ form.as_p }}  <!-- Render the form fields -->
     <button type="submit">Save Changes</button>
+    <a href="/dashboard/home_list" class="cancel_edit_btn btn btn-primary">Cancel</a>
   </form>
     </div>
 

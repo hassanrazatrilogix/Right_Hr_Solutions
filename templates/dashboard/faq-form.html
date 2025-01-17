@@ -2,6 +2,48 @@
 {% load static %}
 {% block title %}Dashboard{% endblock %}
 {% block content %}
+<head>
+    <style>
+        /* Custom form field styling */
+        .custom-form-field {
+            width: 100%; /* Ensure fields take full width */
+            max-width: 500px; /* Maximum width for fields */
+            font-size: 16px; /* Set font size */
+            padding: 10px; /* Set padding for better spacing */
+            text-transform: none; /* Disable capitalizing field content */
+            box-sizing: border-box; /* Ensure padding doesn't overflow */
+        }
+
+        /* Button sizing */
+        .custom-button {
+            width: 200px; /* Set fixed button width */
+            padding: 10px 20px; /* Set padding inside the button */
+            font-size: 16px; /* Set font size */
+            text-transform: none; /* Prevent capitalization */
+            margin-right: 10px; /* Space between buttons */
+        }
+
+        /* Optional: Add some spacing for the form groups */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        /* Optional: Add some margin between buttons */
+        .form-actions {
+            margin-top: 20px;
+        }
+        .form-control {
+            width: 154%;
+            width-left: 40;
+            max-width: 1000px;
+            margin-bottom: 15px;
+            padding: 3px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+
 <div class="user_details_sec edit_service">
 
     <div class="top_main_heading services_sec_top">
@@ -21,11 +63,11 @@
 
     <form method="post">
         {% csrf_token %}
-        
+
         <!-- FAQ Section -->
         <div class="form-group">
             <label for="id_section">FAQ Section</label>
-            <select name="section" id="id_section" class="form-control">
+            <select name="section" id="id_section" class="form-control custom-form-field">
                 {% for section in form.section.field.queryset %}
                     <option value="{{ section.id }}" {% if section.id == form.section.value %}selected{% endif %}>
                         {{ section.title }}
@@ -40,7 +82,7 @@
         <!-- FAQ Heading -->
         <div class="form-group">
             <label for="id_heading">FAQ Heading</label>
-            <input type="text" name="heading" id="id_heading" value="{{ form.heading.value|default_if_none:'' }}" class="form-control">
+            <input type="text" name="heading" id="id_heading" value="{{ form.heading.value|default_if_none:'' }}" class="form-control custom-form-field">
             {% if form.heading.errors %}
                 <span class="error">{{ form.heading.errors.0 }}</span>
             {% endif %}
@@ -49,13 +91,16 @@
         <!-- FAQ Description -->
         <div class="form-group">
             <label for="id_description">FAQ Description</label>
-            <textarea name="description" id="id_description" rows="5" class="form-control">{{ form.description.value|default_if_none:'' }}</textarea>
+            <textarea name="description" id="id_description" rows="3" cols="500" class="form-control custom-form-field">{{ form.description.value|default_if_none:'' }}</textarea>
             {% if form.description.errors %}
                 <span class="error">{{ form.description.errors.0 }}</span>
             {% endif %}
         </div>
 
-        <button type="submit" class="btn btn-primary">Save</button>
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary custom-button">Save</button>
+            <a href="{% url 'faq_list' %}" class="cancel_edit_btn btn btn-secondary custom-button">Cancel</a>
+        </div>
     </form>
 </div>
 {% endblock %}

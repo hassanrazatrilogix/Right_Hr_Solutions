@@ -36,19 +36,9 @@
             {% csrf_token %}
             {{ form.as_p }}
             <button type="submit">Save Changes</button>
-            <a href="/dashboard/users/" class="cancel_edit_btn btn btn-primary">Cancel</a>
+            <a href="/dashboard/user/" class="cancel_edit_btn btn btn-primary">Cancel</a>
         </form>
     </div>
 
 </main>
-
-
-
-
-
-
-
-
-
-
-    {% endblock %}
+{% endblock %}

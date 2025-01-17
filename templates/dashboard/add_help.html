@@ -26,6 +26,7 @@
                 {% csrf_token %}
                 {{ form.as_p }}
                 <button type="submit">{{ action }}</button>
+                <a href="/dashboard/help/" class="cancel_edit_btn btn btn-primary">Cancel</a>
             </form>
 
         </form>

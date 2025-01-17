@@ -144,10 +144,7 @@ class AppointmentForm(forms.ModelForm):
    
         if not email.endswith('.com'):
             raise ValidationError("Email domain must end with '.com'.")
-        
-        if Appointment.objects.filter(email=email).exists():
-            raise ValidationError("This email is already in use. Please use a different email address.")
-        
+
         return email   
          
     widgets = {
@@ -244,7 +241,6 @@ class HomeForm(forms.ModelForm):
         exclude = ['pagename'] 
         labels = {
             # Hero Section
-            'pagename': 'Page Name',
             'hero_title': 'Hero Title',
             'hero_des': 'Hero Description',
             'hero_buttonImage': 'Hero Image',
@@ -327,22 +323,28 @@ class ProfessionalServicesForm(forms.ModelForm):
     class Meta:
         model = Professional_Services
         fields = '__all__'
+        exclude = ['pagename']
 
 
 class HRSolutionsForm(forms.ModelForm):
     class Meta:
         model = Hr_Solutions
         fields = '__all__'
+        exclude = ['pagename']
+
 
 class GovernmentForm(forms.ModelForm):
     class Meta:
         model = Government
         fields = '__all__'
+        exclude = ['pagename']
+
 
 class AboutUsForm(forms.ModelForm):
     class Meta:
         model = About_Us
         fields = '__all__'
+        exclude = ['pagename']
 
 
 class HelpForm(forms.ModelForm):
@@ -355,15 +357,22 @@ class HelpForm(forms.ModelForm):
         }
 
 
-
 class FAQForm(forms.ModelForm):
+    # This defines a custom field for 'description'
+    description = forms.CharField(
+        widget=forms.Textarea(attrs={
+            'rows': 3,  # Height of the textarea (lines)
+            'cols': 100,  # Width of the textarea (characters)
+            'class': 'form-control',  # Adding Bootstrap class for styling
+        })
+    )
+
     class Meta:
         model = FAQ
-        fields = ['section', 'heading', 'description']
+        fields = ['section', 'heading', 'description']  # Include 'description' in the fields
         labels = {
             'section': 'Section',
             'heading': 'FAQ Heading',
-            'description': 'FAQ Description',
         }
 
 
@@ -374,3 +383,4 @@ class FAQSectionForm(forms.ModelForm):
         labels = {
             'title': 'Section Title',
         }
+

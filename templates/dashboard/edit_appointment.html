@@ -1,5 +1,5 @@
 {% extends 'dashboard-base.html' %}
-{% block title %}Edit Home Page{% endblock %}
+{% block title %}Edit Appointment Page{% endblock %}
 {% block content %}
 <main>
 
@@ -7,26 +7,26 @@
 
         <div class="top_main_heading services_sec_top" bis_skin_checked="1">
             <div class="heading_breadcrumbs" bis_skin_checked="1">
-                <h1>Edit Home Page</h1>
+                <h1>Edit Appointment Page</h1>
                 <nav aria-label="Breadcrumb">
                     <ul class="breadcrumb">
                     <li><a href="/dashboard/">Dashboard</a></li>
-                    <li><a href="/current-page">Edit Home Page</a></li>
+                    <li><a href="/current-page">Edit Appointment Page</a></li>
                     </ul>
                 </nav>
             </div>
             <div class="top_add_services" bis_skin_checked="1">
-                <a class="cancel_edit_btn btn btn-secondary" href="/dashboard/home_list">Back to List</a>
+                <a class="cancel_edit_btn btn btn-secondary" href="/dashboard/appointment_list">Back to List</a>
             </div>
         </div>
 
 
-        <form method="POST" action="{% url 'home_edit' home_id=home_instance.id %}" enctype="multipart/form-data">
+        <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
-                    {{ form.as_p }}
+            {{ form.as_p }}
 
             <button type="submit" class="btn btn-primary">Save</button>
-            <a href="/dashboard/home_list" class="cancel_edit_btn btn btn-primary">Cancel</a>
+            <a href="/dashboard/appointment_list" class="cancel_edit_btn btn btn-primary">Cancel</a>
 
         </form>
     </div>
