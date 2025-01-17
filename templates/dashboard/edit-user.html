@@ -1,93 +1,54 @@
 {% extends 'dashboard-base.html' %}
 {% block title %}Edit User{% endblock %}
 {% block content %}
-    <style>
-        .form-error-message {
-    margin-bottom: 20px;
-    padding: 15px;
-    border: 1px solid #e74c3c;
-    background-color: #fdf2f2;
-    color: #e74c3c;
-    border-radius: 5px;
-}
+<main>
 
-.form-error-message strong {
-    display: block;
-    margin-bottom: 10px;
-    font-size: 16px;
-}
+    <div class="user_details_sec edit_service" bis_skin_checked="1">
 
-.form-error-message ul {
-    list-style-type: disc;
-    margin-left: 20px;
-}
-
-.form-error-message li {
-    margin-bottom: 5px;
-    font-size: 14px;
-}
-
-
-
-
-.edit_user_form ul.errorlist {
-    display: none;
-}
-
-/* Global Error Styling */
-.form-error-message {
-    margin-bottom: 20px;
-    padding: 15px;
-    border: 1px solid #e74c3c;
-    background-color: #fdf2f2;
-    color: #e74c3c;
-    border-radius: 5px;
-}
-
-.form-error-message strong {
-    display: block;
-    margin-bottom: 10px;
-    font-size: 16px;
-}
-
-.form-error-message ul {
-    list-style-type: disc;
-    margin-left: 20px;
-}
-
-.form-error-message li {
-    margin-bottom: 5px;
-    font-size: 14px;
-}
-
-/* Highlight Fields with Errors */
-.edit_user_form .error input,
-.edit_user_form .error select,
-.edit_user_form .error textarea {
-    border: 1px solid #e74c3c;
-    background-color: #fdf2f2;
-}
-    </style>
-        <div class="edit_user_form">
-            <h3>Edit User: <span>{{ user.first_name }} {{ user.last_name }}</span></h3>
-
-            <!-- Display Form Validation Errors (Global Errors) -->
-            {% if form.non_field_errors %}
-            <div class="form-error-message">
-                <strong>There were some errors with your submission:</strong>
-                <ul>
-                    {% for error in form.non_field_errors %}
-                        <li>{{ error }}</li>
-                    {% endfor %}
-                </ul>
+        <div class="top_main_heading services_sec_top" bis_skin_checked="1">
+            <div class="heading_breadcrumbs" bis_skin_checked="1">
+                <h1>Edit User: <span>{{ user.first_name }} {{ user.last_name }}</h1>
+                <nav aria-label="Breadcrumb">
+                    <ul class="breadcrumb">
+                    <li><a href="/dashboard/">Dashboard</a></li>
+                    <li><a href="/current-page">Users</a></li>
+                    </ul>
+                </nav>
             </div>
-            {% endif %}
-
-            <!-- Render the Form Without Field Errors -->
-            <form method="POST" action="{% url 'edit-user' user_id=user.id %}" enctype="multipart/form-data">
-                {% csrf_token %}
-                {{ form.as_p }}
-                <button type="submit">Save Changes</button>
-            </form>
+            <div class="top_add_services" bis_skin_checked="1">
+                <a class="cancel_edit_btn btn btn-secondary" href="/dashboard/user/">Back to List</a>
+            </div>
         </div>
+
+        {% if form.non_field_errors %}
+    <div class="form-error-message">
+        <strong>There were some errors with your submission:</strong>
+        <ul>
+            {% for error in form.non_field_errors %}
+                <li>{{ error }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+
+
+        <form method="POST" action="{% url 'edit-user' user_id=user.id %}" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Save Changes</button>
+            <a href="/dashboard/users/" class="cancel_edit_btn btn btn-primary">Cancel</a>
+        </form>
+    </div>
+
+</main>
+
+
+
+
+
+
+
+
+
+
     {% endblock %}
