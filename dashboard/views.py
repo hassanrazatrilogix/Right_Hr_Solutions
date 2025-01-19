@@ -540,7 +540,10 @@ def faq_delete(request, pk):
 @login_required(login_url='signin')
 def appointment_list(request):
     appointment_list = Appointment.objects.all()
-    return render(request ,'dashboard/appointment_list.html', {'appointment_list': appointment_list})
+    paginator = Paginator(appointment_list, 10)
+    page_number = request.GET.get('page')
+    appointment_page = paginator.get_page(page_number)
+    return render(request ,'dashboard/appointment_list.html', {'appointment_page': appointment_page})
 
 
 @login_required(login_url='signin')

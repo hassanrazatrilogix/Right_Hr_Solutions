@@ -20,7 +20,8 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from .forms import AppointmentForm , BillingDetailsForm , OrderForm , UserRegistrationForm  , ContactUs
 from .models import Document , NewsletterSubscriber
-from dashboard.models import Service, Cart, Home, Professional_Services, Hr_Solutions, Government, About_Us, FAQSection
+from dashboard.models import Service, Cart, Home, Professional_Services, Hr_Solutions, Government, About_Us, FAQSection, \
+    Home_Recent, Professional_Services_Recent, Hr_Solutions_Recent, About_Us_Recent, Government_Recent
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import get_template
 from django.http import JsonResponse
@@ -37,9 +38,21 @@ def home(request):
     home_list = Home.objects.all()
     return render(request, 'index.html', {'home_list': home_list})
 
+def home_recent(request):
+
+    home_list = Home_Recent.objects.all()
+    return render(request, 'index.html', {'home_list': home_list})
+
+
 def about(request):
     about_us = About_Us.objects.all()
     return render(request, 'about-us.html', {'about_us': about_us})
+
+def about_recent(request):
+    about_us = About_Us_Recent.objects.all()
+    return render(request, 'about-us.html', {'about_us': about_us})
+
+
 
 def apostilleservices(request):
     return render(request, 'apostille-services.html') 
@@ -212,11 +225,21 @@ def government(request):
     government = Government.objects.all()
     return render(request, 'government.html', {'government': government})
 
+def government_recent(request):
+    government = Government_Recent.objects.all()
+    return render(request, 'government.html', {'government': government})
+
+
 def header(request):
     return render(request, 'header.html') 
 
 def hrsolutions(request):
     hr_solution = Hr_Solutions.objects.all()
+    return render(request, 'hr-solutions.html', {'hr_solution': hr_solution})
+
+
+def hrsolutions_recent(request):
+    hr_solution = Hr_Solutions_Recent.objects.all()
     return render(request, 'hr-solutions.html', {'hr_solution': hr_solution})
 
 def notarypublicservice(request):
@@ -228,6 +251,12 @@ def privacypolicy(request):
 def professional_services(request):
     professional_services = Professional_Services.objects.all()
     return render(request, 'professional-services.html', {'professional_services': professional_services})
+
+
+def professional_services_recent(request):
+    professional_services = Professional_Services_Recent.objects.all()
+    return render(request, 'professional-services.html', {'professional_services': professional_services})
+
 
 @login_required(login_url='signin')
 def placeorder(request):

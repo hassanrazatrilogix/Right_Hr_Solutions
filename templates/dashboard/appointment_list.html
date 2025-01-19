@@ -34,22 +34,22 @@
 
         <div class="pagination-section">
             <ul class="pagination">
-                {% if orders.has_previous %}
-                <li class="prev_btn"><a href="?q={{ request.GET.q|urlencode }}&page={{ orders.previous_page_number }}">‹ Prev</a></li>
+                {% if appointment_page.has_previous %}
+                <li class="prev_btn"><a href="?q={{ request.GET.q|urlencode }}&page={{ appointment_page.previous_page_number }}">‹ Prev</a></li>
                 {% else %}
                 <li class="prev_btn disabled hidden"><span>‹ Prev</span></li>
                 {% endif %}
 
-                {% for page_num in orders.paginator.page_range %}
-                {% if orders.number == page_num %}
+                {% for page_num in appointment_page.paginator.page_range %}
+                {% if appointment_page.number == page_num %}
                 <li class="active"><a href="?q={{ request.GET.q|urlencode }}&page={{ page_num }}">{{ page_num }}</a></li>
                 {% else %}
                 <li><a href="?q={{ request.GET.q|urlencode }}&page={{ page_num }}">{{ page_num }}</a></li>
                 {% endif %}
                 {% endfor %}
 
-                {% if orders.has_next %}
-                <li class="next_btn"><a href="?q={{ request.GET.q|urlencode }}&page={{ orders.next_page_number }}">Next ›</a></li>
+                {% if appointment_page.has_next %}
+                <li class="next_btn"><a href="?q={{ request.GET.q|urlencode }}&page={{ appointment_page.next_page_number }}">Next ›</a></li>
                 {% else %}
                 <li class="next_btn disabled hidden"><span>Next ›</span></li>
                 {% endif %}
@@ -74,7 +74,7 @@
                 </tr>
             </thead>
         <tbody>
-                {% for appointment in appointment_list %}
+                {% for appointment in appointment_page %}
                 <tr>
                     <td style="text-align: left;">{{ appointment.id }}</td>
                     <td style="text-align: left;">{{ appointment.service }}</td>
@@ -85,16 +85,11 @@
                     <td style="text-align: left;">{{ appointment.time }}</td>
                     <td style="text-align: left;">{{ appointment.address }}</td>
                     <td>
-                        <a href="{% url 'edit_appointment_list' pk=appointment.id %}" class="edit_btn">Edit</a>
+                        <a  href="{% url 'edit_appointment_list' pk=appointment.id %}" class="edit_btn">Edit</a>
                     </td>
-                <td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
     </div>
-
- </div>
-
-</main>
 {% endblock %}
