@@ -1,5 +1,4 @@
 from django.urls import path
-from setuptools.extern import names
 
 from . import views
 from dashboard.views import  service_list, service_create, service_update, service_delete
