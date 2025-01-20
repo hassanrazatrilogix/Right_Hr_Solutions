@@ -25,9 +25,9 @@
     {{ form.as_p }}  <!-- Render form fields -->
      <button type="submit" class="btn btn-primary">Save</button>
      <a href="/dashboard/home_list" class="cancel_edit_btn btn btn-primary">Cancel</a>
-     <a href="{% url 'government_recent' %}" class="cancel_edit_btn btn btn-primary">Reset</a>
-        </form>
-    </div>
+     <a href="{% url 'reset_to_original' government.get_model_name government.id %}" class="cancel_edit_btn btn btn-primary">
+        Reset
+    </a>
 
             </main>
 {% endblock %}

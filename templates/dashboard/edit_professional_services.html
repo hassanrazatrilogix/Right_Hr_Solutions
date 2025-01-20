@@ -26,7 +26,9 @@
     {{ form.as_p }}
     <button type="submit">Save Changes</button>
       <a href="/dashboard/home_list" class="cancel_edit_btn btn btn-primary">Cancel</a>
-      <a href="{% url 'professional_services_recent' %}" class="cancel_edit_btn btn btn-primary">Reset</a>
+      <a href="{% url 'reset_to_original' professional_service.get_model_name professional_service.id %}" class="cancel_edit_btn btn btn-primary">
+        Reset
+    </a>
    </form>
     </div>
 

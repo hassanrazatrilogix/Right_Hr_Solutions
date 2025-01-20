@@ -308,6 +308,21 @@ def home_list(request):
 
     return render(request, 'pages.html', {'all_pages': all_pages})
 
+from django.http import HttpResponse
+
+def reset_to_original_view(request, model_name, model_id):
+    if request.method == "GET":
+        # Dynamically get the model class
+        model_class = {'home': Home, 'Professional_Services': Professional_Services, 'Hr_Solutions': Hr_Solutions, "Government":Government, 'About_Us': About_Us, 'FAQSection':FAQSection}.get(model_name.lower())
+        if not model_class:
+            return HttpResponse("Invalid model name.", status=400)
+
+        instance = get_object_or_404(model_class, id=model_id)
+        instance.reset_to_original()
+        return redirect('/dashboard/home_list')
+    return redirect('/dashboard/home_list')
+    
+
 @login_required
 def home_edit(request, home_id):
     home_instance = get_object_or_404(Home, pk=home_id)

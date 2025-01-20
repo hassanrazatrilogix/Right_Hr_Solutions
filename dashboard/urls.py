@@ -34,6 +34,7 @@ urlpatterns = [
     path('edit_professional_services/<int:professional_id>', views.edit_professional_services, name='edit_professional_services'),
     path('edit_hr_solutions/<int:hr_solution_id>', views.edit_hr_solutions, name='edit_hr_solutions'),
     path('home_edit/<int:home_id>/', views.home_edit, name='home_edit'),
+    path('reset/<str:model_name>/<int:model_id>/', views.reset_to_original_view, name='reset_to_original'),
     path('edit_government/<int:government_id>/', views.edit_government, name='edit_government'),
     path('about_us/<int:about_us_id>/', views.edit_about_us, name='edit_about_us'),
     path('home_list', views.home_list, name='home_list'),

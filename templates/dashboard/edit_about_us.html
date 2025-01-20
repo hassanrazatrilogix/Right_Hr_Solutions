@@ -25,7 +25,9 @@
     {{ form.as_p }}  <!-- Render form fields as paragraph tags -->
     <button type="submit">Save Changes</button>
       <a href="/dashboard/home_list" class="cancel_edit_btn btn btn-primary">Cancel</a>
-      <a href="{% url 'about_recent' %}" class="cancel_edit_btn btn btn-primary">Reset</a>
+      <a href="{% url 'reset_to_original' about_us.get_model_name about_us.id %}" class="cancel_edit_btn btn btn-primary">
+        Reset
+    </a>
    </form>
     </div>
 

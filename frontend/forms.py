@@ -238,7 +238,7 @@ class HomeForm(forms.ModelForm):
     class Meta:
         model = Home
         fields = '__all__'
-        exclude = ['pagename'] 
+        exclude = ['pagename', 'original_data'] 
         labels = {
             # Hero Section
             'hero_title': 'Hero Title',
