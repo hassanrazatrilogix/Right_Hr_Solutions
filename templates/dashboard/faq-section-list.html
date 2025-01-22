@@ -21,14 +21,14 @@
     <table>
         <thead>
             <tr>
-                <th>Name</th>
+                <th style="text-align: left;">Name</th>
                 <th>Actions</th>
             </tr>
         </thead>
         <tbody>
             {% for faq_section in faq_sections %}
             <tr>
-                <td class="service_name" style="text-align: left; text-align: center !important;">{{ faq_section.title }}</td>
+                <td class="service_name" style="text-align: left;">{{ faq_section.title }}</td>
                 <td class="service_btns">
                     <a class="edit_btn" href="{% url 'faq_section_update' faq_section.pk %}">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">

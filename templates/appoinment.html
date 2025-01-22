@@ -80,6 +80,17 @@
                                     pattern="^(?!\s*$).+" title="Name cannot be empty or only spaces">
                                     <div class="invalid-feedback">Enter your address. </div>
                                 </div>
+                               <div class="col-12">
+                                    <label for="status" class="form-label">Status</label>
+                                    <select class="form-control" id="status" name="status" required>
+                                        <option value="" {% if not form.status.value %}selected{% endif %}>----Select Status----</option>
+                                        <option value="scheduled" {% if form.status.value == 'scheduled' %}selected{% endif %}>Scheduled</option>
+                                        <option value="completed" {% if form.status.value == 'completed' %}selected{% endif %}>Completed</option>
+                                        <option value="cancelled" {% if form.status.value == 'cancelled' %}selected{% endif %}>Cancelled</option>
+                                        <option value="rescheduled" {% if form.status.value == 'rescheduled' %}selected{% endif %}>Rescheduled</option>
+                                    </select>
+                                    <div class="invalid-feedback">Please select a valid status.</div>
+                                </div>
                                 <div class="col-12">
                                     <label for="commentsQuestions" class="form-label">Comments or Questions <span
                                             class="small">(Optional)</span>

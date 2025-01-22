@@ -7,16 +7,16 @@ urlpatterns = [
 
     path('', views.dashboard_summary, name='summary'),
     path('orders/', views.all_orders, name='orders'),
-    path('orders_id/<int:id>/', views.edit_orders, name='edit_orders'),
+    path('orders/orders_id/<int:id>/', views.edit_orders, name='edit_orders'),
     path('appointment_list/', views.appointment_list, name='appointment_list'),
-    path('edit_appointment_list/<int:pk>/', views.edit_appointment_list, name='edit_appointment_list'),
+    path('appointment_list/edit_appointment_list/<int:id>/', views.edit_appointment_list, name='edit_appointment_list'),
     path('user/', views.user, name='user'),
-    path('edit-user/<int:user_id>/', views.edit_user, name='edit-user'),
+    path('user/edit-user/<int:user_id>/', views.edit_user, name='edit-user'),
   
 
     path('service/', service_list, name='service_list'),  
     path('create/', service_create, name='service_create'),  
-    path('<int:pk>/update/', service_update, name='service_update'),  
+    path('service/<int:pk>/update/', service_update, name='service_update'),
     path('<int:pk>/delete/', service_delete, name='service_delete'),  
 
     path('service-types/', views.service_type_list, name='service_type_list'),
@@ -31,12 +31,12 @@ urlpatterns = [
 
 
     #To Do
-    path('edit_professional_services/<int:professional_id>', views.edit_professional_services, name='edit_professional_services'),
-    path('edit_hr_solutions/<int:hr_solution_id>', views.edit_hr_solutions, name='edit_hr_solutions'),
-    path('home_edit/<int:home_id>/', views.home_edit, name='home_edit'),
-    path('reset/<str:model_name>/<int:model_id>/', views.reset_to_original_view, name='reset_to_original'),
-    path('edit_government/<int:government_id>/', views.edit_government, name='edit_government'),
-    path('about_us/<int:about_us_id>/', views.edit_about_us, name='edit_about_us'),
+    path('home_list/edit_professional_services/<int:professional_id>', views.edit_professional_services, name='edit_professional_services'),
+    path('home_list/edit_hr_solutions/<int:hr_solution_id>', views.edit_hr_solutions, name='edit_hr_solutions'),
+    path('home_list/home_edit/<int:home_id>/', views.home_edit, name='home_edit'),
+    path('home_list/reset/<str:model_name>/<int:model_id>/', views.reset_to_original_view, name='reset_to_original'),
+    path('home_list/edit_government/<int:government_id>/', views.edit_government, name='edit_government'),
+    path('home_list/about_us/<int:about_us_id>/', views.edit_about_us, name='edit_about_us'),
     path('home_list', views.home_list, name='home_list'),
 
     

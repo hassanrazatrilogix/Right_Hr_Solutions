@@ -12,7 +12,7 @@ from django.template.loader import render_to_string
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
-from frontend.models import User 
+from frontend.models import User, Appointment
 from django.conf import settings
 from django.views import View
 from django.contrib.auth import logout
@@ -462,7 +462,13 @@ def termsconditions(request):
     return render(request, 'terms-conditions.html') 
 
 def thankyou(request):
-    return render(request, 'thank-you.html') 
+    appointment_id_value = request.GET.get('appointment_id')  # Get the appointment ID from the URL query params
+    if appointment_id_value:
+        appointment = Appointment.objects.filter(appointment_id=int(appointment_id_value)).first()
+        print(appointment)
+    else:
+        appointment = None
+    return render(request, 'thank-you.html', {'appointment': appointment})
 
 def welcome(request):
     return render(request, 'welcome.html') 

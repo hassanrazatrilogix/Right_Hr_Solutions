@@ -9,6 +9,9 @@ from dashboard.models import Service
 from frontend.utils import UserManager
 
 import uuid
+import logging
+
+logger = logging.getLogger(__name__)
 
 Role_CHOICES = [
     ("ADMIN", "Admin"),
@@ -53,8 +56,16 @@ class User(AbstractBaseUser, PermissionsMixin):
         return self.email
 
 
-class Appointment(models.Model):
+Appointment_CHOICES = [
+        ('scheduled', 'Scheduled'),
+        ('completed', 'Completed'),
+        ('cancelled', 'Cancelled'),
+        ('rescheduled', 'Rescheduled'),
+    ]
 
+
+class Appointment(models.Model):
+    appointment_id = models.CharField(max_length=5, unique=True)
     service = models.CharField(max_length=100)
     date = models.DateField()
     time = models.CharField(max_length=20)
@@ -63,10 +74,30 @@ class Appointment(models.Model):
     phone = models.CharField(max_length=15)
     address = models.CharField(max_length=500)
     comments = models.TextField(blank=True, null=True)
+    status = models.CharField(max_length=20, choices=Appointment_CHOICES, default='scheduled', blank=True, null=True)
     terms = models.BooleanField(default=False)
 
+    def save(self, *args, **kwargs):
+        if not self.appointment_id:
+            logger.debug("Generating new appointment_id")
+            last_appointment = Appointment.objects.all().order_by('-id').first()
+            if last_appointment:
+                last_id = int(last_appointment.appointment_id)
+                new_id = str(last_id + 1).zfill(5)
+                logger.debug(f"Generated new ID: {new_id}")
+                while Appointment.objects.filter(appointment_id=new_id).exists():
+                    logger.debug(f"ID {new_id} already exists. Incrementing...")
+                    last_id += 1
+                    new_id = str(last_id).zfill(5)
+                logger.debug(f"Unique ID found: {new_id}")
+            else:
+                new_id = '00001'
+                logger.debug(f"First record. Assigning ID: {new_id}")
+            self.appointment_id = new_id
+        super().save(*args, **kwargs)
+
     def __str__(self):
-        return f"Appointment for {self.name} on {self.date} at {self.time}"
+        return f"Appointment {self.appointment_id}"
 
 
 Order_CHOICES = [
@@ -83,7 +114,7 @@ class Order(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)  
     pick_date = models.DateField()
     pick_time = models.TimeField()
-    order_status = models.CharField(max_length=50, choices=[('Not Started', 'Not Started'), ('In Progress', 'In Progress'), ('Completed', 'Completed')], default='In Progress')
+    order_status = models.CharField(max_length=50, choices=[('Not Started', 'Not Started'), ('In Progress', 'In Progress'), ('Completed', 'Completed')], default='Not Started')
     terms_accepted = models.BooleanField(default=False)
 
     created_at = models.DateTimeField(default=now)

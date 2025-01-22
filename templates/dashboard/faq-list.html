@@ -21,18 +21,18 @@
     <table>
         <thead>
             <tr>
-                <th>Section</th>
-                <th>FAQ Heading</th>
-                <th>Description</th>
-                <th>Actions</th>
+                <th style="text-align: left;">Section</th>
+                <th style="text-align: left;">FAQ Heading</th>
+                <th style="text-align: left;">Description</th>
+                <th style="text-align: left;">Actions</th>
             </tr>
         </thead>
         <tbody>
             {% for faq in faqs %}
             <tr>
-                <td class="section_name">{{ faq.section.title }}</td>
-                <td class="faq_heading">{{ faq.heading }}</td>
-                <td class="faq_description">{{ faq.description|truncatewords:10 }}</td>
+                <td class="section_name" style="text-align: left;">{{ faq.section.title }}</td>
+                <td class="faq_heading" style="text-align: left;">{{ faq.heading }}</td>
+                <td class="faq_description" style="text-align: left;">{{ faq.description|truncatewords:10 }}</td>
                 <td class="faq_btns">
                        <a href="{% url 'faq_update' faq.pk %}" class="edit_btn-2">
                                     <i class="fa-solid fa-pen-to-square"></i>

@@ -623,3 +623,82 @@ class FAQ(models.Model):
     
     def __str__(self) -> str:
         return f"{self.section.title} - {self.heading}"
+<<<<<<< HEAD
+=======
+
+
+
+    # Hero Section
+
+    # hero_title = models.CharField(max_length=255)
+    # pagename = models.CharField(max_length=255)
+    # hero_text = models.TextField()
+    # hero_button_image = models.ImageField(upload_to='services/icons/', validators=[
+    #     FileExtensionValidator(['pdf', 'doc', 'svg', 'png', 'jpeg', 'jpg'])])
+    #
+    # # Video Section
+    # about_right_HR_title = models.CharField(max_length=255)
+    # about_right_HR_desc = models.TextField()
+    #
+    # # Service Section - HR Solutions
+    # our_story_title = models.CharField(max_length=255)
+    # our_story_desc = models.TextField()
+    # our_story_image = models.ImageField(upload_to='services/icons/', validators=[
+    #     FileExtensionValidator(['pdf', 'doc', 'svg', 'png', 'jpeg', 'jpg'])])
+    # disadvantaged_business_enterprises = models.CharField(max_length=255)
+    # certified_women_owned_business = models.CharField(max_length=255)
+    # office_of_supplier = models.CharField(max_length=255)
+    # broward_health = models.CharField(max_length=255)
+    # minority_women_business = models.CharField(max_length=255)
+    # the_school_board_of = models.CharField(max_length=255)
+    # the_school_board  = models.CharField(max_length=255)
+    # broward_college = models.CharField(max_length=255)
+    #
+    # # HR Solutions List
+    # our_mission_title = models.CharField(max_length=255)
+    # our_mission_desc = models.TextField()
+    # our_mission_image = models.ImageField(upload_to='services/icons/', validators=[
+    #     FileExtensionValidator(['pdf', 'doc', 'svg', 'png', 'jpeg', 'jpg'])])
+    # providing_personalized_hr_services = models.CharField(max_length=255)
+    # promoting_diversity_inclusion_and_equal = models.CharField(max_length=255)
+    # building_strong_long_lasting_relationships = models.CharField(max_length=255)
+    #
+    # # our vision
+    #
+    # our_vision_title = models.CharField(max_length=255, null=True, blank=True)
+    # our_vision_desc = models.TextField(null=True, blank=True)
+    # our_vision_image = models.ImageField(upload_to='services/icons/', validators=[
+    #     FileExtensionValidator(['pdf', 'doc', 'svg', 'png', 'jpeg', 'jpg'])], null=True, blank=True)
+    # help_businesses_build_high_performing = models.CharField(max_length=255, null=True, blank=True)
+    # support_employees_professional_development = models.CharField(max_length=255, null=True, blank=True)
+    # simplify_hr_management_for_businesses = models.CharField(max_length=255, null=True, blank=True)
+    #
+    # # Why Choose Section
+    #
+    # why_choose_section_title = models.CharField(max_length=255)
+    # why_choose_section_image = models.ImageField(upload_to='services/icons/', validators=[
+    #     FileExtensionValidator(['pdf', 'doc', 'svg', 'png', 'jpeg', 'jpg'])])
+    # expert_hr_guidance_section_title = models.CharField(max_length=255)
+    # expert_hr_guidance_section_desc = models.TextField()
+    # expert_hr_guidance_section_images = models.FileField(upload_to='services/icons/', validators=[
+    #     FileExtensionValidator(['pdf', 'doc', 'svg', 'png', 'jpeg', 'jpg'])])
+    # efficiency_compliance_section_title = models.CharField(max_length=255)
+    # efficiency_compliance_section_desc = models.TextField()
+    # efficiency_compliance_section_image = models.FileField(upload_to='services/icons/', validators=[
+    #     FileExtensionValidator(['pdf', 'doc', 'svg', 'png', 'jpeg', 'jpg'])])
+    # costomized_solution_section_title = models.CharField(max_length=255)
+    # costomized_solution_section_desc = models.TextField()
+    # costomized_solution_section_image = models.FileField(upload_to='services/icons/', validators=[
+    #     FileExtensionValidator(['pdf', 'doc', 'svg', 'png', 'jpeg', 'jpg'])])
+    # customer_satisfaction_section_title = models.CharField(max_length=255)
+    # customer_satisfaction_section_desc = models.TextField()
+    # customer_satisfaction_section_image = models.FileField(upload_to='services/icons/', validators=[
+    #     FileExtensionValidator(['pdf', 'doc', 'svg', 'png', 'jpeg', 'jpg'])])
+    #
+    # # Get Started Section
+    # lets_build_success_title = models.CharField(max_length=255)
+    # lets_build_success_desc = models.TextField()
+    #
+    # def __str__(self):
+    #     return self.pagename
+>>>>>>> a95bf9e (All changes fix today 23/2025)

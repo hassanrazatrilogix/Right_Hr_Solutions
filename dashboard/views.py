@@ -562,9 +562,8 @@ def appointment_list(request):
 
 
 @login_required(login_url='signin')
-def edit_appointment_list(request, pk):
-    appointment = get_object_or_404(Appointment, id=pk)
-
+def edit_appointment_list(request, id):
+    appointment = get_object_or_404(Appointment, id=id)
     if request.method == 'POST':
         form = AppointmentForm(request.POST, instance=appointment)
         if form.is_valid():

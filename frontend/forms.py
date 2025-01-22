@@ -75,28 +75,53 @@ User = get_user_model()
 
 
 class UserEditForm(forms.ModelForm):
+    # Email field (readonly)
+    email = forms.EmailField(
+        required=True,
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Enter your email',
+            'readonly': 'readonly'  # Makes the email field non-editable
+        }),
+        label="Email"
+    )
 
+    # # Confirm Email field (editable, needs to match the email)
+    # confirm_email = forms.EmailField(
+    #     label="Confirm Email",
+    #     required=False,
+    #     widget=forms.TextInput(attrs={
+    #         'class': 'form-control',
+    #         'placeholder': 'Confirm your email',
+    #         'readonly': 'readonly'
+    #     })
+    # )
+
+    # Password field
     password = forms.CharField(
         required=False,
         widget=forms.PasswordInput(attrs={'placeholder': 'New Password'}),
         label='New Password'
     )
+
+    # Confirm Password field
     confirm_password = forms.CharField(
         required=False,
         widget=forms.PasswordInput(attrs={'placeholder': 'Confirm New Password'}),
         label='Confirm Password'
     )
 
-    # Add confirm_email field
-
+    # Image field (optional)
     image = forms.ImageField(
         required=False,
         widget=forms.ClearableFileInput(attrs={'class': 'form-control-file', 'placeholder': 'Choose an image'}),
         label='Image'
     )
+
     class Meta:
         model = User
         fields = [
+            'email',
             'first_name',
             'last_name',
             'phone_number',
@@ -107,17 +132,33 @@ class UserEditForm(forms.ModelForm):
             'state',
             'zip_code',
             'image',
-            'is_superuser'
+            'is_superuser',
         ]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        # Disable email field if the instance already exists (so it's non-editable)
+        if self.instance and self.instance.email:
+            self.fields['email'].widget.attrs['readonly'] = 'readonly'
+            self.fields['email'].widget.attrs['class'] = 'form-control'
 
     def clean(self):
         cleaned_data = super().clean()
+
+        # Email and Confirm Email Validation
+        email = cleaned_data.get('email')
+        confirm_email = cleaned_data.get('confirm_email')
+        if email and confirm_email:
+            if email != confirm_email:
+                raise ValidationError("The email addresses must match.")
+
+        # Password and Confirm Password Validation
         password = cleaned_data.get('password')
         confirm_password = cleaned_data.get('confirm_password')
-
-        # Validate password match
-        if password and password != confirm_password:
-            raise forms.ValidationError('Passwords do not match.')
+        if password and confirm_password:
+            if password != confirm_password:
+                raise ValidationError('Passwords do not match.')
 
         return cleaned_data
 
@@ -132,7 +173,7 @@ class SetPasswordForm(forms.Form):
 class AppointmentForm(forms.ModelForm):
     class Meta:
         model = Appointment
-        fields = ['service', 'date', 'time', 'name', 'email', 'phone', 'address', 'comments', 'terms']
+        fields = ['service', 'date', 'time', 'name', 'email', 'phone', 'address', 'status', 'comments', 'terms']
 
     def clean_email(self):
         email = self.cleaned_data['email']
