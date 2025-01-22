@@ -623,8 +623,6 @@ class FAQ(models.Model):
     
     def __str__(self) -> str:
         return f"{self.section.title} - {self.heading}"
-<<<<<<< HEAD
-=======
 
 
 
@@ -701,4 +699,3 @@ class FAQ(models.Model):
     #
     # def __str__(self):
     #     return self.pagename
->>>>>>> a95bf9e (All changes fix today 23/2025)
