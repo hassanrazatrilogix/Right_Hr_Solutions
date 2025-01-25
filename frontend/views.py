@@ -527,7 +527,6 @@ def order_cart_notre(request, id):
 
             # Get the Service object for the given categoriesList_id
             categoriesList = Service.objects.get(id=categoriesList_id)  # Fetch the Service object by ID
-            order_id = id
             # Create and save the Order object
             order = Order(
                 user=request.user,  # Assuming the logged-in user
@@ -562,7 +561,7 @@ def order_cart_notre(request, id):
                     if document_instance:
                         sendEmail(too=['m.haneef1966@gmail.com'],
                                   temp=None)
-                        return HttpResponse("<h1>Thank you for choosing HR Solution, please check your email for registration completion</h1>")
+                        return render(request, 'thank-you.html', {'order_id': order.order_id})
             else:
                 document_instance = Document(
                     user=user,
@@ -576,7 +575,7 @@ def order_cart_notre(request, id):
                 if document_instance:
                     sendEmail(too=['m.haneef1966@gmail.com'], sub="Thank you for choosing Right HR Solution, please check your email for registration completion",
                                   temp="Your registration is now complete!")
-                    return HttpResponse("<h1>Thank you for choosing Right HR Solution, please check your email for registration completion</h1>")
+                    return render(request, 'thank-you.html', {'order_id': order.order_id})
         except Service.DoesNotExist:
             messages.error(request, "The selected service category does not exist.")
             return render(request, 'order_cart_notre.html', {'services': services, 'id': id})
