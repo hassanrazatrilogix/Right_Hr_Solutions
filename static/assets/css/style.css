@@ -201,7 +201,15 @@
    padding-left: 2rem;
    padding-right: 2rem;
  }
- 
+
+ .bg-Dark{
+ background: black;
+ color: white;
+ }
+ .bg-White{
+ background: white;
+ }
+
  #google_translate_element,
  .skiptranslate,
  #goog-gt-tt,
@@ -1954,9 +1962,6 @@
     border: 1px solid #b3b3b3;
  }
 
- #place_order .list-group-item-check:checked+.list-group-item {
-  background-color: #202020;
-}
 
 
 

@@ -7,11 +7,15 @@ from django.contrib import messages
 from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import send_mail
 from django.urls import reverse
+from django.utils.timezone import now
+import datetime
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.template.loader import render_to_string
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
+from django.utils.timezone import now
+
 from frontend.models import User, Appointment
 from django.conf import settings
 from django.views import View
@@ -30,6 +34,8 @@ import zipfile
 import os
 from django.http import HttpResponse
 from io import BytesIO
+
+from .signals import sendEmail
 
 
 def home(request):
@@ -494,7 +500,109 @@ def download_order_files(request, id):
     return response
 
 
+def generate_order_id():
+    # Generate a unique order ID using the current timestamp
+    timestamp = datetime.now().strftime('%Y%m%d%H%M%S')
+    order_id = f"ORD-{timestamp}"
+    return order_id
 
-      
 
 
+def order_cart_notre(request, id):
+    id = id
+    order_form = OrderForm()
+    services = Service.objects.all()
+    if request.method == "POST":
+        vaye = request.POST
+        try:
+            # Extract form data
+            price = request.POST.get('extraField')
+            price = float(price.replace('$', '').strip())
+            categoriesList_id = request.POST.get('categoriesList')  # ForeignKey ID for Service (dropdown or select)
+             # Price
+            pick_date = request.POST.get('pick_date', datetime.date.today())  # Pick date
+            pick_time = request.POST.get('pick_time', datetime.datetime.now().time())  # Pick time
+            order_status = request.POST.get('order_status', 'Not Started')  # Default value if not provided
+            terms_accepted = request.POST.get('terms_accepted') == 'on'  # Checkbox for terms accepted
+
+            # Get the Service object for the given categoriesList_id
+            categoriesList = Service.objects.get(id=categoriesList_id)  # Fetch the Service object by ID
+            order_id = id
+            # Create and save the Order object
+            order = Order(
+                user=request.user,  # Assuming the logged-in user
+                categoriesList=categoriesList,  # Set the ForeignKey field
+                price=price,
+                pick_date=pick_date,
+                pick_time=pick_time,
+                order_status=order_status,
+                terms_accepted=terms_accepted,
+                created_at=now()
+            )
+            order.save()
+
+            print("Order exists:", order)
+            user = request.user
+            order = order
+            pagename = request.POST.get('name')
+            document = request.POST.get('pageNumbers')
+            upload_documents = request.FILES.getlist('upload_documents')
+
+            if upload_documents:
+                for file in upload_documents:
+                    document_instance = Document(
+                        user=user,
+                        order=order,
+                        upload_documents=file,
+                        type=pagename,
+                        number_of_document=document
+                    )
+                    document_instance.save()
+                    messages.success(request, "Documents uploaded successfully.")
+                    if document_instance:
+                        sendEmail(too=['m.haneef1966@gmail.com'],
+                                  temp=None)
+                        return HttpResponse("<h1>Thank you for choosing HR Solution, please check your email for registration completion</h1>")
+            else:
+                document_instance = Document(
+                    user=user,
+                    order=order,
+                    upload_documents=None,
+                    type=pagename,
+                    number_of_document=document
+                )
+                document_instance.save()
+                messages.success(request, "Documents uploaded successfully.")
+                if document_instance:
+                    sendEmail(too=['m.haneef1966@gmail.com'], sub="Thank you for choosing Right HR Solution, please check your email for registration completion",
+                                  temp="Your registration is now complete!")
+                    return HttpResponse("<h1>Thank you for choosing Right HR Solution, please check your email for registration completion</h1>")
+        except Service.DoesNotExist:
+            messages.error(request, "The selected service category does not exist.")
+            return render(request, 'order_cart_notre.html', {'services': services, 'id': id})
+
+        except Exception as e:
+            messages.error(request, f"An error occurred: {str(e)}")
+            return render(request, 'order_cart_notre.html', {'services': services, 'id': id})
+
+        else:
+            if request.method == "GET":
+                pass
+    return render(request, 'order_cart_notre.html', {'order_form': order_form, 'services': services, 'id': id})
+
+
+# def send_email_notification(user):
+#     subject = "Welcome to Our Platform"
+#     if user.is_superuser:
+#         subject = "Superuser Notification: Welcome to Our Platform"
+#
+#     message = render_to_string("email_template.html", {'user': user})
+#
+#     # Send email to the user
+#     send_mail(
+#         subject,
+#         message,
+#         settings.EMAIL_HOST_USER,
+#         [user.email],
+#         fail_silently=False
+#     )

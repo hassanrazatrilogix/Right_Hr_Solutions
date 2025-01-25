@@ -1,0 +1,282 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Right HR Solutions – HR Solutions & Professional Services{% endblock title %}
+<style>
+  .bg-Dark{
+ background: black;
+ color: white;
+ }
+ .bg-White{
+ background: white;
+ }
+#place_order .list-group-item-check:checked+.list-group-item {
+    background-color: #fff !important;
+    color: black !important;
+}
+
+</style>
+
+ {% block content %}
+
+      <section id="page_header" class="page-header d-flex align-items-center justify-center"
+      style="background-image: url({% static '' %}/assets/img/image/place-order-page.png);">
+        <div class="overlay"></div>
+        <div class="container">
+          <div class="row d-flex align-items-center justify-center">
+            <div class="col-md-5 page-header-content">
+              <h1 class="page-title">Place Your Order</h1>
+              <h5 class="text">Get started with Right HR Solutions by placing an order for our comprehensive HR and
+                professional services.</h5>
+            </div>
+          </div>
+          <!-- End row -->
+          <!-- End container -->
+      </section>
+      <!-- End Page Title  -->
+      <!-- Place Order Section  -->
+      <section id="place_order">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="section-content">
+                <div class="row g-5 align-items-center justify-center">
+                  <div class="col-md-12">
+                    <div class="order-form-wrapper">
+                      <form method="post" action="{% url 'order_cart_notre' id=id %}" enctype="multipart/form-data" class="needs-validation" id="dynamicForm" novalidate>
+                        {% csrf_token %}
+                        <div class="form-section">
+                          <div class="form-heading">
+                            <h3 class="title">Select Category</h3>
+                            <h6 class="sub-title">Choose from our broad range of service categories. </h6>
+                          </div>
+                          <div class="form-body">
+                            <div class="category-list-group list-group list-group-checkable ">
+
+                        {% for service in services %}
+
+                            <input class="list-group-item-check pe-none" type="radio" name="categoriesList"
+                                        style="background: white !important;" value="13">
+
+                            <label class="list-group-item rounded-3 py-3 {% if service.id == 13 %}bg-dark text-light {% else %} text-dark bg-light {% endif %} " for="{{ service.name }}">
+                                <div class="service-category" data-id="{{ service.id }}">
+                                    <img class="service-icon bg-light" src="{{ service.icon.url }}" alt="Apostille Service">
+                                    <h6 class="service-heading">{{ service.name }}</h6>
+                                    <p class="price"></p>
+                                    <div>
+                                    <input type="hidden" name="test_price" id="priceField" value="5">
+                                    </div>
+                                </div>
+                            </label>
+                        {% endfor %}
+
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-section" id="customizeOrderSection">
+                          <div class="form-heading">
+                            <h3 class="title">Add Order Details</h3>
+                            <h6 class="sub-title">Specify details unique to your requirements. </h6>
+                          </div>
+                          <div class="form-body">
+
+                            <div id="formContainer">
+                              <div class="step_form_process">
+
+                                <div class="row g-4">
+                                  <div class="col-12 col-sm-12 col-md-6">
+                                    <label class="form-label">Document Name</label>
+                                    <div class="input-group">
+                                      <input type="text" name="name" id="pagename" class="form-control" placeholder="Enter Number of Pages" required>
+
+                                    </div>
+
+                                  </div>
+                                    {% if id == 1 %}
+                                  <div class="col-12 col-sm-12 col-md-6">
+                                    <label class="form-label">Documents Quantity</label>
+                                    <div class="input-group">
+                                      <input type="Number" name="pageNumbers" id="pageNumbers" class="form-control" placeholder="Enter Number of Pages" required>
+
+                                    </div>
+
+                                  </div>
+                                    {% elif id == 2 %}
+                                     <div class="col-12 col-sm-12 col-md-6">
+                                    <label class="form-label">Upload Documents</label>
+                                    <div class="input-group">
+                                      <input type="file" name="upload_documents" id="documentsNumber" class="form-control" accept=".jpg, .jpeg, .png, .pdf" multiple required>
+
+                                    </div>
+                                    <small class="form-text text-muted">Accepted formats: JPG, PNG, PDF. Max size: 5MB.</small>
+                                    <div class="invalid-feedback">Please upload a file in JPG, PNG, or PDF format.</div>
+                                  </div>
+                                      {% elif id == 3 %}
+
+                                      <div class="col-12 col-sm-12 col-md-6">
+                                    <label class="form-label">Length</label>
+                                    <select class="form-select" id="selectLength" name="pageNumbers" required>
+                                      <option value="">--Select Length--</option>
+                                      <option value="25">1-30 km</option>
+                                      <option value="50">31-60 km</option>
+                                      <option value="75">61-90 km</option>
+                                      <option value="100">91+ km</option>
+                                    </select>
+                                  </div>
+                                      {% elif id == 4 %}
+                                     <div class="col-12 col-sm-12 col-md-6">
+                                    <label class="form-label">Upload Documents</label>
+                                    <div class="input-group">
+                                      <input type="file" name="upload_documents" id="mobileServices" class="form-control" accept=".jpg, .jpeg, .png, .pdf" multiple required>
+
+                                    </div>
+                                    <small class="form-text text-muted">Accepted formats: JPG, PNG, PDF. Max size: 5MB.</small>
+                                    <div class="invalid-feedback">Please upload a file in JPG, PNG, or PDF format.</div>
+                                  </div>
+                                    {% endif %}
+
+                                  <div class="col-12 col-sm-12 col-md-2 {% if id == 2 or id == 4 %}  {% else %} hidden {% endif %} ">
+                                    <div class="step_process">
+                                      <button type="button" class="plus btn btn-success">+</button>
+                                      <button type="button" class="minus btn btn-danger">-</button>
+                                    </div>
+                                  </div>
+
+                                </div>
+                              </div>
+                            </div>
+
+                            <div class="row g-4">
+
+
+                              <div class="col-12">
+                                <label for="commentsQuestions" class="form-label">Comments or Questions <span
+                                    class="small">(Optional)</span>
+                                </label>
+                                <textarea class="form-control" id="commentsQuestions" placeholder="" name ="comments_questions" ></textarea>
+                                <div class="invalid-feedback"> Please enter your comments or questions. </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-section" id="orderConfirmSection">
+                          <div class="form-heading">
+                            <h3 class="title">Confirm Order</h3>
+                            <h6 class="sub-title">Confirm your order to proceed
+                              to the next step. </h6>
+                          </div>
+                          <div class="form-body">
+                            <div class="row g-4">
+                              <div class="col-12">
+                                <div class="form-check">
+                                  <input type="checkbox" class="form-check-input" id="acceptTermsConditions" name="terms_accepted" required>
+                                  <label class="form-check-label" for="acceptTermsConditions">I do accept the <a
+                                      href="/terms-conditions">Terms and Conditions</a>
+                                  </label>
+                                  <div class="invalid-feedback">You must accept the terms and conditions. </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <button class="mt-4 btn btn-big" type="submit" id="submitButton" disabled>Complete your
+                            order</button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- End Place Order Section  -->
+
+    </main>
+    <!-- End Main Body -->
+
+<script>
+
+
+    let pageNumbers = document.getElementById('pageNumbers');
+let serElement = document.querySelectorAll(".service-category");
+
+pageNumbers?.addEventListener('input', function() {
+    let EnteredPages = this.value;
+    console.log("Page Number", this.value);
+    serElement.forEach(function(service) {
+        let dataId = service.getAttribute('data-id');
+           let priceField = service.querySelector('#priceField');
+        let price = service.querySelector('.price');
+        if (dataId == 13) {
+            price.textContent = `$${parseInt(EnteredPages * 10)}`;
+            document.getElementById('priceField').value = `$${parseInt(EnteredPages * 10)}`;
+            console.log("Price for 13 is", priceField.value = price.textContent);
+        }
+        console.log("service", service, "DataId", dataId);
+    });
+});
+
+document.getElementById('documentsNumber')?.addEventListener('change', function() {
+    var fileCount = this.files.length;
+    console.log('Number of files uploaded: ' + fileCount);
+    serElement.forEach(function(service) {
+        let dataId = service.getAttribute('data-id');
+        let priceField = service.querySelector('#priceField');
+        let price = service.querySelector('.price');
+        if (dataId == 13) {
+            price.textContent = `$ ${parseInt(fileCount * 25)}`;
+            document.getElementById('priceField').value =parseInt(fileCount * 25);
+            console.log("Price for Docs is", price.textContent);
+        }
+    });
+});
+
+
+document.getElementById('mobileServices')?.addEventListener('change', function() {
+    var fileCount = this.files.length;
+    console.log('Number of files uploaded: ' + fileCount);
+    serElement.forEach(function(service) {
+        let dataId = service.getAttribute('data-id');
+            let priceField = service.querySelector('#priceField');
+        let price = service.querySelector('.price');
+        if (dataId == 13) {
+            price.textContent = `$ ${parseInt(fileCount * 25)}`;
+            document.getElementById('priceField').value = parseInt(fileCount * 25);
+            console.log("Price for Docs is", price.textContent);
+        }
+    });
+});
+
+
+
+    document.getElementById('selectLength')?.addEventListener('change', function() {
+    var fileCount = this.value;
+    console.log('Total KM: ' + fileCount);
+    serElement.forEach(function(service) {
+        let dataId = service.getAttribute('data-id');
+         let priceField = service.querySelector('#priceField');
+        let price = service.querySelector('.price');
+        if (dataId == 13) {
+            price.textContent = `$ ${parseInt(fileCount)}`;
+               document.getElementById('priceField').value = parseInt(fileCount)
+            console.log("Price for Docs is", price.textContent);
+        }
+    });
+});
+
+document.getElementById('dynamicForm').addEventListener('submit', function (event) {
+    // Add a new hidden input field for the extra value
+    const hiddenField = document.createElement('input');
+    hiddenField.type = 'hidden';
+    hiddenField.name = 'extraField'; // Name for the new field
+    hiddenField.value = document.getElementById('priceField').value; // Value you want to send
+
+    // Append the hidden field to the form
+    this.appendChild(hiddenField);
+});
+
+
+</script>
+
+
+    {% endblock content %}

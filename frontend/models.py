@@ -108,7 +108,7 @@ Order_CHOICES = [
 
 
 class Order(models.Model):
-    order_id = models.CharField(max_length=50)
+    order_id = models.CharField(max_length=5, unique=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     categoriesList = models.ForeignKey(Service, on_delete=models.CASCADE)   
     price = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)  
@@ -118,6 +118,25 @@ class Order(models.Model):
     terms_accepted = models.BooleanField(default=False)
 
     created_at = models.DateTimeField(default=now)
+
+    def save(self, *args, **kwargs):
+        if not self.order_id:
+            logger.debug("Generating new appointment_id")
+            last_order = Order.objects.all().order_by('-id').first()
+            if last_order:
+                last_id = int(last_order.order_id)
+                new_id = str(last_id + 1).zfill(5)
+                logger.debug(f"Generated new ID: {new_id}")
+                while Order.objects.filter(order_id=new_id).exists():
+                    logger.debug(f"ID {new_id} already exists. Incrementing...")
+                    last_id += 1
+                    new_id = str(last_id).zfill(5)
+                logger.debug(f"Unique ID found: {new_id}")
+            else:
+                new_id = '00001'
+                logger.debug(f"First record. Assigning ID: {new_id}")
+            self.order_id = new_id
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return f"{self.categoriesList}"
@@ -154,6 +173,7 @@ class Document(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
     upload_documents = models.FileField(upload_to='documents/', blank=True, null=True)
     type = models.CharField(max_length=50)
+    number_of_document = models.CharField(max_length=50, null=True, blank=True)
     def __str__(self):
         return f"Document for Order #{self.order.id} - {self.type}"
 
