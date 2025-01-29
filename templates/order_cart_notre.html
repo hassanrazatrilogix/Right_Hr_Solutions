@@ -104,7 +104,7 @@
                                      <div class="col-12 col-sm-12 col-md-6">
                                     <label class="form-label">Upload Documents</label>
                                     <div class="input-group">
-                                      <input type="file" name="upload_documents" id="documentsNumber" class="form-control" accept=".jpg, .jpeg, .png, .pdf" multiple required>
+                                      <input type="file" name="upload_documents" id="documentsNumber" class="form-control documentsNumber" accept=".jpg, .jpeg, .png, .pdf" required>
 
                                     </div>
                                     <small class="form-text text-muted">Accepted formats: JPG, PNG, PDF. Max size: 5MB.</small>
@@ -126,7 +126,7 @@
                                      <div class="col-12 col-sm-12 col-md-6">
                                     <label class="form-label">Upload Documents</label>
                                     <div class="input-group">
-                                      <input type="file" name="upload_documents" id="mobileServices" class="form-control" accept=".jpg, .jpeg, .png, .pdf" multiple required>
+                                      <input type="file" name="upload_documents" id="mobileServices" class="form-control mobileServices" accept=".jpg, .jpeg, .png, .pdf" multiple required>
 
                                     </div>
                                     <small class="form-text text-muted">Accepted formats: JPG, PNG, PDF. Max size: 5MB.</small>
@@ -197,81 +197,152 @@
 <script>
 
 
-    let pageNumbers = document.getElementById('pageNumbers');
+  let pageNumbers = document.getElementById('pageNumbers');
 let serElement = document.querySelectorAll(".service-category");
 
 pageNumbers?.addEventListener('input', function() {
-    let EnteredPages = this.value;
-    console.log("Page Number", this.value);
-    serElement.forEach(function(service) {
-        let dataId = service.getAttribute('data-id');
-           let priceField = service.querySelector('#priceField');
-        let price = service.querySelector('.price');
-        if (dataId == 13) {
-            price.textContent = `$${parseInt(EnteredPages * 10)}`;
-            document.getElementById('priceField').value = `$${parseInt(EnteredPages * 10)}`;
-            console.log("Price for 13 is", priceField.value = price.textContent);
-        }
-        console.log("service", service, "DataId", dataId);
-    });
-});
+    let enteredPages = this.value;
+    console.log("Page Number", enteredPages);
 
-document.getElementById('documentsNumber')?.addEventListener('change', function() {
-    var fileCount = this.files.length;
-    console.log('Number of files uploaded: ' + fileCount);
     serElement.forEach(function(service) {
         let dataId = service.getAttribute('data-id');
         let priceField = service.querySelector('#priceField');
         let price = service.querySelector('.price');
+
         if (dataId == 13) {
-            price.textContent = `$ ${parseInt(fileCount * 25)}`;
-            document.getElementById('priceField').value =parseInt(fileCount * 25);
-            console.log("Price for Docs is", price.textContent);
+            let updatedPrice = parseInt(enteredPages * 10);
+            price.textContent = `$${updatedPrice}`;
+            priceField.value = updatedPrice;
+            console.log("Price for 13 is", updatedPrice);
         }
     });
 });
 
+document.addEventListener('change', function(event) {
+    if (event.target && event.target.classList.contains('documentsNumber')) {
+        updatePrice();
+    }
+    if (event.target && event.target.id === 'mobileServices') {
+        updatePrice1();
+    }
+    if (event.target && event.target.id === 'selectLength') {
+        updatePrice1();
+    }
+});
+
+function updatePrice() {
+    let totalFileCount2 = 0;
+    document.querySelectorAll('.documentsNumber').forEach(function(inputElement) {
+        totalFileCount2 += inputElement.files.length;
+    });
+
+    let totalPrice = totalFileCount2 * 25;
+    console.log('Total number of files uploaded: ' + totalFileCount2);
+    console.log("Total Price is", totalPrice);
+
+    serElement.forEach(function(service) {
+        let dataId = service.getAttribute('data-id');
+        let priceField = service.querySelector('#priceField');
+        let price = service.querySelector('.price');
+
+        if (dataId == 13) {
+            price.textContent = `$ ${totalPrice}`;
+            if (priceField) {
+                priceField.value = totalPrice;
+            }
+            console.log("Updated price for docs:", price.textContent);
+        }
+    });
+}
 
 document.getElementById('mobileServices')?.addEventListener('change', function() {
-    var fileCount = this.files.length;
+    let fileCount = this.files.length;
     console.log('Number of files uploaded: ' + fileCount);
+
     serElement.forEach(function(service) {
         let dataId = service.getAttribute('data-id');
-            let priceField = service.querySelector('#priceField');
+        let priceField = service.querySelector('#priceField');
         let price = service.querySelector('.price');
+
         if (dataId == 13) {
-            price.textContent = `$ ${parseInt(fileCount * 25)}`;
-            document.getElementById('priceField').value = parseInt(fileCount * 25);
+            let updatedPrice = fileCount * 25;
+            price.textContent = `$ ${updatedPrice}`;
+            priceField.value = updatedPrice;
             console.log("Price for Docs is", price.textContent);
         }
     });
 });
 
+function updatePrice1() {
+    console.log("updatePrice1 is called");
+    let totalFileCount1 = 0;
 
+    document.querySelectorAll('.mobileServices').forEach(function(inputElement1) {
+        totalFileCount1 += inputElement1.files.length;
+    });
 
-    document.getElementById('selectLength')?.addEventListener('change', function() {
-    var fileCount = this.value;
-    console.log('Total KM: ' + fileCount);
+    let totalPrice1 = totalFileCount1 * 25;
+    console.log("Total price before select length:", totalPrice1);
+
+    let selectLengthValue = parseInt(document.getElementById('selectLength')?.value) || 0;
+    totalPrice1 += selectLengthValue;
+
+    console.log("Total Price after select length is", totalPrice1);
+
     serElement.forEach(function(service) {
         let dataId = service.getAttribute('data-id');
-         let priceField = service.querySelector('#priceField');
+        let priceField = service.querySelector('#priceField');
         let price = service.querySelector('.price');
+
         if (dataId == 13) {
-            price.textContent = `$ ${parseInt(fileCount)}`;
-               document.getElementById('priceField').value = parseInt(fileCount)
-            console.log("Price for Docs is", price.textContent);
+            price.textContent = `$ ${totalPrice1}`;
+            if (priceField) {
+                priceField.value = totalPrice1;
+            }
         }
     });
+}
+
+document.addEventListener('click', function(event) {
+    if (event.target && event.target.classList.contains('minus')) {
+        let totalFileCount = 0;
+
+        document.querySelectorAll('.mobileServices').forEach(function(inputElement) {
+            totalFileCount += inputElement.files.length;
+        });
+
+        let totalPrice = totalFileCount * 25;
+        console.log("Total price before select length:", totalPrice);
+
+        let selectLengthValue = parseInt(document.getElementById('selectLength')?.value) || 0;
+        totalPrice += selectLengthValue;
+
+        console.log("Total Price after select length is", totalPrice);
+
+        serElement.forEach(function(service) {
+            let dataId = service.getAttribute('data-id');
+            let priceField = service.querySelector('#priceField');
+            let price = service.querySelector('.price');
+
+            if (dataId == 13) {
+                let currentPrice = parseFloat(priceField.value) || 0;
+                let updatedPrice = currentPrice - 25;
+                if (updatedPrice < 0) updatedPrice = 25;
+                price.textContent = `$ ${updatedPrice}`;
+                if (priceField) {
+                    priceField.value = updatedPrice;
+                }
+            }
+        });
+    }
 });
 
 document.getElementById('dynamicForm').addEventListener('submit', function (event) {
-    // Add a new hidden input field for the extra value
     const hiddenField = document.createElement('input');
     hiddenField.type = 'hidden';
-    hiddenField.name = 'extraField'; // Name for the new field
-    hiddenField.value = document.getElementById('priceField').value; // Value you want to send
+    hiddenField.name = 'extraField';
+    hiddenField.value = document.getElementById('priceField').value;
 
-    // Append the hidden field to the form
     this.appendChild(hiddenField);
 });
 

@@ -72,9 +72,9 @@ def all_orders(request):
     x = '000'
     query = request.GET.get('q', '')  
     if request.user.is_superuser:
-        orders = Order.objects.prefetch_related('document_set').all()
+        orders = Order.objects.prefetch_related('document_set').all().order_by('-pick_date')
     else:
-        orders = Order.objects.prefetch_related('document_set').filter(user=request.user)
+        orders = Order.objects.prefetch_related('document_set').filter(user=request.user).order_by('-pick_date')
 
     if query: 
         orders = orders.filter(
@@ -130,9 +130,9 @@ def user(request):
         User = get_user_model()
 
         if not request.user.is_superuser:
-            users = [request.user] 
+            users = [request.user].order_by('-date_joined')
         else:
-            users = User.objects.all() 
+            users = User.objects.all().order_by('-date_joined')
              
         search_query = request.GET.get('q', '').strip()  
         if search_query:
@@ -554,7 +554,7 @@ def faq_delete(request, pk):
 
 @login_required(login_url='signin')
 def appointment_list(request):
-    appointment_list = Appointment.objects.all()
+    appointment_list = Appointment.objects.all().order_by('-date')
     paginator = Paginator(appointment_list, 10)
     page_number = request.GET.get('page')
     appointment_page = paginator.get_page(page_number)
