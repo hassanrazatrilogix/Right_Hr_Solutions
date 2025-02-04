@@ -174,6 +174,7 @@ class Document(models.Model):
     upload_documents = models.FileField(upload_to='documents/', blank=True, null=True)
     type = models.CharField(max_length=50)
     number_of_document = models.CharField(max_length=50, null=True, blank=True)
+    comments = models.TextField(null=True, blank=True)
     def __str__(self):
         return f"Document for Order #{self.order.id} - {self.type}"
 

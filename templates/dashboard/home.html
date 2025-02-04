@@ -90,13 +90,18 @@
                 <td>
                     
                     {% if order.document_set.exists %}
-                    <a href="{% url 'download_order_files' order.id %}" class="btn btn-primary">
-                        Download Files
-                    </a>
-                    {% else %}
-                    {{ order.type }}
-                    {% endif %}
-
+        {% with document=order.document_set.first %}
+            {% if document.upload_documents %}
+                <a href="{% url 'download_order_files' order.id %}" class="btn btn-primary">
+                    Download Files
+                </a>
+            {% else %}
+                {{ order.type }}
+            {% endif %}
+        {% endwith %}
+    {% else %}
+        {{ order.type }}
+    {% endif %}
                 </td>
             </tr>
             {% endfor %}

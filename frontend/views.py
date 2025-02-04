@@ -11,7 +11,7 @@ from django.utils.timezone import now
 import datetime
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.template.loader import render_to_string
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseBadRequest
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.utils.timezone import now
@@ -35,7 +35,7 @@ import os
 from django.http import HttpResponse
 from io import BytesIO
 
-from .signals import sendEmail
+from .signals import sendEmail, process_payment
 
 
 def home(request):
@@ -474,7 +474,51 @@ def thankyou(request):
         print(appointment)
     else:
         appointment = None
-    return render(request, 'thank-you.html', {'appointment': appointment})
+    order_id = request.GET.get('order_id')
+    payment_status = request.GET.get('payment_status')
+
+    if order_id and payment_status:
+        try:
+            # Fetch the order using the order_id passed from Square
+            order = Order.objects.get(order_id=order_id)
+
+            # Check if payment was successful
+            if payment_status == 'success':
+                # Update the order status to 'Completed'
+                order.order_status = 'Completed'
+                order.save()
+
+                # Save any uploaded documents if they exist (optional)
+                documents_to_save = Document.objects.filter(order=order)
+                for doc in documents_to_save:
+                    doc.save()  # Ensure documents are saved
+
+                # Optionally, send a confirmation email
+                sendEmail(
+                    too=[order.user.email],  # Send email to the user who placed the order
+                    sub="Your payment was successful! Thank you for your order.",
+                    temp="Your registration is now complete!"
+                )
+
+                # Optionally, display a success message to the user
+                messages.success(request, "Your payment was successful and your order has been completed.")
+            else:
+                # If the payment status is not 'success', mark the order as 'Failed'
+                order.order_status = 'Failed'
+                order.save()
+
+                messages.error(request, "Payment failed. Please try again.")
+                return redirect("/payment-failed/")  # Redirect to payment failure page
+
+        except Order.DoesNotExist:
+            # Handle the case where the order is not found
+            messages.error(request, "Order not found.")
+            return HttpResponseBadRequest("Invalid order")
+    else:
+        # Handle the case where order_id or payment_status is missing from the URL
+        messages.error(request, "Missing order or payment status.")
+        return HttpResponseBadRequest("Invalid request")
+    return render(request, 'thank-you.html', {'appointment': appointment, 'order': order})
 
 def welcome(request):
     return render(request, 'welcome.html') 
@@ -510,14 +554,49 @@ def generate_order_id():
 
 def order_cart_notre(request, id):
     id = id
+    if id == 1:
+        service_name = "Walk-In"
+    elif id == 2:
+        service_name = "Online Electronic"
+    elif id == 3:
+        service_name = "Mobile Services"
+    elif id == 4:
+        service_name = "Signing Agent/Real Estate"
     order_form = OrderForm()
     services = Service.objects.all()
-    if request.method == "POST":
-        vaye = request.POST
-        try:
+    if len(request.POST) == 4:
+        if request.method == "POST":
+            print(len(request.POST))
+            service_name = request.POST.get('service_name')  # Walk-In
+            price = request.POST.get('price')  # 10
+            pageNumbers = request.POST.get('pageNumbers')
+
+            if id == 1:
+                updatedPrice = int(price) * int(pageNumbers)
+            else:
+                start_length, end_length = map(int, pageNumbers.split('-'))
+                if 1 <= start_length <= 30:
+                    updatedPrice = 10
+                elif 31 <= start_length <= 100:
+                    updatedPrice = 20
+                elif 101 <= start_length <= 150:
+                    updatedPrice = 30
+
+                else:
+                    updatedPrice = 0
+            return render(request, 'order_cart_notre.html', {'services': services, 'id': id, 'service_name': service_name,
+                                                             'pageNumbers': pageNumbers, 'updatedPrice': updatedPrice})
+
+            # print(service_name)  # Now this will be assigned
+    else:
+        if request.method == "POST":
+            print(request.POST)
+
             # Extract form data
-            price = request.POST.get('extraField')
-            price = float(price.replace('$', '').strip())
+            updatedPrice = request.POST.get('extraField')
+
+            price = float(updatedPrice)
+            print(updatedPrice)
             categoriesList_id = request.POST.get('categoriesList')  # ForeignKey ID for Service (dropdown or select)
              # Price
             pick_date = request.POST.get('pick_date', datetime.date.today())  # Pick date
@@ -539,14 +618,16 @@ def order_cart_notre(request, id):
                 created_at=now()
             )
             order.save()
-
             print("Order exists:", order)
             user = request.user
             order = order
             pagename = request.POST.get('name')
+            print(pagename)
             document = request.POST.get('pageNumbers')
+            print(document)
             upload_documents = request.FILES.getlist('upload_documents')
-
+            comments = request.POST.get('comments_questions')
+            documents_to_save = []
             if upload_documents:
                 for file in upload_documents:
                     document_instance = Document(
@@ -554,54 +635,76 @@ def order_cart_notre(request, id):
                         order=order,
                         upload_documents=file,
                         type=pagename,
-                        number_of_document=document
+                        number_of_document=document,
+                        comments=comments
                     )
-                    document_instance.save()
+                    documents_to_save.append(document_instance)
+                    for doc in documents_to_save:
+                        doc.save()
                     messages.success(request, "Documents uploaded successfully.")
-                    if document_instance:
-                        sendEmail(too=['m.haneef1966@gmail.com'],
-                                  temp=None)
-                        return render(request, 'thank-you.html', {'order_id': order.order_id})
+                    if documents_to_save:
+                        source_id = order.order_id  # Payment nonce from Square
+                        result = process_payment(pagename, price, source_id, categoriesList)
+                        if result.is_success():
+                            return redirect(result.body['payment_link']['url'])  # Redirect to Square Checkout
+                        else:
+                            return redirect("/payment-failed/")  # Handle errors
+                        #
+                        # return redirect("/order/")
+                        # success, payment_response = process_payment(request, price, source_id, categoriesList)
+                            # sendEmail(too=['m.haneef1966@gmail.com'],
+                            #           sub="Thank you for choosing Right HR Solution, please check your email for registration completion",
+                            #           temp="Your registration is now complete!")
+                    return render(request, 'thank-you.html', {'order_id': order.order_id, 'documents_to_save': documents_to_save})
             else:
                 document_instance = Document(
                     user=user,
                     order=order,
                     upload_documents=None,
                     type=pagename,
-                    number_of_document=document
+                    number_of_document=document,
+                    comments=comments
                 )
-                document_instance.save()
+                documents_to_save.append(document_instance)
+                for doc in documents_to_save:
+                    doc.save()
                 messages.success(request, "Documents uploaded successfully.")
-                if document_instance:
-                    sendEmail(too=['m.haneef1966@gmail.com'], sub="Thank you for choosing Right HR Solution, please check your email for registration completion",
-                                  temp="Your registration is now complete!")
-                    return render(request, 'thank-you.html', {'order_id': order.order_id})
-        except Service.DoesNotExist:
-            messages.error(request, "The selected service category does not exist.")
-            return render(request, 'order_cart_notre.html', {'services': services, 'id': id})
+                if documents_to_save:
+                    source_id = order.order_id  # Payment nonce from Square
+                    result = process_payment(pagename, price, source_id, categoriesList)
+                    if result.is_success():
+                        return redirect(result.body['payment_link']['url'])  # Redirect to Square Checkout
+                    else:
+                        return redirect("/payment-failed/")  # Handle errors
 
-        except Exception as e:
-            messages.error(request, f"An error occurred: {str(e)}")
-            return render(request, 'order_cart_notre.html', {'services': services, 'id': id})
-
-        else:
-            if request.method == "GET":
-                pass
-    return render(request, 'order_cart_notre.html', {'order_form': order_form, 'services': services, 'id': id})
+                    # if result:
+                    #     sendEmail(too=['m.haneef1966@gmail.com'], sub="Thank you for choosing Right HR Solution, please check your email for registration completion",
+                    #                   temp="Your registration is now complete!")
 
 
-# def send_email_notification(user):
-#     subject = "Welcome to Our Platform"
-#     if user.is_superuser:
-#         subject = "Superuser Notification: Welcome to Our Platform"
-#
-#     message = render_to_string("email_template.html", {'user': user})
-#
-#     # Send email to the user
-#     send_mail(
-#         subject,
-#         message,
-#         settings.EMAIL_HOST_USER,
-#         [user.email],
-#         fail_silently=False
-#     )
+        return render(request, 'order_cart_notre.html', {'services': services, 'id': id, 'service_name': service_name})
+
+
+    return render(request, 'order_cart_notre.html', {'order_form': order_form, 'services': services,
+                    'id': id, 'service_name': service_name})
+
+
+def first_page(request):
+    # This is the view for the first page (card)
+    return render(request, 'notary-public-service.html')
+
+def second_page(request):
+    # This is the view for the second page (checkout)
+    if request.method == "GET":
+        # Get data from the URL parameters
+        service_name = request.GET.get('service_name')
+        price = request.GET.get('price')
+        pageNumbers = request.GET.get('pageNumbers')
+
+        # Pass the data to the template
+        context = {
+            'service_name': service_name,
+            'price': price,
+            'pageNumbers': pageNumbers,
+        }
+        return render(request, 'second_page.html', context)

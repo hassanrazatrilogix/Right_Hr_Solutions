@@ -47,23 +47,39 @@
   <section class="notary_sec bg" style="background-image: url(/static/assets/img/image/second-banner.png)">
     <div class="container">
       <div class="inner_services_sec">
-        <div class="notry_services">
-          <div class="top_img">
-            <img src="{% static  '' %}assets/img/image/icon-1.png" alt="">
-          </div>
-          <div class="content_area">
-            <div class="middle_title">
-              <h3>Walk-In</h3>
-              <p>In person Notary Service.</p>				
-            </div>
-            <div class="price_text">
-              <p> <span>$10</span> Per Stamp</p>
-            </div>
-          </div>
-          <div class="cart_btn">
-            <a href="{% url 'order_cart_notre' id=1 %}" id="walkins">Order Now</a>
-          </div>
-        </div>
+       <div class="notry_services">
+  <div class="top_img">
+    <img src="{% static 'assets/img/image/icon-1.png' %}" alt="">
+  </div>
+  <div class="content_area">
+    <div class="middle_title">
+      <h3 class ="walk-inn">Walk-In</h3>
+      <p>In person Notary Service.</p>
+    </div>
+    <div class="price_text">
+      <p><span class="price-value" >$10</span> Per Stamp</p>
+    </div>
+  </div>
+  <div class="cart_btn">
+    <!-- Form to submit the service, price, and page number -->
+    <form action="{% url 'order_cart_notre' id=1 %}" method="POST">
+      {% csrf_token %}
+
+      <!-- Hidden fields for Walk-In service and price -->
+      <input type="hidden" name="service_name" value="Walk-In">
+      <input type="hidden" name="price" value="10">
+
+      <!-- Input field for page number -->
+      <div class="form-group">
+        <label for="pageNumbers">Number of Pages:</label>
+        <input type="number" id="pageNumbers" name="pageNumbers" min="1" value="1" required>
+      </div>
+
+      <!-- Order Now button -->
+      <button type="submit">Order Now</button>
+    </form>
+  </div>
+</div>
         <div class="notry_services">
           <div class="top_img">
             <img src="{% static  '' %}assets/img/image/icon-2.png" alt="">
@@ -74,7 +90,7 @@
             </div>
             <div class="price_text">
               <p> <span>$25</span> Per Stamp</p>
-            </div>
+             </div>
             <div class="upload_document">
               <a><img src="{% static  '' %}assets/img/image/document.png" alt="">upload documents</a>
             </div>
@@ -90,24 +106,31 @@
           <div class="content_area">
             <div class="middle_title">
               <h3>Mobile Services</h3>
-              <p>Skip the travel and let us come to you.</p>				
-            </div>
-            <div class="dropdown-container">
-              <select>
-              <option value="0-30">0 - 30</option>
-              <option value="31-100">31 - 100</option>
-              <option value="101-150">101 - 150</option>
-              </select>
-            </div>
-            
-            <div class="price_text">
+              <p>Skip the travel and let us come to you.</p>
+              <div class="price_text">
               <p> <span>$10</span> Per Stamp</p>
+              </div>
             </div>
+            <div class="cart_btn">
+            <form action="{% url 'order_cart_notre' id=3 %}" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="service_name" value="Mobile Services">
+                <input type="hidden" name="price" value="10">
+
+                <div class="dropdown-container">
+                    <select name="pageNumbers" id="price_range">
+                        <option value="0-30">0 - 30</option>
+                        <option value="31-100">31 - 100</option>
+                        <option value="101-150">101 - 150</option>
+                    </select>
+                </div>
+
+                <!-- Replace the link with a submit button -->
+                <button type="submit">Order Now</button>
+            </form>
           </div>
-          <div class="cart_btn">
-            <a href="{% url 'order_cart_notre' id=3 %}">Order Now</a>
           </div>
-        </div>
+          </div>
         <div class="notry_services">
           <div class="top_img">
             <img src="{% static  '' %}assets/img/image/icon-4.png" alt="">
@@ -235,5 +258,26 @@
   <!-- main.js -->
   <script src="assets/js/main.js"></script>
 
+ <script>
+
+   console.log("loading js")
+ const walkinButton  = document.querySelector("#walkins")
+console.log("walkinButton",walkinButton)
+
+
+ function handlePageSubmit()
+   {
+console.log("calling the pages")
+   const cartText = document.querySelector(".walk-inn").textContent.trim()
+   const priceElement =  document.querySelector(".price-value")
+   const priceValue =  parseFloat(priceElement.textContent.slice(1,3).trim())
+   const numberOfPages =  document.querySelector("#pageNumbers").value
+   console.log("cartText",cartText,"priceElement",priceValue)
+   const productOfPages =  numberOfPages.priceValue
+   console.log("numberOfPages",numberOfPages)
+   const dataArray =  []
+   }
+
+ </script>
 
     {% endblock content %}

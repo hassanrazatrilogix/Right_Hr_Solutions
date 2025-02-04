@@ -13,6 +13,25 @@
     background-color: #fff !important;
     color: black !important;
 }
+  .file-names {
+    margin-top: 10px;
+}
+
+#fileNames ul {
+    padding: 0;
+    list-style-type: none;
+    margin: 0;
+}
+
+#fileNames ul li {
+    margin: 5px 0;
+    font-size: 14px;
+}
+
+#documentsNumber:hover + #fileNames {
+    display: block;
+}
+
 
 </style>
 
@@ -61,9 +80,10 @@
                                 <div class="service-category" data-id="{{ service.id }}">
                                     <img class="service-icon bg-light" src="{{ service.icon.url }}" alt="Apostille Service">
                                     <h6 class="service-heading">{{ service.name }}</h6>
-                                    <p class="price"></p>
+                                    <p class="service-heading">{{ service_name }}</p>
+                                    <p class="price">{% if service.id == 13 %} {{updatedPrice}} {%endif%}</p>
                                     <div>
-                                    <input type="hidden" name="test_price" id="priceField" value="5">
+                                    <input type="hidden" name="test_price" id="priceField" value="{{updatedPrice}}">
                                     </div>
                                 </div>
                             </label>
@@ -83,63 +103,56 @@
                               <div class="step_form_process">
 
                                 <div class="row g-4">
-                                  <div class="col-12 col-sm-12 col-md-6">
+                                    {% if id == 1 or id == 3 %}
+                                  <div class="col-12 col-sm-12 col-md-12">
                                     <label class="form-label">Document Name</label>
                                     <div class="input-group">
-                                      <input type="text" name="name" id="pagename" class="form-control" placeholder="Enter Number of Pages" required>
-
+                                        <input type="text" name="name" id="pagename1" class="form-control" value="{{ service_name }}" required disabled>
+                                        <input type="hidden" name="name" value="{{ service_name }}">
                                     </div>
-
+                                      <div class="input-group">
+                                      <input type="text" name="pageNumbers" id="hiddenPageNm" class="form-control" value="{{pageNumbers}}" hidden>
+                                      </div>
                                   </div>
-                                    {% if id == 1 %}
-                                  <div class="col-12 col-sm-12 col-md-6">
-                                    <label class="form-label">Documents Quantity</label>
+                                    {% else %}
+                                    <div class="col-12 col-sm-12 col-md-6">
+                                    <label class="form-label">Document Name</label>
                                     <div class="input-group">
-                                      <input type="Number" name="pageNumbers" id="pageNumbers" class="form-control" placeholder="Enter Number of Pages" required>
+                                      <input type="text" name="name" id="pagename" class="form-control" value="{{ service_name }}" placeholder="Enter Enter service name" required>
 
                                     </div>
 
-                                  </div>
-                                    {% elif id == 2 %}
-                                     <div class="col-12 col-sm-12 col-md-6">
-                                    <label class="form-label">Upload Documents</label>
-                                    <div class="input-group">
-                                      <input type="file" name="upload_documents" id="documentsNumber" class="form-control documentsNumber" accept=".jpg, .jpeg, .png, .pdf" required>
-
-                                    </div>
-                                    <small class="form-text text-muted">Accepted formats: JPG, PNG, PDF. Max size: 5MB.</small>
-                                    <div class="invalid-feedback">Please upload a file in JPG, PNG, or PDF format.</div>
-                                  </div>
-                                      {% elif id == 3 %}
-
-                                      <div class="col-12 col-sm-12 col-md-6">
-                                    <label class="form-label">Length</label>
-                                    <select class="form-select" id="selectLength" name="pageNumbers" required>
-                                      <option value="">--Select Length--</option>
-                                      <option value="25">1-30 km</option>
-                                      <option value="50">31-60 km</option>
-                                      <option value="75">61-90 km</option>
-                                      <option value="100">91+ km</option>
-                                    </select>
-                                  </div>
-                                      {% elif id == 4 %}
-                                     <div class="col-12 col-sm-12 col-md-6">
-                                    <label class="form-label">Upload Documents</label>
-                                    <div class="input-group">
-                                      <input type="file" name="upload_documents" id="mobileServices" class="form-control mobileServices" accept=".jpg, .jpeg, .png, .pdf" multiple required>
-
-                                    </div>
-                                    <small class="form-text text-muted">Accepted formats: JPG, PNG, PDF. Max size: 5MB.</small>
-                                    <div class="invalid-feedback">Please upload a file in JPG, PNG, or PDF format.</div>
                                   </div>
                                     {% endif %}
+                                    {% if id == 2 %}
+                                 <div class="col-12 col-sm-12 col-md-6">
+    <label class="form-label">Upload Documents</label>
+    <div class="input-group">
+        <input type="file" name="upload_documents" id="documentsNumber" class="form-control documentsNumber" accept=".jpg, .jpeg, .png, .pdf" required multiple>
+    </div>
+    <small class="form-text text-muted">Accepted formats: JPG, PNG, PDF. Max size: 5MB.</small>
+    <div class="invalid-feedback">Please upload a file in JPG, PNG, or PDF format.</div>
 
-                                  <div class="col-12 col-sm-12 col-md-2 {% if id == 2 or id == 4 %}  {% else %} hidden {% endif %} ">
-                                    <div class="step_process">
-                                      <button type="button" class="plus btn btn-success">+</button>
-                                      <button type="button" class="minus btn btn-danger">-</button>
-                                    </div>
-                                  </div>
+
+    <div id="fileNames" class="file-names" style="display: none;">
+        <ul id="fileList"></ul>
+    </div>
+</div>
+                                      {% elif id == 4 %}
+<div class="col-12 col-sm-12 col-md-6">
+    <label class="form-label">Upload Documents</label>
+    <div class="input-group">
+        <input type="file" name="upload_documents" id="uploadDocuments" class="form-control documentsNumber uploadDocuments" accept=".jpg, .jpeg, .png, .pdf" multiple required>
+    </div>
+    <small class="form-text text-muted">Accepted formats: JPG, PNG, PDF. Max size: 5MB.</small>
+    <div class="invalid-feedback">Please upload a file in JPG, PNG, or PDF format.</div>
+    <div id="fileNames1" class="file-names" style="display: none;">
+        <ul id="fileList1"></ul>
+    </div>
+</div>
+
+                                    {% endif %}
+
 
                                 </div>
                               </div>
@@ -152,7 +165,7 @@
                                 <label for="commentsQuestions" class="form-label">Comments or Questions <span
                                     class="small">(Optional)</span>
                                 </label>
-                                <textarea class="form-control" id="commentsQuestions" placeholder="" name ="comments_questions" ></textarea>
+                                <textarea class="form-control" id="commentsQuestions" placeholder="" name="comments_questions"></textarea>
                                 <div class="invalid-feedback"> Please enter your comments or questions. </div>
                               </div>
                             </div>
@@ -192,68 +205,132 @@
       <!-- End Place Order Section  -->
 
     </main>
+
+<div id="filePopup" class="file-popup" style="display:none;">
+    <div class="file-popup-content">
+        <span class="close-popup" onclick="closePopup()">×</span>
+        <h5>Selected Files:</h5>
+        <ul id="fileList"></ul>
+    </div>
+</div>
     <!-- End Main Body -->
 
 <script>
 
+  let serElement = document.querySelectorAll(".service-category");
+let priceField = document.querySelector('#priceField');
+let priceText = document.querySelector('.price');  // Assuming the price is displayed in a <p class="price"> element.
 
-  let pageNumbers = document.getElementById('pageNumbers');
-let serElement = document.querySelectorAll(".service-category");
+const fileInputs = document.querySelectorAll('.documentsNumber');
 
+fileInputs.forEach(fileInput => {
+    fileInput.addEventListener('change', function(event) {
+        const fileInput = event.target;
+        const fileList = fileInput.closest('.col-12').querySelector('.file-names ul');
+        const fileNamesDiv = fileInput.closest('.col-12').querySelector('.file-names');
+
+        if (fileInput.files.length > 0) {
+            console.log("Total Files", fileInput.files.length);
+            fileNamesDiv.style.display = 'block';
+
+            Array.from(fileInput.files).forEach(file => {
+                // Check if file is already in the list to avoid duplicates
+                const existingFiles = Array.from(fileList.children).map(item => item.textContent);
+                if (!existingFiles.includes(file.name)) {
+                    const listItem = document.createElement('li');
+                    listItem.textContent = file.name;
+                    fileList.appendChild(listItem);
+                }
+            });
+
+            let totalFiles = fileList.children.length;
+            console.log(`Total number of files: ${totalFiles}`);
+
+            let updatedPrice = parseFloat(totalFiles) * 25;
+            priceField.value = updatedPrice;
+
+            if (priceText) {
+                priceText.textContent = `$${updatedPrice.toFixed(2)}`;
+            }
+
+            serElement.forEach(function(service) {
+                let dataId = service.getAttribute('data-id');
+                let price = service.querySelector('.price');
+                let priceHidden = service.querySelector('#priceField');
+
+                if (dataId == 13 && price) {
+                    price.textContent = `$${updatedPrice.toFixed(2)}`;
+                    priceHidden.value = updatedPrice.toFixed(2);
+                    console.log("Price for 13 is", updatedPrice);
+                }
+            });
+
+        } else {
+            fileNamesDiv.style.display = 'none';
+        }
+    });
+});
+
+
+
+
+
+let pageNumbers = document.getElementById('pageNumbers');
 pageNumbers?.addEventListener('input', function() {
     let enteredPages = this.value;
     console.log("Page Number", enteredPages);
 
     serElement.forEach(function(service) {
         let dataId = service.getAttribute('data-id');
-        let priceField = service.querySelector('#priceField');
+
         let price = service.querySelector('.price');
 
         if (dataId == 13) {
             let updatedPrice = parseInt(enteredPages * 10);
             price.textContent = `$${updatedPrice}`;
             priceField.value = updatedPrice;
+            document.getElementById('priceField').value;
             console.log("Price for 13 is", updatedPrice);
         }
     });
 });
 
-document.addEventListener('change', function(event) {
-    if (event.target && event.target.classList.contains('documentsNumber')) {
-        updatePrice();
-    }
-    if (event.target && event.target.id === 'mobileServices') {
-        updatePrice1();
-    }
-    if (event.target && event.target.id === 'selectLength') {
-        updatePrice1();
-    }
-});
+<!--document.addEventListener('change', function(event) {-->
+<!--    if (event.target && event.target.classList.contains('documentsNumber')) {-->
+<!--        updatePrice();-->
+<!--    }-->
+<!--    if (event.target && event.target.id === 'mobileServices') {-->
+<!--        updatePrice1();-->
+<!--    }-->
+<!--    if (event.target && event.target.id === 'selectLength') {-->
+<!--        updatePrice1();-->
+<!--    }-->
+<!--});-->
 
-function updatePrice() {
-    let totalFileCount2 = 0;
-    document.querySelectorAll('.documentsNumber').forEach(function(inputElement) {
-        totalFileCount2 += inputElement.files.length;
-    });
+<!--function updatePrice() {-->
+<!--    let totalFileCount2 = 0;-->
+<!--    document.querySelectorAll('.documentsNumber').forEach(function(inputElement) {-->
+<!--        totalFileCount2 += inputElement.files.length;-->
+<!--    });-->
 
-    let totalPrice = totalFileCount2 * 25;
-    console.log('Total number of files uploaded: ' + totalFileCount2);
-    console.log("Total Price is", totalPrice);
+<!--    let totalPrice = totalFileCount2 * 25;-->
+<!--    console.log('Total number of files uploaded: ' + totalFileCount2);-->
+<!--    console.log("Total Price is", totalPrice);-->
 
-    serElement.forEach(function(service) {
-        let dataId = service.getAttribute('data-id');
-        let priceField = service.querySelector('#priceField');
-        let price = service.querySelector('.price');
+<!--    serElement.forEach(function(service) {-->
+<!--        let dataId = service.getAttribute('data-id');-->
+<!--        let priceField = service.querySelector('#priceField');-->
+<!--        let price = service.querySelector('.price');-->
 
-        if (dataId == 13) {
-            price.textContent = `$ ${totalPrice}`;
-            if (priceField) {
-                priceField.value = totalPrice;
-            }
-            console.log("Updated price for docs:", price.textContent);
-        }
-    });
-}
+<!--        if (dataId == 13) {-->
+<!--            price.textContent = `$ ${totalPrice}`;-->
+<!--            if (priceField) {-->
+<!--                priceField.value = totalPrice;-->
+<!--            }-->
+<!--            console.log("Updated price for docs:", priceField.value);-->
+<!--        }-->
+<!--    });-->
+<!--}-->
 
 document.getElementById('mobileServices')?.addEventListener('change', function() {
     let fileCount = this.files.length;
@@ -303,39 +380,39 @@ function updatePrice1() {
     });
 }
 
-document.addEventListener('click', function(event) {
-    if (event.target && event.target.classList.contains('minus')) {
-        let totalFileCount = 0;
+<!--document.addEventListener('click', function(event) {-->
+<!--    if (event.target && event.target.classList.contains('minus')) {-->
+<!--        let totalFileCount = 0;-->
 
-        document.querySelectorAll('.mobileServices').forEach(function(inputElement) {
-            totalFileCount += inputElement.files.length;
-        });
+<!--        document.querySelectorAll('.mobileServices').forEach(function(inputElement) {-->
+<!--            totalFileCount += inputElement.files.length;-->
+<!--        });-->
 
-        let totalPrice = totalFileCount * 25;
-        console.log("Total price before select length:", totalPrice);
+<!--        let totalPrice = totalFileCount * 25;-->
+<!--        console.log("Total price before select length:", totalPrice);-->
 
-        let selectLengthValue = parseInt(document.getElementById('selectLength')?.value) || 0;
-        totalPrice += selectLengthValue;
+<!--        let selectLengthValue = parseInt(document.getElementById('selectLength')?.value) || 0;-->
+<!--        totalPrice += selectLengthValue;-->
 
-        console.log("Total Price after select length is", totalPrice);
+<!--        console.log("Total Price after select length is", totalPrice);-->
 
-        serElement.forEach(function(service) {
-            let dataId = service.getAttribute('data-id');
-            let priceField = service.querySelector('#priceField');
-            let price = service.querySelector('.price');
+<!--        serElement.forEach(function(service) {-->
+<!--            let dataId = service.getAttribute('data-id');-->
+<!--            let priceField = service.querySelector('#priceField');-->
+<!--            let price = service.querySelector('.price');-->
 
-            if (dataId == 13) {
-                let currentPrice = parseFloat(priceField.value) || 0;
-                let updatedPrice = currentPrice - 25;
-                if (updatedPrice < 0) updatedPrice = 25;
-                price.textContent = `$ ${updatedPrice}`;
-                if (priceField) {
-                    priceField.value = updatedPrice;
-                }
-            }
-        });
-    }
-});
+<!--            if (dataId == 13) {-->
+<!--                let currentPrice = parseFloat(priceField.value) || 0;-->
+<!--                let updatedPrice = currentPrice - 25;-->
+<!--                if (updatedPrice < 0) updatedPrice = 25;-->
+<!--                price.textContent = `$ ${updatedPrice}`;-->
+<!--                if (priceField) {-->
+<!--                    priceField.value = updatedPrice;-->
+<!--                }-->
+<!--            }-->
+<!--        });-->
+<!--    }-->
+<!--});-->
 
 document.getElementById('dynamicForm').addEventListener('submit', function (event) {
     const hiddenField = document.createElement('input');
@@ -346,6 +423,31 @@ document.getElementById('dynamicForm').addEventListener('submit', function (even
     this.appendChild(hiddenField);
 });
 
+
+
+      const appId = '{{ SQUARE_APPLICATION_ID }}';
+        const locationId = LBGRAB74K3J47;
+
+        const payments = Square.payments(appId, locationId);
+        let card;
+
+        async function initializeCard() {
+            card = await payments.card();
+            await card.attach('#card-container');
+        }
+
+        async function handlePayment() {
+            const result = await card.tokenize();
+            if (result.status === 'OK') {
+                document.getElementById('source_id').value = result.token;
+                document.getElementById('order-form').submit();  // Submit the form
+            } else {
+                alert('Payment failed. Please try again.');
+            }
+        }
+
+        document.getElementById('card-button').addEventListener('click', handlePayment);
+        initializeCard();
 
 </script>
 
