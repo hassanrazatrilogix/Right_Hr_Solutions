@@ -72,9 +72,9 @@ def all_orders(request):
     x = '000'
     query = request.GET.get('q', '')  
     if request.user.is_superuser:
-        orders = Order.objects.prefetch_related('document_set').all().order_by('-pick_date')
+        orders = Order.objects.prefetch_related('document_set').all().order_by('-created_at')
     else:
-        orders = Order.objects.prefetch_related('document_set').filter(user=request.user).order_by('-pick_date')
+        orders = Order.objects.prefetch_related('document_set').filter(user=request.user).order_by('-created_at')
 
     if query: 
         orders = orders.filter(

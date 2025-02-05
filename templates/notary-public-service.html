@@ -71,12 +71,12 @@
 
       <!-- Input field for page number -->
       <div class="form-group">
-        <label for="pageNumbers">Number of Pages:</label>
-        <input type="number" id="pageNumbers" name="pageNumbers" min="1" value="1" required>
+        <p for="pageNumbers" style="color: white;">Number of Pages:</p>
+        <input type="number" id="pageNumbers" name="pageNumbers" class="form-control"  min="1" value="1" required>
       </div>
 
       <!-- Order Now button -->
-      <button type="submit">Order Now</button>
+      <button type="submit" class="btn">Order Now</button>
     </form>
   </div>
 </div>
@@ -88,15 +88,16 @@
             <div class="middle_title">
               <h3>Online Electronic</h3>			
             </div>
+            
+            <div class="upload_document">
+              <a><img src="{% static  '' %}assets/img/icons/info.png" style="max-width: 16px;" alt="">upload documents</a>
+            </div>
             <div class="price_text">
               <p> <span>$25</span> Per Stamp</p>
              </div>
-            <div class="upload_document">
-              <a><img src="{% static  '' %}assets/img/image/document.png" alt="">upload documents</a>
-            </div>
           </div>
           <div class="cart_btn">
-            <a href="{% url 'order_cart_notre' id=2 %}">Order Now</a>
+            <a href="{% url 'order_cart_notre' id=2 %}" class="btn">Order Now</a>
           </div>
         </div>
         <div class="notry_services">
@@ -114,9 +115,12 @@
             <div class="cart_btn">
             <form action="{% url 'order_cart_notre' id=3 %}" method="POST">
                 {% csrf_token %}
+                <p> </p>
                 <input type="hidden" name="service_name" value="Mobile Services">
-                <input type="hidden" name="price" value="10">
+                <p> </p>
 
+                <input type="hidden" name="price" value="10">
+                <p> </p>
                 <div class="dropdown-container">
                     <select name="pageNumbers" id="price_range">
                         <option value="0-30">0 - 30</option>
@@ -124,9 +128,9 @@
                         <option value="101-150">101 - 150</option>
                     </select>
                 </div>
-
+                <p> </p>
                 <!-- Replace the link with a submit button -->
-                <button type="submit">Order Now</button>
+                <button type="submit" class="btn">Order Now</button>
             </form>
           </div>
           </div>
@@ -139,11 +143,11 @@
             <div class="middle_title">
               <h3>Signing Agent/Real Estate</h3>			
             </div>
+            <div class="upload_document">
+              <a><img src="{% static  '' %}assets/img/icons/info.png" style="max-width: 16px;" alt="">upload documents</a>
+            </div>
             <div class="price_text">
               <p> <span>$25</span> Per Stamp</p>
-            </div>
-            <div class="upload_document">
-             <a> <img src="{% static  '' %}assets/img/image/document.png" alt="">upload documents</a>
             </div>
           </div>
           <div class="cart_btn">

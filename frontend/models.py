@@ -172,7 +172,7 @@ class Document(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
     upload_documents = models.FileField(upload_to='documents/', blank=True, null=True)
-    type = models.CharField(max_length=50)
+    type = models.CharField(max_length=50, null=True, blank=True)
     number_of_document = models.CharField(max_length=50, null=True, blank=True)
     comments = models.TextField(null=True, blank=True)
     def __str__(self):

@@ -80,7 +80,8 @@
                                 <div class="service-category" data-id="{{ service.id }}">
                                     <img class="service-icon bg-light" src="{{ service.icon.url }}" alt="Apostille Service">
                                     <h6 class="service-heading">{{ service.name }}</h6>
-                                    <p class="service-heading">{{ service_name }}</p>
+
+                                    <p class="service-heading">{% if service.id == 13 %} {{ service_name }}{%endif%}</p>
                                     <p class="price">{% if service.id == 13 %} {{updatedPrice}} {%endif%}</p>
                                     <div>
                                     <input type="hidden" name="test_price" id="priceField" value="{{updatedPrice}}">
@@ -105,7 +106,7 @@
                                 <div class="row g-4">
                                     {% if id == 1 or id == 3 %}
                                   <div class="col-12 col-sm-12 col-md-12">
-                                    <label class="form-label">Document Name</label>
+                                    <label class="form-label">Service Type</label>
                                     <div class="input-group">
                                         <input type="text" name="name" id="pagename1" class="form-control" value="{{ service_name }}" required disabled>
                                         <input type="hidden" name="name" value="{{ service_name }}">
@@ -116,9 +117,9 @@
                                   </div>
                                     {% else %}
                                     <div class="col-12 col-sm-12 col-md-6">
-                                    <label class="form-label">Document Name</label>
+                                    <label class="form-label">Service Type</label>
                                     <div class="input-group">
-                                      <input type="text" name="name" id="pagename" class="form-control" value="{{ service_name }}" placeholder="Enter Enter service name" required>
+                                      <input type="text" name="name" id="pagename" class="form-control" value="{{ service_name }}" placeholder="Enter Enter service name" required disabled>
 
                                     </div>
 

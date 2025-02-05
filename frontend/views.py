@@ -551,7 +551,7 @@ def generate_order_id():
     return order_id
 
 
-
+@login_required(login_url='signin')
 def order_cart_notre(request, id):
     id = id
     if id == 1:
