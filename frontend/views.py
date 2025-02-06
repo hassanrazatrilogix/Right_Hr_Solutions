@@ -35,7 +35,7 @@ import os
 from django.http import HttpResponse
 from io import BytesIO
 
-from .signals import sendEmail, process_payment
+from frontend.signals import sendEmail, process_payment
 
 
 def home(request):
