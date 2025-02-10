@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.shortcuts import  get_object_or_404
+from django.shortcuts import get_object_or_404
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
 from django.contrib.auth.models import User
@@ -22,8 +22,8 @@ from django.views import View
 from django.contrib.auth import logout
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from .forms import AppointmentForm , BillingDetailsForm , OrderForm , UserRegistrationForm  , ContactUs
-from .models import Document , NewsletterSubscriber
+from .forms import AppointmentForm, BillingDetailsForm, OrderForm, UserRegistrationForm, ContactUs
+from .models import Document, NewsletterSubscriber
 from dashboard.models import Service, Cart, Home, Professional_Services, Hr_Solutions, Government, About_Us, FAQSection
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import get_template
@@ -39,10 +39,8 @@ from frontend.signals import sendEmail, process_payment
 
 
 def home(request):
-
     home_list = Home.objects.all()
     return render(request, 'index.html', {'home_list': home_list})
-
 
 
 def about(request):
@@ -50,10 +48,8 @@ def about(request):
     return render(request, 'about-us.html', {'about_us': about_us})
 
 
-
-
 def apostilleservices(request):
-    return render(request, 'apostille-services.html') 
+    return render(request, 'apostille-services.html')
 
 
 def appointment(request):
@@ -65,7 +61,7 @@ def appointment(request):
         else:
             email_errors = form.errors.get('email', [])
             if email_errors:
-                specific_email_error = email_errors[0]  
+                specific_email_error = email_errors[0]
             else:
                 specific_email_error = None
             return render(request, 'appoinment.html', {'form': form, 'specific_email_error': specific_email_error})
@@ -76,10 +72,10 @@ def appointment(request):
 
 
 def backgroundcheck(request):
-    return render(request, 'background-check.html') 
+    return render(request, 'background-check.html')
+
 
 def checkout(request, order_id=None):
-
     if request.method == "POST":
         form = BillingDetailsForm(request.POST)
         if form.is_valid():
@@ -96,6 +92,7 @@ def checkout(request, order_id=None):
     return render(request, 'checkout.html', {
         # 'order': order,
     })
+
 
 def contact(request):
     if request.method == 'POST':
@@ -125,11 +122,10 @@ def contact(request):
             error_messages = form.errors.as_data()
             context_errors = {}
             for field, errors in error_messages.items():
-              
                 clean_errors = [error.message for error in errors]
-              
+
                 context_errors[field] = [err.replace("['", "").replace("']", "") for err in clean_errors]
-            
+
             messages.error(request, 'Please correct the errors below.')
             return render(request, 'contact-us.html', {'form': form, 'errors': context_errors})
 
@@ -152,10 +148,8 @@ def newsletter_submission(request):
                 htmly = get_template('email-template/subscribe-mail.html')
                 html_content = htmly.render({"email": email})
 
-             
                 plaintext = get_template('email-template/mail.txt')
                 plain_content = plaintext.render({"email": email})
-
 
                 msg = EmailMultiAlternatives(
                     subject="Thank You for Subscribing to Our Newsletter!",
@@ -172,7 +166,6 @@ def newsletter_submission(request):
         else:
             return JsonResponse({"message": "Invalid email address.", "status": "error"})
     return JsonResponse({"message": "Invalid request method.", "status": "error"})
-
 
 
 def cart(request, order_id):
@@ -208,25 +201,27 @@ def cart(request, order_id):
 
 
 def documenttranslationservice(request):
-    
-    return render(request, 'document-translation-service.html') 
+    return render(request, 'document-translation-service.html')
+
 
 def faqs(request):
     sections = FAQSection.objects.prefetch_related('faqs')
     return render(request, 'faqs.html', {'sections': sections})
-    return render(request, 'faqs.html') 
+    return render(request, 'faqs.html')
+
 
 def fingerprintingservice(request):
-    return render(request, 'fingerprinting-service.html') 
+    return render(request, 'fingerprinting-service.html')
+
 
 def government(request):
     government = Government.objects.all()
     return render(request, 'government.html', {'government': government})
 
 
-
 def header(request):
-    return render(request, 'header.html') 
+    return render(request, 'header.html')
+
 
 def hrsolutions(request):
     hr_solution = Hr_Solutions.objects.all()
@@ -234,10 +229,12 @@ def hrsolutions(request):
 
 
 def notarypublicservice(request):
-    return render(request, 'notary-public-service.html') 
+    return render(request, 'notary-public-service.html')
+
 
 def privacypolicy(request):
-    return render(request, 'privacy-policy.html') 
+    return render(request, 'privacy-policy.html')
+
 
 def professional_services(request):
     professional_services = Professional_Services.objects.all()
@@ -256,20 +253,20 @@ def placeorder(request):
             category_price = order_form.cleaned_data['category_price']
 
             order = order_form.save(commit=False)
-            order.user = request.user 
-            order.price = category_price  
+            order.user = request.user
+            order.price = category_price
             order.save()
-            
+
             for i in range(len(files)):
                 document = Document(
-                    user=request.user, 
-                    order=order, 
-                    upload_documents=files[i], 
+                    user=request.user,
+                    order=order,
+                    upload_documents=files[i],
                     type=types[i] if i < len(types) else None
                 )
                 document.save()
 
-            selected_services = request.POST.getlist('categoriesList')  
+            selected_services = request.POST.getlist('categoriesList')
             for service_id in selected_services:
                 service = Service.objects.get(id=service_id)
                 cart_item, created = Cart.objects.get_or_create(
@@ -277,12 +274,12 @@ def placeorder(request):
                     service=service,
                     defaults={'quantity': 1, 'service_name': service.name, 'service_price': service.price}
                 )
-                
+
                 if not created:
                     # If the cart item already exists, increase the quantity
                     cart_item.quantity += 1
                     cart_item.save()
-            
+
             messages.success(request, 'Order and documents uploaded successfully.')
             card_data = Cart.objects.all()
             for cart in card_data:
@@ -299,9 +296,8 @@ def placeorder(request):
 
     return render(request, 'place-order.html', {
         'order_form': order_form,
-        'services': services  
+        'services': services
     })
-
 
 
 def signup(request):
@@ -309,7 +305,7 @@ def signup(request):
         form = UserRegistrationForm(request.POST)
 
         if form.is_valid():
-      
+
             user = form.save()
             username = user.first_name
             email = user.email
@@ -320,7 +316,7 @@ def signup(request):
 
             text_content = plaintext.render(d)
             html_content = htmly.render(d)
-            
+
             msg = EmailMultiAlternatives(
                 subject="Welcome to Our Platform",
                 body=text_content,
@@ -329,7 +325,7 @@ def signup(request):
             )
             msg.attach_alternative(html_content, "text/html")
             msg.send()
-            
+
             messages.success(request, "User created successfully!")
             return redirect('welcome')
         else:
@@ -345,7 +341,7 @@ def signup(request):
                 'email_errors': email_errors,
                 'phone_number_errors': phone_number_errors
             }
-       
+
             return render(request, 'sign-up.html', context)
     else:
         form = UserRegistrationForm()
@@ -362,19 +358,21 @@ def signin(request):
         if user is not None:
             login(request, user)
 
-            if user.is_staff or user.is_superuser:  
+            if user.is_staff or user.is_superuser:
                 return redirect('/dashboard/')
             else:
-                return redirect('professional-services') 
+                return redirect('professional-services')
         else:
             messages.error(request, "Invalid credentials. Please try again.")
             return redirect('signin')
 
     return render(request, 'sign-in.html')
 
+
 def logout_view(request):
-    logout(request) 
+    logout(request)
     return redirect('/')
+
 
 def forgetpassword(request):
     context = {}
@@ -387,16 +385,15 @@ def forgetpassword(request):
             user = User.objects.filter(email=email).first()
             if user:
                 token = default_token_generator.make_token(user)
-                uid = urlsafe_base64_encode(str(user.pk).encode('utf-8')) 
-   
+                uid = urlsafe_base64_encode(str(user.pk).encode('utf-8'))
+
                 reset_url = request.build_absolute_uri(
                     reverse('confirm-password', kwargs={'uidb64': uid, 'token': token})
                 )
-                
-                htmly = get_template('email-template/forget-mail.html')
-                html_content = htmly.render({"reset_url": "reset_url"}) # to-do
 
-             
+                htmly = get_template('email-template/forget-mail.html')
+                html_content = htmly.render({"reset_url": "reset_url"})  # to-do
+
                 plaintext = get_template('email-template/mail.txt')
                 plain_content = plaintext.render({"reset_url": "reset-url"})
 
@@ -428,21 +425,21 @@ def confirmpassword(request, uidb64, token):
         if default_token_generator.check_token(user, token):
             print("Token is valid.")
             if request.method == "POST":
-            
+
                 new_password = request.POST.get('new-password')
                 confirm_password = request.POST.get('confirm-password')
 
                 if new_password == confirm_password:
                     print("Passwords match. Setting new password.")
-                   
+
                     user.set_password(new_password)
                     user.save()
-    
+
                     user = User.objects.get(pk=user.pk)
 
                     user_authenticated = authenticate(email=user.email, password=new_password)
                     if user_authenticated is not None:
-                        login(request, user_authenticated)  
+                        login(request, user_authenticated)
                         print("User re-authenticated and logged in.")
 
                         messages.success(request, "Your password has been reset successfully. Please sign in.")
@@ -456,16 +453,16 @@ def confirmpassword(request, uidb64, token):
             return render(request, 'confirm-password.html')
         else:
             return HttpResponse('Invalid or expired link', status=400)
-    
+
     except (TypeError, ValueError, OverflowError, User.DoesNotExist) as e:
- 
+
         print(f"Error during password reset: {str(e)}")
         return HttpResponse('Invalid link', status=400)
 
 
-
 def termsconditions(request):
-    return render(request, 'terms-conditions.html') 
+    return render(request, 'terms-conditions.html')
+
 
 def thankyou(request):
     appointment_id_value = request.GET.get('appointment_id')  # Get the appointment ID from the URL query params
@@ -520,8 +517,9 @@ def thankyou(request):
         return HttpResponseBadRequest("Invalid request")
     return render(request, 'thank-you.html', {'appointment': appointment, 'order': order})
 
+
 def welcome(request):
-    return render(request, 'welcome.html') 
+    return render(request, 'welcome.html')
 
 
 def download_order_files(request, id):
@@ -540,7 +538,8 @@ def download_order_files(request, id):
     # Prepare the response
     zip_buffer.seek(0)
     response = HttpResponse(zip_buffer, content_type='application/zip')
-    response['Content-Disposition'] = f'attachment; filename=order_{order.user.first_name}_{order.user.last_name}__files.zip'
+    response[
+        'Content-Disposition'] = f'attachment; filename=order_{order.user.first_name}_{order.user.last_name}__files.zip'
     return response
 
 
@@ -584,8 +583,9 @@ def order_cart_notre(request, id):
 
                 else:
                     updatedPrice = 0
-            return render(request, 'order_cart_notre.html', {'services': services, 'id': id, 'service_name': service_name,
-                                                             'pageNumbers': pageNumbers, 'updatedPrice': updatedPrice})
+            return render(request, 'order_cart_notre.html',
+                          {'services': services, 'id': id, 'service_name': service_name,
+                           'pageNumbers': pageNumbers, 'updatedPrice': updatedPrice})
 
             # print(service_name)  # Now this will be assigned
     else:
@@ -593,12 +593,12 @@ def order_cart_notre(request, id):
             print(request.POST)
 
             # Extract form data
-            updatedPrice = request.POST.get('extraField')
+            updatedPrice = request.POST.get('test_price')
 
             price = float(updatedPrice)
             print(updatedPrice)
             categoriesList_id = request.POST.get('categoriesList')  # ForeignKey ID for Service (dropdown or select)
-             # Price
+            # Price
             pick_date = request.POST.get('pick_date', datetime.date.today())  # Pick date
             pick_time = request.POST.get('pick_time', datetime.datetime.now().time())  # Pick time
             order_status = request.POST.get('order_status', 'Not Started')  # Default value if not provided
@@ -621,14 +621,15 @@ def order_cart_notre(request, id):
             print("Order exists:", order)
             user = request.user
             order = order
-            pagename = request.POST.get('name')
+            pagename = request.POST.get('service_name')
             print(pagename)
             document = request.POST.get('pageNumbers')
             print(document)
-            upload_documents = request.FILES.getlist('upload_documents')
+            upload_documents = request.FILES.getlist('upload_documents1[]')
+            print(type(upload_documents))
             comments = request.POST.get('comments_questions')
             documents_to_save = []
-            if upload_documents:
+            if upload_documents is not None:
                 for file in upload_documents:
                     document_instance = Document(
                         user=user,
@@ -638,24 +639,24 @@ def order_cart_notre(request, id):
                         number_of_document=document,
                         comments=comments
                     )
-                    documents_to_save.append(document_instance)
-                    for doc in documents_to_save:
-                        doc.save()
+
+                    document_instance.save()
                     messages.success(request, "Documents uploaded successfully.")
-                    if documents_to_save:
-                        source_id = order.order_id  # Payment nonce from Square
-                        result = process_payment(pagename, price, source_id, categoriesList)
-                        if result.is_success():
-                            return redirect(result.body['payment_link']['url'])  # Redirect to Square Checkout
-                        else:
-                            return redirect("/payment-failed/")  # Handle errors
-                        #
-                        # return redirect("/order/")
-                        # success, payment_response = process_payment(request, price, source_id, categoriesList)
-                            # sendEmail(too=['m.haneef1966@gmail.com'],
-                            #           sub="Thank you for choosing Right HR Solution, please check your email for registration completion",
-                            #           temp="Your registration is now complete!")
-                    return render(request, 'thank-you.html', {'order_id': order.order_id, 'documents_to_save': documents_to_save})
+
+                source_id = order.order_id  # Payment nonce from Square
+                result = process_payment(pagename, price, source_id, categoriesList)
+                if result.is_success():
+                    return redirect(result.body['payment_link']['url'])  # Redirect to Square Checkout
+                else:
+                    return redirect("/payment-failed/")  # Handle errors
+                    #
+                    # return redirect("/order/")
+                    # success, payment_response = process_payment(request, price, source_id, categoriesList)
+                    # sendEmail(too=['m.haneef1966@gmail.com'],
+                    #           sub="Thank you for choosing Right HR Solution, please check your email for registration completion",
+                    #           temp="Your registration is now complete!")
+                # return render(request, 'thank-you.html',
+                #               {'order_id': order.order_id, 'documents_to_save': documents_to_save})
             else:
                 document_instance = Document(
                     user=user,
@@ -665,33 +666,30 @@ def order_cart_notre(request, id):
                     number_of_document=document,
                     comments=comments
                 )
-                documents_to_save.append(document_instance)
-                for doc in documents_to_save:
-                    doc.save()
+
+                document_instance.save()
                 messages.success(request, "Documents uploaded successfully.")
-                if documents_to_save:
-                    source_id = order.order_id  # Payment nonce from Square
-                    result = process_payment(pagename, price, source_id, categoriesList)
-                    if result.is_success():
-                        return redirect(result.body['payment_link']['url'])  # Redirect to Square Checkout
-                    else:
-                        return redirect("/payment-failed/")  # Handle errors
+                source_id = order.order_id  # Payment nonce from Square
+                result = process_payment(pagename, price, source_id, categoriesList)
+                if result.is_success():
+                    return redirect(result.body['payment_link']['url'])  # Redirect to Square Checkout
+                else:
+                    return redirect("/payment-failed/")  # Handle errors
 
                     # if result:
                     #     sendEmail(too=['m.haneef1966@gmail.com'], sub="Thank you for choosing Right HR Solution, please check your email for registration completion",
                     #                   temp="Your registration is now complete!")
 
-
         return render(request, 'order_cart_notre.html', {'services': services, 'id': id, 'service_name': service_name})
 
-
     return render(request, 'order_cart_notre.html', {'order_form': order_form, 'services': services,
-                    'id': id, 'service_name': service_name})
+                                                     'id': id, 'service_name': service_name})
 
 
 def first_page(request):
     # This is the view for the first page (card)
     return render(request, 'notary-public-service.html')
+
 
 def second_page(request):
     # This is the view for the second page (checkout)
