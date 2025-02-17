@@ -569,17 +569,17 @@ def order_cart_notre(request, id):
             service_name = request.POST.get('service_name')  # Walk-In
             price = request.POST.get('price')  # 10
             pageNumbers = request.POST.get('pageNumbers')
-
+            print(pageNumbers)
             if id == 1:
                 updatedPrice = int(price) * int(pageNumbers)
             else:
                 start_length, end_length = map(int, pageNumbers.split('-'))
-                if 1 <= start_length <= 30:
-                    updatedPrice = 10
+                if  end_length == 30:
+                    updatedPrice = 60
                 elif 31 <= start_length <= 100:
-                    updatedPrice = 20
-                elif 101 <= start_length <= 150:
-                    updatedPrice = 30
+                    updatedPrice = 120
+                elif 101 <= start_length <= 103:
+                    updatedPrice = 170
 
                 else:
                     updatedPrice = 0

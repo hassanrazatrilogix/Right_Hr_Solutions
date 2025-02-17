@@ -2,286 +2,506 @@
 {% load static %}
 {% block title %}Right HR Solutions – HR Solutions & Professional Services{% endblock title %}
 
- {% block content %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notary Public Services</title>
+    <style>
+        /* General Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            position: relative;
+            width: 100%;
+            height: 300px;
+            background: url('notary-background.jpg') no-repeat center center/cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+        }
+        .overlay {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: rgba(128, 0, 128, 0.8); /* Purple overlay */
+        }
+        .content {
+            position: relative;
+            z-index: 1;
+            padding: 20px;
+        }
+        .content h1 {
+            font-size: 36px;
+        }
+        .content h1 span {
+            color: #FFC107; /* Yellow color for Notary */
+        }
+        .content p {
+            margin: 10px 0;
+            font-size: 16px;
+        }
+        .btn {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 10px 20px;
+            background: #FFC107;
+            color: black;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 5px;
+        }
+        .btn:hover {
+            background: #e0a800;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Header Section */
+        #page_header {
+            background-image: url('assets/img/image/place-order-page.png');
+            background-size: cover;
+            background-position: center;
+            padding: 100px 0;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+
+        #page_header .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        #page_header .page-header-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        #page_header .page-title {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        #page_header .text {
+            font-size: 1.2rem;
+        }
+
+        /* Services Section */
+        .services {
+            padding: 40px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .services h2 {
+            text-align: center;
+            color: #007BFF;
+            font-size: 2rem;
+            margin-bottom: 40px;
+        }
+
+        .service-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .service-row .col-md-4 {
+            flex: 1;
+            max-width: 50%; /* 4 columns for image and 4 columns for text */
+        }
+
+        .service-row img {
+            width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            left
+        }
+
+        .service-option {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .service-option h3 {
+            color: #007BFF;
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .service-option p {
+            font-size: 1rem;
+            margin-bottom: 15px;
+        }
+
+        .service-option button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .service-option button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Footer Section */
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            margin-top: 30px;
+        }
+        .notry-public-service{
+            position: absolute !important;
+     background-color: #a01e66;
+    color: white;
+    padding: 20px;
+    text-align: left;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 36%;
+    height: 340px;
+    border-radius: 0px;
+        }
+    .triangle{
 
 
-  <!-- First_home _banner -->
-  <section class="home_baner_sec bg" style="background-image: url(/static/assets/img/image/main-banner.png)">
-    <div class="home_banner_text">  
-      <div class="inner_banner_text">      
-        <h1 class="banner_title">Notary<br><span> Public Services</span></h1>
-        <p>Our dedicated team provides seamless notary solutions throughout the state.</p>
-        <div class="btnn">
-          <a href="">Book Appointment</a>
+        }
+    </style>
+</head>
+{% block content %}
+<body>
+    <!-- Header Section -->
+   <section id="page_header" class="page-header d-flex align-items-center justify-center"
+      style="background-image: url('/static/assets/img/image/main-banner.png');">
+    <div class="col-md-6 order-text-square notry-public-service " style="background-color: #a01e66c9; opacity: 0.8; color: white; padding: 20px; text-align: left; cursor: pointer; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); width: 40%; height: 100%; position: absolute; border-radius: 0px;">
+        <h3 style="margin-bottom: 15px;">Notary</h3>
+        <p style="margin-bottom: 10px;">Public Services</p>
+        <p style="margin-bottom: 15px;">Get your documents notarized quickly and hassle-free with our professional Notary Services.</p>
+        <a href="{% url 'appoinment' %}" class="btn">Book Appointments</a>
+        <!-- Right Arrow Triangle -->
+        <div class="triangle col-md-6" style="    position: absolute;
+    right: -174px;
+    top: 65%;
+    transform: translateY(-60%);
+    width: 11px;
+    height: 83px;
+    border-top: 252px solid transparent;
+    border-bottom: 137px solid transparent;
+    opacity: 0.8;
+    border-left: 174px solid #a01e66;" >
+
         </div>
-      </div>           	         
+
     </div>
-  </section>
-  <!-- First_end -->
+</section>
 
-  <!-- Second_section -->
-  <section class="services_in_florida">
-    <div class="container">
-      <div class="inner_services">
-        <div class="top_title">
-          <h2>Notary Public <span>Services in Florida</span></h2>
-        </div>
-        <div class="main_description">
-          <h3>Trusted and Award-Winning Notary Public <span>Services in Florida</span></h3>
-          <p>When authenticity matters, our notary services stand out. As state-commissioned officers, our notaries uphold the highest standards to ensure the accuracy and legality of your documents. Appointed by the Governor, we are equipped to handle a wide range of notarial duties that safeguard your transactions and ensure peace of mind.</p>
-          <h4>Notarize your 1-page document starting at just $10.</h4>
-          <div class="schedule_btn">
-            <a href="">Schedule An Appointment</a>
-          </div>
-        </div>
-        <div class="arrow_img">
-          <img src="{% static  '' %}assets/img/image/Arrow.png">
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Second_section end -->
-
-  <!-- Third-section -->
-  <section class="notary_sec bg" style="background-image: url(/static/assets/img/image/second-banner.png)">
-    <div class="container">
-      <div class="inner_services_sec">
-       <div class="notry_services">
-  <div class="top_img">
-    <img src="{% static 'assets/img/image/icon-1.png' %}" alt="">
-  </div>
-  <div class="content_area">
-    <div class="middle_title">
-      <h3 class ="walk-inn">Walk-In</h3>
-      <p>In person Notary Service.</p>
-    </div>
-    <div class="price_text">
-      <p><span class="price-value" >$10</span> Per Stamp</p>
-    </div>
-  </div>
-  <div class="cart_btn">
-    <!-- Form to submit the service, price, and page number -->
-    <form action="{% url 'order_cart_notre' id=1 %}" method="POST">
-      {% csrf_token %}
-
-      <!-- Hidden fields for Walk-In service and price -->
-      <input type="hidden" name="service_name" value="Walk-In">
-      <input type="hidden" name="price" value="10">
-
-      <!-- Input field for page number -->
-      <div class="form-group">
-        <p for="pageNumbers" style="color: white;">Number of Pages:</p>
-        <input type="number" id="pageNumbers" name="pageNumbers" class="form-control"  min="1" value="1" required>
-      </div>
-
-      <!-- Order Now button -->
-      <button type="submit" class="btn">Order Now</button>
-    </form>
-  </div>
+<section id="about_us">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-12 m-auto">
+                <div class="section-heading text-center">
+                  <h2 class="title" style="text-align: left;">About Right HR Solutions</h2>
+                  <h5 class="sub-title">At Right HR Solutions, we are more than just an HR service provider. We are your dedicated partner in building, managing, and growing your workforce. With a team of seasoned HR professionals, we focus on delivering customized solutions that meet the unique needs of each client, ensuring that your business thrives with the right talent and support.</h5>
+                </div>
+                  <div class="col-md-4 order-text" style="background-color: #a01e66; color: white; padding: 10px; text-align: left; border-radius: 20px; cursor: pointer; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+    Choose an option below to place your order now.
 </div>
-        <div class="notry_services">
-          <div class="top_img">
-            <img src="{% static  '' %}assets/img/image/icon-2.png" alt="">
-          </div>
-          <div class="content_area">
-            <div class="middle_title">
-              <h3>Online Electronic</h3>			
-            </div>
-            
-            <div class="upload_document">
-              <a><img src="{% static  '' %}assets/img/icons/info.png" style="max-width: 16px;" alt="">upload documents</a>
-            </div>
-            <div class="price_text">
-              <p> <span>$25</span> Per Stamp</p>
-             </div>
-          </div>
-          <div class="cart_btn">
-            <a href="{% url 'order_cart_notre' id=2 %}" class="btn">Order Now</a>
-          </div>
-        </div>
-        <div class="notry_services">
-          <div class="top_img">
-            <img src="{% static  '' %}assets/img/image/icon-3.png" alt="">
-          </div>
-          <div class="content_area">
-            <div class="middle_title">
-              <h3>Mobile Services</h3>
-              <p>Skip the travel and let us come to you.</p>
-              <div class="price_text">
-              <p> <span>$10</span> Per Stamp</p>
               </div>
             </div>
-            <div class="cart_btn">
-            <form action="{% url 'order_cart_notre' id=3 %}" method="POST">
-                {% csrf_token %}
-                <p> </p>
-                <input type="hidden" name="service_name" value="Mobile Services">
-                <p> </p>
+          </div>
+        </section>
 
-                <input type="hidden" name="price" value="10">
-                <p> </p>
-                <div class="dropdown-container">
-                    <select name="pageNumbers" id="price_range">
-                        <option value="0-30">0 - 30</option>
-                        <option value="31-100">31 - 100</option>
-                        <option value="101-150">101 - 150</option>
-                    </select>
+    <!-- Services Section -->
+   <section class="services">
+        <div class="container">
+            <div class="service-list">
+                <div id="Payroll_Management" class="row  mb-5 g-4 g-md-5 align-items-center justify-center service-row">
+                    <div class="col-md-5">
+                      <img class="img-fluid img-shadow ratio-h" src="/static/assets/img/image/i_6.png" alt="Payroll Management">
+                    </div>
+                    <div class="col-md-7">
+                      <div class="hr-block">
+                        <div class="hr-block-heading">
+                          <h3 class="title">Walk-In Notary (In-Person Service)</h3>
+                          <p class="sub-title">For those who prefer face-to-face notarization, visit our office for quick and efficient service.</p>
+                        </div>
+                        <div class="hr-block-content">
+                          <h4 class="title">Ideal for:</h4>
+                          <p>Personal, business, and legal documents requiring notarization on-site.</p>
+                          <p>$10 per notarial stamp</p>
+                            <form action="{% url 'order_cart_notre' id=1 %}" method="POST">
+                              {% csrf_token %}
+
+                              <!-- Hidden fields for Walk-In service and price -->
+                              <input type="hidden" name="service_name" value="Walk-In (In-Person Service)">
+                              <input type="hidden" name="price" value="10">
+
+                              <!-- Input field for page number -->
+                              <div class="form-group">
+                                <p for="pageNumbers" style="color: white;">Number of Pages:</p>
+                                <input type="number" id="pageNumbers" name="pageNumbers" class="form-control"  min="1" value="1" required>
+                              </div>
+                          <button type="submit" class="btn">Order Walk-In Notary Service</button>
+                            </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                <div id="Payroll_Management" class="row  mb-5 g-4 g-md-5 align-items-center justify-center service-row">
+                    <div class="col-md-5">
+                      <img class="img-fluid img-shadow ratio-h" src="/static/assets/img/image/i_5.png" alt="Payroll Management">
+                    </div>
+                    <div class="col-md-7">
+                      <div class="hr-block">
+                        <div class="hr-block-heading">
+                          <h3 class="title">Electronic Notary (Remote Online Notarization)</h3>
+                          <p class="sub-title">Notarize your documents from anywhere with our secure electronic notary
+service. Upload your documents, verify your identity, and complete the
+notarization online.</p>
+                        </div>
+                        <div class="hr-block-content">
+                          <h4 class="title">Ideal for:</h4>
+                          <p>Those needing fast, legally binding notarization without leaving their home or office.</p>
+                          <p>$25 per notarial stamp</p>
+                          <a href="{% url 'order_cart_notre' id=2 %}" class="btn">Order Electronic Notary Service
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                <div id="Payroll_Management" class="row  mb-5 g-4 g-md-5 align-items-center justify-center service-row">
+                    <div class="col-md-5">
+                      <img class="img-fluid img-shadow ratio-h" src="/static/assets/img/image/i_4.png" alt="Payroll Management">
+                    </div>
+                    <div class="col-md-7">
+                      <div class="hr-block">
+                        <div class="hr-block-heading">
+                          <h3 class="title">Mobile Notary (We Come to You)</h3>
+                          <p class="sub-title">Need a notary at your location? Our mobile notary service brings convenience to your home, business, or designated location.</p>
+                        </div>
+                        <div class="hr-block-content">
+                          <h4 class="title">Ideal for:</h4>
+                          <p>Busy professionals, elderly clients, businesses, and real estate transactions.</p>
+                          <p>$10 per notarial stamp</p>
+                          <h3>Travel Fee:</h3>
+                            <ul>
+                                <li>$60 for the first 30 miles</li>
+                                <li>$120 for 31-100 miles</li>
+                                <li>$170 for over 101 miles (round trip)</li>
+                            </ul>
+                            <form action="{% url 'order_cart_notre' id=3 %}" method="POST">
+                            {% csrf_token %}
+                            <p> </p>
+                            <input type="hidden" name="service_name" value="Mobile Services">
+                            <p> </p>
+
+                            <input type="hidden" name="price" value="10">
+                            <p> </p>
+                            <div class="dropdown-container">
+                                <select name="pageNumbers" id="price_range">
+                                    <option><-----Select Miles------></option>
+                                    <option value="0-30">$60 for the first 30 miles</option>
+                                    <option value="31-100">$120 for 31 - 100 miles</option>
+                                    <option value="101-103">$170 for 101 - 103 miles</option>
+                                </select>
+                            </div>
+                          <button type="submit" class="btn">Order Mobile Notary Service</button>
+                            </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                <div id="Payroll_Management" class="row  mb-5 g-4 g-md-5 align-items-center justify-center service-row">
+                    <div class="col-md-5">
+                      <img class="img-fluid img-shadow ratio-h" src="/static/assets/img/image/i_3.png" alt="Payroll Management">
+                    </div>
+                    <div class="col-md-7">
+                      <div class="hr-block">
+                        <div class="hr-block-heading">
+                          <h3 class="title">Notary Signing Agent (Real Estate Documents)</h3>
+                          <p class="sub-title">For real estate transactions, our certified Notary Signing Agents ensure that
+mortgage, loan, and closing documents are notarized correctly.</p>
+                        </div>
+                        <div class="hr-block-content">
+                          <h4 class="title">Ideal for:</h4>
+                            <p>Real estate closings, mortgage signings, title companies, and real estate
+agents.</p>
+                          <ul class="list">
+                            <li class="list-item">$75 for 1-5 documents</li>
+                            <li class="list-item">$150 for 6-10 documents</li>
+                            <li class="list-item">$250 for 11-20 documents</li>
+                            <li class="list-item">$500 for transactions with more than 20 documents</li>
+                          </ul>
+                          <a href="{% url 'order_cart_notre' id=4 %}" class="btn">Order Notary Signing Agent Service
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+            </div>
+        </div>
+    </section>
+    <section id="quick_service" style="background-color: #a01e66; color: white; padding: 10px; text-align: left;">
+          <div class="container">
+            <div class="row">
+              <h2>What Our Notary Services Cover:</h2>
+                <ul class="col-md-5">
+                    <li>Administering oaths or affirmations</li>
+                    <li>Taking acknowledgments for deeds and legal instruments</li>
+                    <li>Verifying vehicle identification numbers (VINs)</li>
+                </ul>
+                <ul class="col-md-5">
+                    <li>Attesting to and certifying copies of documents</li>
+                    <li>Solemnizing marriages</li>
+                    <li>Certifying the contents of safe deposit boxes</li>
+                </ul>
+
+        <p>Our award-winning services are recognized for their reliability, attention to detail, and official certification. From birth certificates to legal documents and business agreements, we offer secure notarization with a focus on customer convenience, including electronic and mobile notary solutions.</p>
+
+        <ul>
+        </ul>
+
+        <h3>What Notary Duties Are We Legally Authorized to Perform for You in Florida? Here's a Glimpse:</h3>
+         <ul class="col-md-5">
+                    <li>Administering oaths or affirmations</li>
+                    <li>Attest to photocopies of certain documents</li>
+                    <li>Verifying vehicle identification numbers (VINs)</li>
+                </ul>
+                <ul class="col-md-5">
+                    <li>Attesting to and certifying copies of documents</li>
+                    <li>Solemnizing marriages</li>
+                    <li>Certifying the contents of safe deposit boxes</li>
+                </ul>
+            </div>
+          </div>
+        </section>
+<section id="service">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12 m-auto">
+              <div class="section-content">
+                <div class="row mb-5 g-5 align-items-center justify-center flex-md-row flex-column-reverse">
+                  <div class="col-md-7">
+                    <div class="hr-list">
+                      <div class="hr-list-heading">
+                        <h3 class="title">How It Works</h3>
+                      </div>
+                      <div class="hr-list-items">
+                        <div class="hr-list-item">
+                          <div class="content">
+                            <h4 class="heading">1. Select Your Service</h4>
+                            <p class="text">Choose from walk-in, electronic, mobile, or signing agent Services.</p>
+                          </div>
+                        </div>
+                        <div class="hr-list-item">
+                          <div class="content">
+                            <h4 class="heading">2. Upload Your Documents</h4>
+                            <p class="text">If using electronic or mobile services, securely upload your documents.</p>
+                          </div>
+                        </div>
+                        <div class="hr-list-item">
+                          <div class="content">
+                            <h4 class="heading">3. Comnplete the Process</h4>
+                            <p class="text">Get your document notarized at our office, online, or at your chosen location.</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-5">
+                    <img class="img-fluid img-shadow ratio-v" src="/static/assets/img/image/1_2.png"
+                      alt="HR Solutions">
+                  </div>
                 </div>
-                <p> </p>
-                <!-- Replace the link with a submit button -->
-                <button type="submit" class="btn">Order Now</button>
-            </form>
-          </div>
-          </div>
-          </div>
-        <div class="notry_services">
-          <div class="top_img">
-            <img src="{% static  '' %}assets/img/image/icon-4.png" alt="">
-          </div>
-          <div class="content_area">
-            <div class="middle_title">
-              <h3>Signing Agent/Real Estate</h3>			
+              </div>
             </div>
-            <div class="upload_document">
-              <a><img src="{% static  '' %}assets/img/icons/info.png" style="max-width: 16px;" alt="">upload documents</a>
-            </div>
-            <div class="price_text">
-              <p> <span>$25</span> Per Stamp</p>
-            </div>
-          </div>
-          <div class="cart_btn">
-            <a href="{% url 'order_cart_notre' id=4 %}">Order Now</a>
           </div>
         </div>
-      </div>
-    </div>
-  </section>
-   <!-- Third-section end -->
-
-   <section class="services_cover">
-    <div class="container">
-      <div class="inner_services_cover">
-        <div class="service_cover">
-          <h3>What Our Notary Services Cover:</h3>
-          <div class="services_covers">
-            <ul>
-              <li>
-                <div class="check_img">
-                  <img src="{% static  '' %}assets/img/image/check.png">
+      </section>
+            <section id="why_choose">
+          <div class="container">
+            <div class="row g-5 align-items-center justify-center">
+              <div class="col-md-5">
+                <img class="img-fluid img-shadow ratio-v" src="/static/assets/img/image/i_1.png" alt="Why Choose Right HR Solutions">
+              </div>
+              <div class="col-md-7">
+                <div class="section-heading">
+                  <h2 class="title">Why Choose US?</h2>
                 </div>
-                <p>Administering oaths or affirmations</p>
-              </li>
-              
-              <li>
-                <div class="check_img">
-                  <img src="{% static  '' %}assets/img/image/check.png">
+                <div class="section-content">
+                  <div class="hr-list">
+                    <div class="hr-list-items">
+                      <div class="hr-list-item">
+                        <div class="content">
+                          <h4 class="heading">Certified & Licensed Notaries</h4>
+                          <p class="text">Our professionals ensure accuracy and compliance with legal requirements.</p>
+                        </div>
+                      </div>
+                      <div class="hr-list-item">
+                        <div class="content">
+                          <h4 class="heading">Flexible & Convenient</h4>
+                          <p class="text">Choose from in-person, mobile, or online notarization.</p>
+                        </div>
+                      </div>
+                      <div class="hr-list-item">
+                        <div class="content">
+                          <h4 class="heading">Secure Transactions</h4>
+                          <p class="text">We prioritize confidentiality and use secure platforms for electronic notarization.</p>
+                        </div>
+                      </div>
+                      <div class="hr-list-item">
+                        <div class="content">
+                          <h4 class="heading">Fast Turnaround</h4>
+                          <p class="text">Get your documents notarized quickly and efficiently.</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <p>Attesting to and certifying copies of documents</p>
-              </li>
-              <li>
-                <div class="check_img">
-                  <img src="{% static  '' %}assets/img/image/check.png">
-                </div>
-                <p>Taking acknowledgments for deeds 
-                  and legal instruments	</p>
-              </li>
-              <li>
-                <div class="check_img">
-                  <img src="{% static  '' %}assets/img/image/check.png">
-                </div>
-                <p>Solemnizing marriages</p>
-              </li>
-              <li>
-                <div class="check_img">
-                  <img src="{% static  '' %}assets/img/image/check.png">
-                </div>
-                <p>Verifying vehicle identification numbers (VINs)</p>
-              </li>
-              <li>
-                <div class="check_img">
-                  <img src="{% static  '' %}assets/img/image/check.png">
-                </div>
-                <p>Certifying the contents of safe deposit boxes</p>
-              </li>
-            </ul>
+              </div>
+            </div>
           </div>
-          <p>Our award-winning services are recognized for their reliability, attention to detail, and official certification. From birth certificates to legal documents and business agreements, we offer secure notarization with a focus on customer convenience, including electronic and mobile notary solutions.</p>
-        </div>
-        <div class="service_cover notary duties">
-          <h3>What notary duties are we legally authorized to perform for you in Florida? Here’s a glimpse:</h3>
-          <div class="services_covers">
-            <ul>
-              <li>
-                <div class="check_img">
-                  <img src="{% static  '' %}assets/img/image/check.png">
+        </section>
+
+<section id="get_started">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="get-started-block text-center">
+                  <div class="section-heading">
+                    <h3 class="title">Ready To Get Started?</h3>
+                    <h5 class="sub-title">To Place Your Order, log in or create an account. Once selected, you'll be redirected to our secure order page to upload your documents and finalize the process</h5>
+                  </div>
+                  <a href="{% url 'appoinment' %}" class="btn btn-big">Order Your Notary Service Now</a>
                 </div>
-                <p>Administering oaths or affirmations</p>
-              </li>
-              <li>
-                <div class="check_img">
-                  <img src="{% static  '' %}assets/img/image/check.png">
-                </div>
-                <p>Take acknowledgments</p>
-              </li>
-              <li>
-                <div class="check_img">
-                  <img src="{% static  '' %}assets/img/image/check.png">
-                </div>
-                <p>Attest to photocopies of certain documents</p>
-              </li>
-              <li>
-                <div class="check_img">
-                  <img src="{% static  '' %}assets/img/image/check.png">
-                </div>
-                <p>Solemnizing marriages</p>
-              </li>
-              <li>
-                <div class="check_img">
-                  <img src="{% static  '' %}assets/img/image/check.png">
-                </div>
-                <p>Verifying vehicle identification numbers (VINs)</p>
-              </li>
-              <li>
-                <div class="check_img">
-                  <img src="{% static  '' %}assets/img/image/check.png">
-                </div>
-                <p>Certifying the contents of safe deposit boxes</p>
-              </li>
-            </ul>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-    </div>
-   </section>
-      
-  <!-- jquery -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-  <!--slick js -->
-  <script src="assets/js/slick.min.js"></script>
-  <!-- main.js -->
-  <script src="assets/js/main.js"></script>
-
- <script>
-
-   console.log("loading js")
- const walkinButton  = document.querySelector("#walkins")
-console.log("walkinButton",walkinButton)
-
-
- function handlePageSubmit()
-   {
-console.log("calling the pages")
-   const cartText = document.querySelector(".walk-inn").textContent.trim()
-   const priceElement =  document.querySelector(".price-value")
-   const priceValue =  parseFloat(priceElement.textContent.slice(1,3).trim())
-   const numberOfPages =  document.querySelector("#pageNumbers").value
-   console.log("cartText",cartText,"priceElement",priceValue)
-   const productOfPages =  numberOfPages.priceValue
-   console.log("numberOfPages",numberOfPages)
-   const dataArray =  []
-   }
-
- </script>
-
-    {% endblock content %}
+        </section>
+</body>
+{% endblock content %}
