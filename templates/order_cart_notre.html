@@ -82,7 +82,7 @@
                                     <h6 class="service-heading">{{ service.name }}</h6>
 
                                     <p class="service-heading">{% if service.id == 13 %} {{ service_name }}{%endif%}</p>
-                                    <p class="price">{% if service.id == 13 %} {{updatedPrice}} {%endif%}</p>
+                                    <p class="price">{% if service.id == 13 %} ${{updatedPrice}} {%endif%}</p>
                                     <div>
                                         {% if service.id == 13 %}
                                     <input type="number" name="test_price" id="priceField" value="{{updatedPrice}}"  hidden>
@@ -221,8 +221,8 @@
 <script>
 
 
-
-
+let pageId = {{id}}
+console.log("Page id is", typeof pageId)
     let serElement = document.querySelectorAll(".service-category");
 let priceField = document.querySelector('#priceField');
 let priceText = document.querySelector('.price');
@@ -264,7 +264,24 @@ fileInputs.forEach(fileInput => {
             });
 
             let totalFiles = fileList.children.length;
-            let updatedPrice = parseFloat(totalFiles) * 25;
+             let updatedPrice
+            if(pageId === 4){
+            console.log("Page id is", 4)
+            if(totalFiles > 0 && totalFiles <=5){
+            updatedPrice = 75;
+            }
+            else if(totalFiles > 5 && totalFiles <=10){
+          updatedPrice = 150;
+            }
+           else if(totalFiles > 10 && totalFiles <=20){
+          updatedPrice = 250;
+            }
+            else{
+            updatedPrice = 500;
+            }}
+            else{
+            updatedPrice = parseFloat(totalFiles) * 25;
+            }
             priceField.value = updatedPrice;
 
             if (priceText) {
